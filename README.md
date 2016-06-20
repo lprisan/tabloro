@@ -47,6 +47,8 @@ sudo docker run -it \
 
 The project files should be now mounted in the `/home/dev/src` folder. Edit the `start.sh` script to set the right environment variables for connecting to amazon S3 to upload images.
 
+**Note**: Your S3 bucket has to be created in the us-standard region!
+
 Then, inside the container prompt, run the script that sets the environment variables for Amazon S3, etc and run npm
 
 ```
@@ -55,11 +57,6 @@ Then, inside the container prompt, run the script that sets the environment vari
 
 Then, in your browser, visit http://localhost:3000
 
-If you want to stop the server, use this simple script
-
-```
-./stop.sh
-```
 
 You can stop the container just by doing `exit` on the terminal (maybe twice).
 
