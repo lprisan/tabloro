@@ -32,25 +32,39 @@ Created a Dockerfile to automate the deployment of containers, based on [this tu
 
 To make it work go to the project folder and run:
 
+(Note: ensure you don't have a mongodb instance running in the host, or it will try to bind the same port in the container and fail starting mongo)
+
 ```
 # Build the docker image
-docker build -t lprisan/tabloro .
+sudo docker build -t lprisan/tabloro .
 # Run the docker container
-docker run -it \
+sudo docker run -it \
   --net="host" \
   -v `pwd`:/home/dev/src \
   --name tabloro-docker \
   lprisan/tabloro
 ```
 
-The project file should be now mounted in the `/home/dev/src` folder, edit the `start.sh` script to set the right environment variables for connecting to amazon S3
+The project files should be now mounted in the `/home/dev/src` folder. Edit the `start.sh` script to set the right environment variables for connecting to amazon S3 to upload images.
 
-Then, inside the container prompt, install the dependencies:
+Then, inside the container prompt, run the script that sets the environment variables for Amazon S3, etc and run npm
 
 ```
-npm install
-# Run the script that sets the environment variables for Amazon S3, etc and run npm
 ./start.sh
 ```
 
 Then, in your browser, visit http://localhost:3000
+
+If you want to stop the server, use this simple script
+
+```
+./stop.sh
+```
+
+You can stop the container just by doing `exit` on the terminal (maybe twice).
+
+Later on, to start the container again (keeping the DB files from last time, rather than from the empty container), just do:
+
+```
+sudo docker start -ia tabloro-docker
+```
