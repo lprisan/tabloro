@@ -24,3 +24,33 @@ Released under MIT License https://opensource.org/licenses/MIT
 
 <img src="http://www.tabloro.com/img/meta.jpg"></img>
 
+---
+
+# Installation of Dockerized app
+
+Created a Dockerfile to automate the deployment of containers, based on [this tutorial](http://fiznool.com/blog/2015/07/25/setting-up-a-docker-based-mean-development-environment/) and [the corresponding github repo](https://github.com/fiznool/mean-docker-example)
+
+To make it work go to the project folder and run:
+
+```
+# Build the docker image
+docker build -t lprisan/tabloro .
+# Run the docker container
+docker run -it \
+  --net="host" \
+  -v `pwd`:/home/dev/src \
+  --name tabloro-docker \
+  lprisan/tabloro
+```
+
+The project file should be now mounted in the `/home/dev/src` folder, edit the `start.sh` script to set the right environment variables for connecting to amazon S3
+
+Then, inside the container prompt, install the dependencies:
+
+```
+npm install
+# Run the script that sets the environment variables for Amazon S3, etc and run npm
+./start.sh
+```
+
+Then, in your browser, visit http://localhost:3000
