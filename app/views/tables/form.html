@@ -10,12 +10,12 @@
   {% else %}
     {% set action = '/tables/' + table.title %}
   {% endif %}
-  
+
   <div class="about"></div>
 
 
   <section class="bg">
-    
+
     <div class="row container">
       <div class="col-md-12">
         <form method="post" action="{{ action }}" role="form" class="form-horizontal">
@@ -63,7 +63,7 @@
             </div>
           </div>
 
-          <div class="form-group"> 
+          <div class="form-group">
             <label class="col-sm-3 control-label">List in Public?</label>
             <div class="col-sm-9">
               <div class="btn-group" data-toggle="buttons">
@@ -78,7 +78,7 @@
             </div>
           </div>
 
-          
+
             <div class="form-group">
               <label for="rules" class="col-sm-3 control-label">Rules</label>
               <div class="col-sm-9">
@@ -91,18 +91,131 @@
               </div>
             </div>
 
+
+            {% if capture %}
+
+                      <div class="panel panel-default col-sm-offset-3">
+                        <div class="panel-heading">
+                          <h4><a data-toggle="collapse" data-target="#accordionCapture">
+                          <i class="fa fa-camera"></i>
+                          Capture from paper game</a></h4>
+                        </div>
+                        <div class="panel-body collapse in" id="accordionCapture">
+                          <video id="webcam" autoplay style="display:none;" width="640" height="480"></video>
+                          <canvas id="snapshot" class="fullscreen" width="640" height="480"></canvas>
+                          <div id="fps" class="info"></div>
+                          <div>
+                            <a class="btn btn-danger btn-lg" href="javascript:capture();">
+                              Capture design! &nbsp;
+                              <i class="fa fa-camera"></i>
+                            </a>
+                            <a class="btn btn-success btn-lg" href="javascript:retry();">
+                              Retry &nbsp;
+                              <i class="fa fa-undo"></i>
+                            </a>
+                          </div>
+                          <div id="capturedElements">
+                          </div>
+                        </div>
+                      </div>
+
+                      <script>
+                          var video = document.getElementById('webcam');
+                          var canvas = document.getElementById('snapshot');
+                          var ctx = canvas.getContext('2d');
+                          var localMediaStream = null;
+
+                          var continuous = true;
+
+                          var lastTags;
+
+                          var width = canvas.width;
+                          var height = canvas.height;
+
+                          var fps = document.getElementById('fps');
+                          var fpsText = document.createTextNode('');
+                          fps.appendChild(fpsText);
+
+                          //Checking camera
+                          var hasGetUserMedia = function() {
+                              return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                                      navigator.mozGetUserMedia || navigator.msGetUserMedia);
+                          }
+                          //Error
+                          var onFailSoHard = function(e) {
+                              console.log('Error!', e);
+                          };
+
+                          //Camera capture
+                          var snapshot = function() {
+                              if (localMediaStream) {
+                                  ctx.drawImage(video, 0, 0, video.width, video.height);
+                                  var start = new Date();
+                                  var obj = Chilitags.findTagsOnImage(canvas, true);
+                                  lastTags = obj;
+                                  var end = new Date();
+                                  var str = 'tag: ';
+                                  for(var tag in obj){
+                                      str += tag + ", ";
+                                  }
+                                  fpsText.nodeValue = "Chilitags processing = " + (end.getTime() - start.getTime()) + "ms  " + str;
+                              }
+                              if(continuous) requestAnimationFrame(snapshot);
+                          }
+
+                          var capture = function() {
+                              continuous=false;
+                              var str = JSON.stringify(lastTags);
+                              var captured = document.getElementById('capturedElements');
+                              var capturedText = document.createTextNode(str);
+                              captured.appendChild(capturedText);
+                          }
+                          var retry = function() {
+                              continuous=true;
+                              var captured = document.getElementById('capturedElements');
+                              var capturedText = document.createTextNode('');
+                              //captured.removeChild(captured.firstChild);
+                              captured.innerHTML='';
+                              captured.appendChild(capturedText);
+                              requestAnimationFrame(snapshot);
+                          }
+
+                          if (hasGetUserMedia()) {
+                              console.log("Camera OK");
+                          } else {
+                              alert("Invalid!");
+                          }
+
+
+                          window.URL = window.URL || window.webkitURL;
+                          navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+                          navigator.getUserMedia({video: true}, function(stream) {
+                                  video.src = window.URL.createObjectURL(stream);
+                                  localMediaStream = stream;
+                                  video.play();
+                                  }, onFailSoHard);
+
+                          video.addEventListener('play', function() {setTimeout('snapshot()', 2500);}, false);
+
+                      </script>
+            {% endif %}
+
+
+
           <div class="panel panel-default col-sm-offset-3">
             <div class="panel-heading">
               <h4><a data-toggle="collapse" data-target="#accordion">
               <i class="fa fa-settings"></i>
               Advanced Options</a></h4>
             </div>
-            
+
             <div class="panel-body collapse" id="accordion">
 
 
 
-              <div class="form-group"> 
+              <div class="form-group">
                 <label class="col-sm-3 control-label">Use WebRTC Video</label>
                 <div class="col-sm-9">
                   <div class="btn-group" data-toggle="buttons">
@@ -119,7 +232,7 @@
 
 
 
-              <div class="form-group"> 
+              <div class="form-group">
                 <label class="col-sm-3 control-label">Use WebRTC Audio</label>
                 <div class="col-sm-9">
                   <div class="btn-group" data-toggle="buttons">
@@ -182,11 +295,11 @@
           </div>
         </form>
       </div>
-      
+
     </div>
   </section>
 
 <div class="about"></div>
-  
+
 
 {% endblock %}

@@ -76,10 +76,18 @@ exports.index = function (req, res) {
 exports.new = function (req, res) {
     var table = new Table({});
     table.setupName = req.query.setupName;
-    res.render('tables/new', {
-        title: 'New Table',
-        table: table
-    });
+    if(!req.query.capture){
+      res.render('tables/new', {
+          title: 'New Table',
+          table: table
+      });
+    }else{
+      res.render('tables/new', {
+          title: 'New Table',
+          table: table,
+          capture: true
+      });
+    }
 };
 
 
@@ -198,8 +206,8 @@ exports.update = function (req, res){
         table: table,
         errors: utils.errors(err.errors || err)
     });
-  });  
-  
+  });
+
 };
 
 
@@ -220,7 +228,7 @@ exports.play = function (req, res) {
 
         var assets = utils.generateAssets(setup, unsortedPieces);
         console.log('assets', assets);
-        
+
         res.render('game/play', {
             title: 'Play - ' + table.title,
             game: table.setup,
