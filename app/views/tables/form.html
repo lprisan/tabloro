@@ -101,8 +101,8 @@
                           Capture from paper game</a></h4>
                         </div>
                         <div class="panel-body collapse in" id="accordionCapture">
-                          <video id="webcam" autoplay style="display:none;" width="640" height="480"></video>
-                          <canvas id="snapshot" class="fullscreen" width="640" height="480"></canvas>
+                          <video id="webcam" autoplay style="display:none;" width="1280" height="720"></video>
+                          <canvas id="snapshot" class="fullscreen" width="1280" height="720"></canvas>
                           <div id="fps" class="info"></div>
                           <div>
                             <a class="btn btn-danger btn-lg" href="javascript:capture();">
@@ -158,7 +158,7 @@
                                   for(var tag in obj){
                                       str += tag + ", ";
                                   }
-                                  fpsText.nodeValue = "Chilitags processing = " + (end.getTime() - start.getTime()) + "ms  " + str;
+                                  fpsText.nodeValue = video.width+"x"+video.height+"--Chilitags processing = " + (end.getTime() - start.getTime()) + "ms  " + str;
                               }
                               if(continuous) requestAnimationFrame(snapshot);
                           }
@@ -191,7 +191,18 @@
                           navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia ||
                           navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
-                          navigator.getUserMedia({video: true}, function(stream) {
+                          navigator.getUserMedia({video: //true
+                             {
+                               optional: [
+                                 {minWidth: 320},
+                                 {minWidth: 640},
+                                 {minWidth: 1024},
+                                 {minWidth: 1280},
+                            //     {minWidth: 1920},
+                            //     {minWidth: 2560},
+                               ]
+                             }
+                          }, function(stream) {
                                   video.src = window.URL.createObjectURL(stream);
                                   localMediaStream = stream;
                                   video.play();
