@@ -29,9 +29,11 @@ Released under MIT License https://opensource.org/licenses/MIT
 # Normal Installation
 
 * [Install NodeJS 6](https://nodejs.org/en/download/package-manager/) (as per https://github.com/madhums/node-express-mongoose-demo)
-* [Install MongoDB 3.2](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#install-mongodb-community-edition) 
+* [Install MongoDB 3.2](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#install-mongodb-community-edition) (as per https://github.com/madhums/node-express-mongoose-demo)
 * Once you have cloned and checked out this project using git...
 * Run `npm install` (as per https://github.com/madhums/node-express-mongoose-demo)
+* (Optional, if using forever to keep the server up) Run `sudo npm install -g grunt-cli bower forever`
+* Check that the MongoDB is started (e.g. `ps -ef | grep mongo`), and if not, start it (e.g., `sudo service mongod start`)
 * Check that the `start.sh` script has all the correct environment variables (including the S3 storage bucket in US standard zone)
 * Run `start.sh`
 
