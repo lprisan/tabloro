@@ -78,6 +78,15 @@
 
               {% if (req.isAuthenticated()) %}
                 <ul class="list-unstyled">
+
+                  <li>
+                      <a href="/tables/new/?setupName=4Ts%20Base%20Setup%20INCOMPLETE&capture=true">
+                          <i class="fa fa-camera fa-fw"></i>&nbsp;
+                          Capture a design
+                      </a>
+                  </li>
+
+                  {% if (isAdmin) %}
                   <li>
                       <a href="/pieces">
                           <i class="fa fa-puzzle-piece fa-fw"></i>&nbsp;
@@ -99,6 +108,8 @@
                       </a>
                   </li>
                 </ul>
+                {% endif %}
+
               {% endif %}
         </li>
 
