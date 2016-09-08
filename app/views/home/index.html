@@ -14,20 +14,20 @@
     </h4>
 
         <h3>
-            An augmented tabletop game to <strong>design</strong> your <strong>collaborative</strong> learning activities.
+            {{ __('An augmented tabletop game to <strong>design</strong> your <strong>collaborative</strong> learning activities.')}}
             <br>
             <br>
-            Play the game <strong>physically</strong>, convert it to <strong>digital</strong>, continue playing and <strong>sharing</strong> it with others online.
+            {{ __('Play the game <strong>physically</strong>, convert it to <strong>digital</strong>, continue playing and <strong>sharing</strong> it with others online.')}}
         </h3>
         <br>
 
         <a href="#current_games" class="btn btn-primary btn-lg">
             <i class="fa fa-heart"></i>
-            Play now
+            {{ __('Play now') }}
         </a>
         <a href="#features" class="btn btn-default btn-lg">
             <i class="fa fa-info"></i>
-            Learn more
+            {{ __('Learn more') }}
         </a>
             <br>
 
@@ -44,8 +44,8 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-lg-10 col-lg-offset-1">
-                    <h2>Features</h2>
-                    <h4>Open Source via github
+                    <h2>{{ __('Features')}}</h2>
+                    <h4>{{ __('Open Source via github')}}
                     <iframe src="https://ghbtns.com/github-btn.html?user=lprisan&repo=tabloro&type=star&count=false&size=small" frameborder="0" scrolling="0" width="70px" height="20px"></iframe>
                     <hr class="small">
                     <div class="row">
@@ -57,9 +57,9 @@
                                 <i class="fa fa-hand-o-up fa-stack-1x text-primary"></i>
                             </span>
                                 <h4>
-                                    <strong>Play physically</strong>
+                                    <strong>{{ __('Play physically')}}</strong>
                                 </h4>
-                                <p>4Ts+ can be played as any other board game, with paper cards around a table.</p>
+                                <p>{{ __('4Ts+ can be played as any other board game, with paper cards around a table.')}}</p>
                             </div>
                         </div>
 
@@ -70,9 +70,9 @@
                                 <i class="fa fa-search fa-stack-1x text-primary"></i>
                             </span>
                                 <h4>
-                                    <strong>Get online advice</strong>
+                                    <strong>{{ __('Get online advice')}}</strong>
                                 </h4>
-                                <p>By pointing a webcam to the board, our advisor can point you to inconsistencies or suggest new elements to use.</p>
+                                <p>{{ __('By pointing a webcam to the board, our advisor can point you to inconsistencies or suggest new elements to use.')}}</p>
                                 <!-- <a href="#" class="btn btn-light">Free sign up</a> -->
                             </div>
                         </div>
@@ -84,9 +84,9 @@
                                     <i class="fa fa-floppy-o fa-stack-1x text-primary"></i>
                                 </span>
                                 <h4>
-                                    <strong>Store digitally</strong>
+                                    <strong>{{ __('Store digitally')}}</strong>
                                 </h4>
-                                <p>Once your time is up, convert your design to digital, for later improvement or sharing with others</p>
+                                <p>{{ __('Once your time is up, convert your design to digital, for later improvement or sharing with others')}}</p>
                                 <!--p>Built in private <a href="http://iswebrtcreadyyet.com/" target="_blank" class="text-default" ><u>peer to peer</u></a> video &amp audio chat in the browser.</p-->
                                 <!-- <a href="#" class="btn btn-light">How That ?</a> -->
                             </div>
@@ -99,9 +99,9 @@
                                         <i class="fa fa-share-alt fa-stack-1x text-primary"></i>
                                     </span>
                                     <h4>
-                                        <strong>Share and improve</strong>
+                                        <strong>{{ __('Share and improve')}}</strong>
                                     </h4>
-                                    <p>Once your board/design is stored, you can share it with others, or <a href="http://iswebrtcreadyyet.com/" target="_blank" class="text-default" >collaborate in improving it remotely</a></p>
+                                    <p>{{ __('Once your board/design is stored, you can share it with others, or collaborate in improving it remotely')}}</p>
                             </div>
                         </div>
 
@@ -154,17 +154,17 @@
                   {% if (req.isAuthenticated()) %}
 
                   <a class="btn btn-danger btn-lg" href="/tables/new/?setupName=4Ts%20Base%20Setup%20INCOMPLETE&capture=true">
-                    Capture a design &nbsp;
+                    {{ __('Capture a design')}} &nbsp;
                     <i class="fa fa-camera"></i>
                   </a>
 
                   {% endif %}
 
 
-                    <h4>Latest Public Tables
+                    <h4>{{ __('Latest Public Tables')}}
                         <a class="btn btn-info btn-s" href="/tables">
                             <i class="fa fa-search"></i>
-                            &nbsp; find more...
+                            &nbsp; {{ __('find more...')}}
                         </a>
                     </h4>
                     <br/>
@@ -193,9 +193,9 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <!-- <img class="img-portfolio img-responsive" src="img/girl.jpg"> -->
-                    <h4>Free signup required to capture your games and play them online.</h4>
-                    <a href="/signup" class="btn btn-lg btn-light" data-toggle="modal" data-target="/signup">Board me Up!</a>
-                    <a href="/login" class="btn btn-lg btn-dark" data-toggle="modal" data-target="/login">Login</a>
+                    <h4>{{ __('Free signup required to capture your games and play them online.')}}</h4>
+                    <a href="/signup" class="btn btn-lg btn-light" data-toggle="modal" data-target="/signup">{{ __('Board me Up!')}}</a>
+                    <a href="/login" class="btn btn-lg btn-dark" data-toggle="modal" data-target="/login">{{ __('Login')}}</a>
                 </div>
             </div>
         </div>

@@ -3,7 +3,8 @@
  * Module dependencies.
  */
 
-var express = require('express');
+var express = require('express'),
+    i18n = require('i18n-2');
 var session = require('express-session');
 var compression = require('compression');
 var morgan = require('morgan');
@@ -26,6 +27,7 @@ var utils = require('../lib/utils');
 
 var env = process.env.NODE_ENV || 'development';
 
+
 /**
  * Expose
  */
@@ -40,7 +42,7 @@ module.exports = function (app, passport, eurecaServer) {
   // Static files middleware
   app.use(express.static(config.root + '/public'));
   app.use(express.static(config.root + '/build'));
-  
+
   if (env === 'development') {
     app.use(express.static(config.root + '/src/game'));
   }
@@ -125,7 +127,7 @@ module.exports = function (app, passport, eurecaServer) {
 
   // should be declared after session and flash
   app.use(helpers(pkg.name));
-  
+
 
 
   // This could be moved to view-helpers :-)
@@ -144,4 +146,24 @@ module.exports = function (app, passport, eurecaServer) {
       next();
     });
   }
+
+
+  // Attach the i18n property to the express request object
+  // And attach helper methods for use in templates
+  i18n.expressBind(app, {
+      // setup some locales - other locales default to en silently
+      locales: ['es', 'it', 'en'],
+      // change the cookie name from 'lang' to 'locale'
+      cookieName: 'locale'
+  });
+
+
+
+  // This is how you'd set a locale from req.cookies.
+  // Don't forget to set the cookie either on the client or in your Express app.
+  app.use(function(req, res, next) {
+      req.i18n.setLocaleFromCookie();
+      next();
+  });
+
 };

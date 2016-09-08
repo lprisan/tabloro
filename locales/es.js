@@ -1,0 +1,21 @@
+{
+	"Play now": "¡Juega ahora!",
+	"An augmented tabletop game to <strong>design</strong> your <strong>collaborative</strong> learning activities.": "Un juego de mesa aumentado para <strong>diseñar</strong> tus actividades de aprendizaje <strong>colaborativas</strong>.",
+	"Learn more": "Quiero saber más",
+	"Play the game <strong>physically</strong>, convert it to <strong>digital</strong>, continue playing and <strong>sharing</strong> it with others online.": "Juega <strong>físicamente</strong>, conviértelo a formato <strong>digital</strong>, y continúa jugando y <strong>compartiéndolo</strong> online con otros.",
+	"Features": "Funcionalidad",
+	"Open Source via github": "Código abierto en github",
+	"Play physically": "Juega físicamente",
+	"4Ts+ can be played as any other board game, with paper cards around a table.": "Puedes jugar a 4Ts+ como a cualquier otro juego de mesa, con tarjetas de papel alrededor de una mesa.",
+	"Get online advice": "Consejos online",
+	"By pointing a webcam to the board, our advisor can point you to inconsistencies or suggest new elements to use.": "Apuntando con una webcam al tablero, nuestro consejero te puede dar pistas sobre inconsistencias en tu diseño, o sugerirte nuevos elementos a usar.",
+	"Store digitally": "Guárdalo digitalmente",
+	"Once your time is up, convert your design to digital, for later improvement or sharing with others": "Cuando termines, convierte tu diseño a formato digital, para compartirlo más tarde con otros",
+	"Share and improve": "Comparte y mejora",
+	"Once your board/design is stored, you can share it with others, or collaborate in improving it remotely": "Una vez tu diseño está guardado, lo puedes compartir con otros, y colaborar en mejorarlo de manera remota",
+	"find more...": "otros...",
+	"Free signup required to capture your games and play them online.": "Regístrate gratis para capturar tus diseños y jugar con ellos online.",
+	"Board me Up!": "¡Regístrame!",
+	"Login": "Entrar",
+	"Latest Public Tables": "Últimos tableros (públicos)"
+}
