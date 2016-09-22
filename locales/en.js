@@ -17,5 +17,6 @@
 	"Free signup required to capture your games and play them online.": "Free signup required to capture your games and play them online.",
 	"Board me Up!": "Board me Up!",
 	"Login": "Login",
-	"Latest Public Tables": "Latest Public Tables"
+	"Latest Public Tables": "Latest Public Tables",
+	"Capture a design": "Capture a design"
 }

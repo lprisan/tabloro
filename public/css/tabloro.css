@@ -143,6 +143,18 @@ hr.small {
 
 }
 
+.sidebar-nav .lang-bar {
+    display: inline-flex;
+    text-align: right;
+    float: right;
+}
+
+.sidebar-nav .lang-bar .lang-sm{
+    line-height: 3.5em;
+    padding-left: 5px;
+    padding-right: 10px;
+    padding-top: 5px;
+}
 
 .sidebar-nav li a:hover {
     text-decoration: none;
@@ -157,7 +169,9 @@ hr.small {
 
 .sidebar-nav > .sidebar-brand {
     height: 55px;
-    font-size: 18px;
+    /*font-size: 18px;*/
+    font-size: 200%;
+    font-weight: bolder;
     line-height: 55px;
 }
 

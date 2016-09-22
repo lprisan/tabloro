@@ -9,6 +9,11 @@
         <li class="sidebar-brand">
             <a href="/#top">4Ts+</a>
         </li>
+        <li class="lang-bar">
+            <a href="?lang=it"><span class="lang-sm" lang="it">IT</span></a>
+            <a href="?lang=en"><span class="lang-sm" lang="en">EN</span></a>
+            <a href="?lang=es"><span class="lang-sm" lang="es">ES</span></a>
+        </li>
 
 
         {% if (req.isAuthenticated()) %}
@@ -22,6 +27,9 @@
                 </a>
             </li>
         {% endif %}
+
+        <p class="navbar-text">--------------------------------------</p>
+        <div class="clearfix"></div>
 
         <!--li>
           <a href="/news" title="Latest News">

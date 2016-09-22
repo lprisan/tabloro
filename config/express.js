@@ -154,7 +154,7 @@ module.exports = function (app, passport, eurecaServer) {
       // setup some locales - other locales default to en silently
       locales: ['it', 'en', 'es'],
       // change the cookie name from 'lang' to 'locale'
-      cookieName: 'locale'
+      //cookieName: 'locale'
   });
 
 
@@ -162,7 +162,12 @@ module.exports = function (app, passport, eurecaServer) {
   // This is how you'd set a locale from req.cookies.
   // Don't forget to set the cookie either on the client or in your Express app.
   app.use(function(req, res, next) {
-      req.i18n.setLocaleFromCookie();
+      if (req.query.lang) {
+        req.i18n.setLocaleFromQuery();
+        res.cookie('lang', req.i18n.getLocale());
+      } else {
+        req.i18n.setLocaleFromCookie();
+      }
       next();
   });
 
