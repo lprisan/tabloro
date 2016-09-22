@@ -18,5 +18,22 @@
 	"Board me Up!": "Board me Up!",
 	"Login": "Login",
 	"Latest Public Tables": "Latest Public Tables",
-	"Capture a design": "Capture a design"
+	"Capture a design": "Capture a design",
+	"Latest Tables": "Latest Designs",
+	"Signup": "Signup",
+	"All Tables": "All Designs",
+	"Gaming Pieces": "Gaming Pieces",
+	"Game Boxes": "Game Boxes",
+	"Game Setups": "Game Setups",
+	"Logout": "Logout",
+	"404 - Not found": "404 - Not found",
+	"We are sorry there is nothing under this url.": "We are sorry there is nothing under this url.",
+	"500 - Oops! Internal server error occured": "500 - Oops! Internal server error occured",
+	"Email": "Email",
+	"Username": "Username",
+	"Password": "Password",
+	"Video & Voice calls": "Video & Voice calls",
+	"Skype": "Skype",
+	"Pick an avatar": "Pick an avatar",
+	"Log in": "Log in"
 }

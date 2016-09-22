@@ -53,7 +53,7 @@
           <li>
               <a href="/#features">
                 <i class="fa fa-list-ol fa-fw"></i>&nbsp;
-                Features
+                {{ __('Features')}}
               </a>
           </li>
         {% endif %}
@@ -61,7 +61,7 @@
         <li>
             <a href="/#current_games">
               <i class="fa fa-rocket fa-fw"></i>&nbsp;
-              Latest Tables
+              {{ __('Latest Tables')}}
             </a>
         </li>
 
@@ -69,7 +69,7 @@
             <li>
                 <a href="/tables">
                     <i class="fa fa-search fa-fw"></i>&nbsp;
-                    All Tables
+                    {{ __('All Tables')}}
                 </a>
             </li>
         {% endif %}
@@ -90,7 +90,7 @@
                   <li>
                       <a href="/tables/new/?setupName=4Ts%20Base%20Setup%20INCOMPLETE&capture=true">
                           <i class="fa fa-camera fa-fw"></i>&nbsp;
-                          Capture a design
+                          {{ __('Capture a design')}}
                       </a>
                   </li>
 
@@ -98,21 +98,21 @@
                   <li>
                       <a href="/pieces">
                           <i class="fa fa-puzzle-piece fa-fw"></i>&nbsp;
-                          Gaming Pieces
+                          {{ __('Gaming Pieces')}}
                       </a>
                   </li>
 
                   <li>
                       <a href="/boxes">
                           <i class="fa fa-cube fa-fw"></i>&nbsp;
-                          Game Boxes
+                          {{ __('Game Boxes')}}
                       </a>
                   </li>
 
                   <li>
                       <a href="/setups">
                           <i class="fa fa-sitemap fa-fw"></i>&nbsp;
-                          Game Setups
+                          {{ __('Game Setups')}}
                       </a>
                   </li>
                 </ul>
@@ -144,21 +144,21 @@
           <li>
             <a href="/logout" title="logout">
               <i class="fa fa-sign-out fa-fw"></i>&nbsp;
-              Logout
+              {{ __('Logout')}}
             </a>
           </li>
         {% else %}
           <li class="{% if (isActive('/login')) %}active{% endif %}">
             <a href="/login" title="Login">
               <i class="fa fa-sign-in fa-fw"></i>&nbsp;
-              Login
+              {{ __('Login')}}
             </a>
           </li>
 
           <li class="{% if (isActive('/signup')) %}active{% endif %}">
             <a href="/signup" title="Signup">
               <i class="fa fa-plus fa-fw"></i>&nbsp;
-              Signup
+              {{ __('Signup')}}
             </a>
           </li>
         {% endif %}

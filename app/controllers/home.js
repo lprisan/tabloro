@@ -22,7 +22,7 @@ exports.index = function (req, res){
 
   Table.list(tableOptions, function (err, tables) {
     if (err) return res.render('500');
-    
+
     R.forEach(function (table) {
       table.players = req.eurecaServer.getPlayerIds(table.title);
     })(tables);
@@ -39,12 +39,5 @@ exports.index = function (req, res){
         });
       });
     });
-  });
-};
-
-
-exports.create = function (req, res) {
-  res.render('home/create', {
-    title: 'Create your own games'
   });
 };
