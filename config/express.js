@@ -152,7 +152,7 @@ module.exports = function (app, passport, eurecaServer) {
   // And attach helper methods for use in templates
   i18n.expressBind(app, {
       // setup some locales - other locales default to en silently
-      locales: ['es', 'it', 'en'],
+      locales: ['it', 'en', 'es'],
       // change the cookie name from 'lang' to 'locale'
       cookieName: 'locale'
   });
