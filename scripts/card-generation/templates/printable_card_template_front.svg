@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="609.44879"
+   height="428.70471"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="printable_card_template_front.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.5"
+     inkscape:cx="381.04898"
+     inkscape:cy="182.3998"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1004"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     units="mm"
+     inkscape:snap-global="false"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       orientation="1,0"
+       position="305,335"
+       id="guide3864" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="57,375"
+       id="guide3936" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="362,396"
+       id="guide3938" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="102,386"
+       id="guide3942" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="106,13"
+       id="guide4008" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="162,354"
+       id="guide4010" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-623.65747)">
+    <rect
+       style="fill:#adcdea;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect3862"
+       width="609.44879"
+       height="428.70471"
+       x="0"
+       y="623.65747" />
+    <image
+       sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/technique.png"
+       xlink:href="../icons/technique.png"
+       width="35.433071"
+       height="35.433071"
+       id="image3933"
+       x="57"
+       y="630.92914" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
+       x="159.80078"
+       y="659.36218"
+       id="text3944"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3946"
+         x="109"
+         y="659.36218"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold;text-anchor:middle;text-align:center">Technique</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
+       x="464.52509"
+       y="659.36096"
+       id="text3944-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3946-1"
+         x="413.7243"
+         y="659.36096"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold;text-anchor:middle;text-align:center">Technique</tspan></text>
+    <image
+       sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/technique.png"
+       xlink:href="../icons/technique.png"
+       width="35.433071"
+       height="35.433071"
+       id="image3933-6"
+       x="362.28345"
+       y="630.64563" />
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
+       x="154.27692"
+       y="698.37164"
+       id="text4012"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="16.843319"
+         y="698.37164"
+         id="tspan4016"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;letter-spacing:-0.50000000000000000px;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold;text-anchor:middle;text-align:center">JIGSAW - FASE I (GRUPPI ESPERTI)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
+       x="459.00131"
+       y="698.37164"
+       id="text4012-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="321.56772"
+         y="698.37164"
+         id="tspan4016-0"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;letter-spacing:-0.5px;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold;text-anchor:middle;text-align:center">JIGSAW - FASE I (GRUPPI ESPERTI)</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       id="rect4045"
+       width="212.59842"
+       height="212.59842"
+       x="47.980316"
+       y="753.36218"
+       rx="17.716536"
+       ry="17.716536" />
+    <image
+       sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../tags/big-noborder/23.png"
+       xlink:href="../tags/big-noborder/23.png"
+       width="141.73228"
+       height="141.73228"
+       id="image4113"
+       x="83.413383"
+       y="788.79523" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
+       x="15.085506"
+       y="1036.1089"
+       id="text4116"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4118"
+         x="15.085506"
+         y="1036.1089"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold">© 2016 by ITD-CNR</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
+       x="597.92377"
+       y="1036.1089"
+       id="text4116-6"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4118-0"
+         x="597.92377"
+         y="1036.1089"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;text-align:end;text-anchor:end;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold">.../continues</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Courier 10 Pitch;-inkscape-font-specification:Courier 10 Pitch"
+       x="328.40756"
+       y="745.36218"
+       id="text4182"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4184"
+         x="328.40756"
+         y="745.36218"
+         style="font-size:14px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:FreeSans;-inkscape-font-specification:FreeSans Italic">Brief description</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4186"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Courier 10 Pitch;font-style:normal;font-weight:normal;font-size:10px;line-height:125%;letter-spacing:0px;word-spacing:0px;-inkscape-font-specification:Courier 10 Pitch;font-stretch:normal;font-variant:normal"><flowRegion
+         id="flowRegion4188"><rect
+           id="rect4190"
+           width="0"
+           height="39.333332"
+           x="733.33331"
+           y="176.70471" /></flowRegion><flowPara
+         id="flowPara4192" /></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4194"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       transform="matrix(1.0383194,0,0,1.0383194,-13.520302,614.63799)"><flowRegion
+         id="flowRegion4196"><rect
+           id="rect4198"
+           width="246.66667"
+           height="224"
+           x="330"
+           y="141.37138"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:FreeSans;-inkscape-font-specification:FreeSans" /></flowRegion><flowPara
+         id="flowPara4200"
+         style="font-size:13.483327px;text-align:start;text-anchor:start">Nella prima fase del Jigsaw il docente, dopo aver presentato il tema da trattare, suddivide la classe in tanti gruppi quanti sono gli argomenti che coprono il tema generale ...</flowPara><flowPara
+         id="flowPara4202"
+         style="font-size:13.483327px;text-align:start;text-anchor:start" /></flowRoot>  </g>
+</svg>
