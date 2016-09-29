@@ -35,5 +35,6 @@
 	"Video & Voice calls": "Video & Voice calls",
 	"Skype": "Skype",
 	"Pick an avatar": "Pick an avatar",
-	"Log in": "Log in"
+	"Log in": "Log in",
+	"Sign up": "Sign up"
 }
