@@ -26,13 +26,13 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.5"
-     inkscape:cx="381.04898"
+     inkscape:cx="301.71565"
      inkscape:cy="182.3998"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1004"
+     inkscape:window-width="1808"
+     inkscape:window-height="908"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
@@ -92,11 +92,11 @@
     <image
        sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/technique.png"
        xlink:href="../icons/technique.png"
-       width="35.433071"
-       height="35.433071"
-       id="image3933"
+       y="630.92914"
        x="57"
-       y="630.92914" />
+       id="image3933"
+       height="35.433071"
+       width="35.433071" />
     <text
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
@@ -124,35 +124,11 @@
     <image
        sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/technique.png"
        xlink:href="../icons/technique.png"
-       width="35.433071"
-       height="35.433071"
-       id="image3933-6"
+       y="630.64563"
        x="362.28345"
-       y="630.64563" />
-    <text
-       xml:space="preserve"
-       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
-       x="154.27692"
-       y="698.37164"
-       id="text4012"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         x="16.843319"
-         y="698.37164"
-         id="tspan4016"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;letter-spacing:-0.50000000000000000px;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold;text-anchor:middle;text-align:center">JIGSAW - FASE I (GRUPPI ESPERTI)</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
-       x="459.00131"
-       y="698.37164"
-       id="text4012-7"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         x="321.56772"
-         y="698.37164"
-         id="tspan4016-0"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;letter-spacing:-0.5px;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold;text-anchor:middle;text-align:center">JIGSAW - FASE I (GRUPPI ESPERTI)</tspan></text>
+       id="image3933-6"
+       height="35.433071"
+       width="35.433071" />
     <rect
        style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
        id="rect4045"
@@ -165,11 +141,11 @@
     <image
        sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../tags/big-noborder/23.png"
        xlink:href="../tags/big-noborder/23.png"
-       width="141.73228"
-       height="141.73228"
-       id="image4113"
+       y="788.79523"
        x="83.413383"
-       y="788.79523" />
+       id="image4113"
+       height="141.73228"
+       width="141.73228" />
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans Semi-Bold"
@@ -231,5 +207,29 @@
          id="flowPara4200"
          style="font-size:13.483327px;text-align:start;text-anchor:start">Nella prima fase del Jigsaw il docente, dopo aver presentato il tema da trattare, suddivide la classe in tanti gruppi quanti sono gli argomenti che coprono il tema generale ...</flowPara><flowPara
          id="flowPara4202"
-         style="font-size:13.483327px;text-align:start;text-anchor:start" /></flowRoot>  </g>
+         style="font-size:13.483327px;text-align:start;text-anchor:start" /></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3016"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       transform="translate(0,629.65747)"><flowRegion
+         id="flowRegion3018"><rect
+           id="rect3020"
+           width="279.33334"
+           height="51.333332"
+           x="12.666667"
+           y="52.038044" /></flowRegion><flowPara
+         id="flowPara3022"
+         style="font-weight:bold;letter-spacing:-0.5px">JIGSAW - FASE I (GRUPPI ESPERTI)</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3016-3"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+       transform="translate(306.28131,629.65849)"><flowRegion
+         id="flowRegion3018-6"><rect
+           id="rect3020-7"
+           width="279.33334"
+           height="51.333332"
+           x="12.666667"
+           y="52.038044" /></flowRegion><flowPara
+         id="flowPara3022-5"
+         style="font-weight:bold;letter-spacing:-0.5px">JIGSAW - FASE I (GRUPPI ESPERTI)</flowPara></flowRoot>  </g>
 </svg>

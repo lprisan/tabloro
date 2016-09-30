@@ -133,7 +133,7 @@ def loadModifyFrontSVG(svgfile, card):
     Returns an element tree (lxml) of the modified svg file."""    # Generate the digital card
     tree = etree.parse(svgfile)
     # Modify bg color
-    bgrect = tree.xpath('.//*[local-name()="rect"]')[0]
+    bgrect = tree.xpath('.//*[@id="rect3862"]')[0]
     bgrect.attrib['style'] = bgrect.attrib['style'].replace(TEMPLATE_BGCOLOR,bgcolors[card['type']])
     #nsmap = tree.getroot().nsmap.copy()
     #nsmap['xmlns'] = nsmap.pop(None)
@@ -152,14 +152,84 @@ def loadModifyFrontSVG(svgfile, card):
     typetext2 = tree.xpath('.//*[@id="tspan3946-1"]')[0]
     typetext2.text = card['type']
     # Modify titleS
-    titletext = tree.xpath('.//*[@id="tspan4016"]')[0]
+    titletext = tree.xpath('.//*[@id="flowPara3022"]')[0]
     titletext.text = card['title']
-    titletext2 = tree.xpath('.//*[@id="tspan4016-0"]')[0]
+    titletext2 = tree.xpath('.//*[@id="flowPara3022-5"]')[0]
     titletext2.text = card['title']
     # Modify text paragraph
     fronttext = tree.xpath('.//*[@id="flowPara4200"]')[0]
     # If there is a \n\n, we only put the text before it    
     fronttext.text = card['description'].split("\n\n")[0]
+    return tree
+
+
+def loadModifyBackPlainSVG(svgfile, card):
+    """Loads a printable back card svg file (plain variant), and loads it with 
+    the data from a card dictionary.
+
+    Returns an element tree (lxml) of the modified svg file."""    # Generate the digital card
+    tree = etree.parse(svgfile)
+    # Modify bg color
+    bgrect = tree.xpath('.//*[@id="rect3862"]')[0]
+    bgrect.attrib['style'] = bgrect.attrib['style'].replace(TEMPLATE_BGCOLOR,bgcolors[card['type']])
+    #nsmap = tree.getroot().nsmap.copy()
+    #nsmap['xmlns'] = nsmap.pop(None)
+    # bgrect = tree.xpath('.//xmlns:rect', namespaces=nsmap)[0]
+    # Modify paragraphs... the first with only the overflow text from the front
+    bcktxt = ""
+    splitdesc = card['description'].split("\n\n")
+    if(len(splitdesc)>1):
+        bcktxt = "\n\n".join(splitdesc[1:])
+    textleft = tree.xpath('.//*[@id="flowPara4202-3"]')[0]
+    textleft.text = bcktxt
+    textright = tree.xpath('.//*[@id="flowPara4202"]')[0]
+    textright.text = card['ind_plain']
+    return tree
+
+
+def loadModifyBackTableSVG(svgfile, card):
+    """Loads a printable back card svg file (table variant), and loads it with 
+    the data from a card dictionary.
+
+    Returns an element tree (lxml) of the modified svg file."""    # Generate the digital card
+    tree = etree.parse(svgfile)
+    # Modify bg color
+    bgrect = tree.xpath('.//*[@id="rect3862"]')[0]
+    bgrect.attrib['style'] = bgrect.attrib['style'].replace(TEMPLATE_BGCOLOR,bgcolors[card['type']])
+    #nsmap = tree.getroot().nsmap.copy()
+    #nsmap['xmlns'] = nsmap.pop(None)
+    # bgrect = tree.xpath('.//xmlns:rect', namespaces=nsmap)[0]
+    # Modify paragraphs... the first with only the overflow text from the front
+    bcktxt = ""
+    splitdesc = card['description'].split("\n\n")
+    if(len(splitdesc)>1):
+        bcktxt = "\n\n".join(splitdesc[1:])
+    textleft = tree.xpath('.//*[@id="flowPara4202-3"]')[0]
+    textleft.text = bcktxt
+    task1 = tree.xpath('.//*[@id="flowPara4077"]')[0]
+    task1.text = card['ind_task1']
+    team1 = tree.xpath('.//*[@id="flowPara4198"]')[0]
+    team1.text = card['ind_team1']
+    tech1 = tree.xpath('.//*[@id="flowPara4198-36"]')[0]
+    tech1.text = card['ind_tech1']
+    time1 = tree.xpath('.//*[@id="flowPara4198-5"]')[0]
+    time1.text = card['ind_time1']
+    task2 = tree.xpath('.//*[@id="flowPara4077-6"]')[0]
+    task2.text = card['ind_task2']
+    team2 = tree.xpath('.//*[@id="flowPara4198-3"]')[0]
+    team2.text = card['ind_team2']
+    tech2 = tree.xpath('.//*[@id="flowPara4198-3-1"]')[0]
+    tech2.text = card['ind_tech2']
+    time2 = tree.xpath('.//*[@id="flowPara4198-3-7"]')[0]
+    time2.text = card['ind_time2']
+    task3 = tree.xpath('.//*[@id="flowPara4077-6-2"]')[0]
+    task3.text = card['ind_task3']
+    team3 = tree.xpath('.//*[@id="flowPara4198-3-2"]')[0]
+    team3.text = card['ind_team3']
+    tech3 = tree.xpath('.//*[@id="flowPara4198-3-2-8"]')[0]
+    tech3.text = card['ind_tech3']
+    time3 = tree.xpath('.//*[@id="flowPara4198-3-2-5"]')[0]
+    time3.text = card['ind_time3']
     return tree
 
 
@@ -180,102 +250,46 @@ if __name__ == '__main__':
     for card in cardinstances:
         digitalsvg = loadModifyDigitalSVG(TEMPLATE_DIGITAL, card)
         # write the modified file to a SVG file
-        filenameD = './output/digital/'+card['title']+'_'+str(card['tag'])+'_DIGITAL.svg'
+        filenameD = './output/digital/'+card['title'].replace(" ","_")+'_'+str(card['tag'])+'_DIGITAL.svg'
         print('Saving digital card at '+filenameD)
         digitalsvg.write(filenameD)
         # Export the file to png for uploading in tabloro
         call(["inkscape", filenameD, "--export-png="+filenameD+".png", "-h140"]) # Should be 100x140 max
         frontsvg = loadModifyFrontSVG(TEMPLATE_PRINT_FRONT, card)
         # write the modified file to a SVG file
-        filenameF = './output/printable/'+card['title']+'_'+str(card['tag'])+'_FRONT.svg'
+        filenameF = './output/printable/'+card['title'].replace(" ","_")+'_'+str(card['tag'])+'_FRONT.svg'
         print('Saving front card at '+filenameF)
         frontsvg.write(filenameF)
         # Export the file to pdf for pasting and printing
         call(["inkscape", filenameF, "--export-pdf="+filenameF+".pdf"])
-        #TODO: Do the back card, depending on the type
-        #TODO: Paste both pdfs into a single pdf
-        #call(["pdftk", "frontcard.pdf", "frontcard.pdf", "cat", "output", "doublecard.pdf"])
+        filenamePrint = './output/printable/'+card['title'].replace(" ","_")+'_'+str(card['tag'])+'_BOTH.pdf'
+        # Do the back card, depending on the type
+        if(card['type']=='Technique'):
+            # If a technique card, the back features a table
+            backtablesvg = loadModifyBackTableSVG(TEMPLATE_PRINT_BACK_TABLE, card)
+            # write the modified file to a SVG file
+            filenameBT = './output/printable/'+card['title'].replace(" ","_")+'_'+str(card['tag'])+'_BACK.svg'
+            print('Saving back (table) card at '+filenameBT)
+            backtablesvg.write(filenameBT)
+            # Export the file to pdf for pasting and printing
+            call(["inkscape", filenameBT, "--export-pdf="+filenameBT+".pdf"])
+            # Paste both pdfs into a single pdf
+            call(["pdftk", filenameF+".pdf", filenameBT+".pdf", "cat", "output", filenamePrint])
+            print("Pasted both card sides")
+        else:
+            # If not a technique card, the back simply features texts
+            backplainsvg = loadModifyBackPlainSVG(TEMPLATE_PRINT_BACK_PLAIN, card)
+            # write the modified file to a SVG file
+            filenameBP = './output/printable/'+card['title'].replace(" ","_")+'_'+str(card['tag'])+'_BACK.svg'
+            print('Saving back (plain) card at '+filenameBP)
+            backplainsvg.write(filenameBP)
+            # Export the file to pdf for pasting and printing
+            call(["inkscape", filenameBP, "--export-pdf="+filenameBP+".pdf"])
+            # Paste both pdfs into a single pdf
+            call(["pdftk", filenameF+".pdf", filenameBP+".pdf", "cat", "output", filenamePrint])
+            print("Pasted both card sides")
+    print("=================================\nCard generation complete!")
 
 
-    
-
-# For each card, we generate everything
-#for card in cardinstances:
-#    # Generate the digital card
-#    tree = etree.parse('digital_card_template.svg')
-#    # Modify bg color
-#    bgrect = tree.xpath('.//*[local-name()="rect"]')[0]
-#    bgrect.attrib['style'] = bgrect.attrib['style'].replace(TEMPLATE_BGCOLOR,bgcolors[card['type']])
-#    #nsmap = tree.getroot().nsmap.copy()
-#    #nsmap['xmlns'] = nsmap.pop(None)
-#    # bgrect = tree.xpath('.//xmlns:rect', namespaces=nsmap)[0]
-#    # Modify icon
-#    icon = tree.xpath('.//*[local-name()="image"]')[0]
-#    icon.attrib['{http://www.w3.org/1999/xlink}href'] = iconfiles[card['type']]
-#    # Modify type
-#    typetext = tree.xpath('.//*[@id="tspan3879"]')[0]
-#    typetext.text = card['type']
-#    # Modify title
-#    titletext = tree.xpath('.//*[@id="flowPara3895"]')[0]
-#    titletext.text = card['title']
-#    # write the modified file to a SVG file
-#    filenameD = './'+card['title']+'_'+str(card['tag'])+'_DIGITAL.svg'
-#    print('Saving digital card at '+filenameD)
-#    tree.write(filenameD)
-#    # Do the same for the FRONT printable cards
-#    tree = etree.parse('printable_card_template_front.svg')
-#    # Modify bg color
-#    bgrect = tree.xpath('.//*[@id="rect3862"]')[0]
-#    bgrect.attrib['style'] = bgrect.attrib['style'].replace(TEMPLATE_BGCOLOR,bgcolors[card['type']])
-#    #nsmap = tree.getroot().nsmap.copy()
-#    #nsmap['xmlns'] = nsmap.pop(None)
-#    # bgrect = tree.xpath('.//xmlns:rect', namespaces=nsmap)[0]
-#    # Modify icon
-#    icon = tree.xpath('.//*[@id="image3933"]')[0]
-#    icon.attrib['{http://www.w3.org/1999/xlink}href'] = iconfiles[card['type']]
-#    # Modify tag
-#    tag = tree.xpath('.//*[@id="image4113"]')[0]
-#    tag.attrib['{http://www.w3.org/1999/xlink}href'] = './'+str(card['tag'])+'.png'
-#    # Modify type
-#    typetext = tree.xpath('.//*[@id="tspan3946"]')[0]
-#    typetext.text = card['type']
-#    # Modify titleS
-#    titletext = tree.xpath('.//*[@id="tspan4016"]')[0]
-#    titletext.text = card['title']
-#    titletext2 = tree.xpath('.//*[@id="tspan4016-0"]')[0]
-#    titletext2.text = card['title']
-#    # Modify text paragraph
-#    fronttext = tree.xpath('.//*[@id="flowPara4200"]')[0]
-#    fronttext.text = card['front']
-#    # write the modified file to a SVG file
-#    filenameP = './'+card['title']+'_'+str(card['tag'])+'_FRONT.svg'
-#    print('Saving front card at '+filenameP)
-#    tree.write(filenameP)
-#    # Do the same for the BACK printable cards
-#    tree = etree.parse('printable_card_template_back.svg')
-#    # Modify bg color
-#    bgrect = tree.xpath('.//*[@id="rect3862"]')[0]
-#    bgrect.attrib['style'] = bgrect.attrib['style'].replace(TEMPLATE_BGCOLOR,bgcolors[card['type']])
-#    #nsmap = tree.getroot().nsmap.copy()
-#    #nsmap['xmlns'] = nsmap.pop(None)
-#    # bgrect = tree.xpath('.//xmlns:rect', namespaces=nsmap)[0]
-#    # Modify text paragraph
-#    # TODO: Each paragraph is translated into a flowPara element!!
-##    backLtext = tree.xpath('.//*[@id="flowPara3075"]')[0]
-##    backLtext.text = card['back_L']
-##    backRtext = tree.xpath('.//*[@id="flowPara3075"]')[0]
-##    backRtext.text = card['back_R']
-##    # write the modified file to a SVG file
-##    filename = './'+card['title']+'_'+str(card['tag'])+'_FRONT.svg'
-##    print('Saving front card at '+filename)
-##    tree.write(filename)
-#    call(["inkscape", "/media/sf_shared/4ts/"+filenameD, "--export-png="+filenameD+".png"])
-#    call(["inkscape", "/media/sf_shared/4ts/"+filenameP, "--export-pdf="+filenameP+".pdf"])
-#    print("Finished writing files "+filenameD+" and "+filenameP)
-
-
-
-# Convert the SVGs to PDF or PNG, and join them for printing
-#call(["pdftk", "frontcard.pdf", "frontcard.pdf", "cat", "output", "doublecard.pdf"])
 
 # Upload the images to the platform via S3?
