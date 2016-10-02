@@ -1,5 +1,5 @@
 <!-- Navigation -->
-<a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i> Menu</a>
+<a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i> {{ __('Menu')}}</a>
 
 
 <nav class="no-select" id="sidebar-wrapper">
@@ -7,10 +7,15 @@
         <a id="menu-close" href="#" class="btn btn-dark btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
 
         <li class="sidebar-brand">
-            <a href="#">tabloro.com</a>
+            <a href="/#top">4Ts+</a>
         </li>
         <li>
-          <a>Table <strong>{{room.title}}</strong></a>
+          <a>{{ __('Table')}} <strong>{{room.title}}</strong></a>
+        </li>
+        <li class="lang-bar">
+            <a href="?lang=it"><span class="lang-sm" lang="it">IT</span></a>
+            <a href="?lang=en"><span class="lang-sm" lang="en">EN</span></a>
+            <a href="?lang=es"><span class="lang-sm" lang="es">ES</span></a>
         </li>
 
 
@@ -45,7 +50,7 @@
         <li>
           <a href="#" onclick="UI.gofull()">
             <i class="fa fa-desktop fa-fw"></i>&nbsp;
-            Fullscreen
+            {{ __('Fullscreen')}}
 
           </a>
         </li>
@@ -55,21 +60,21 @@
           <li>
             <a href="/logout" title="logout">
               <i class="fa fa-sign-out fa-fw"></i>&nbsp;
-              Logout
+              {{ __('Logout')}}
             </a>
           </li>
         {% else %}
           <li class="{% if (isActive('/login')) %}active{% endif %}">
             <a href="/login" title="Login">
               <i class="fa fa-sign-in fa-fw"></i>&nbsp;
-              Login
+              {{ __('Login')}}
             </a>
           </li>
 
           <li class="{% if (isActive('/signup')) %}active{% endif %}">
             <a href="/signup" title="Signup">
               <i class="fa fa-plus fa-fw"></i>&nbsp;
-              Signup
+              {{ __('Signup')}}
             </a>
           </li>
         {% endif %}
@@ -88,7 +93,7 @@
           <li class="{% if (isActive('/signup')) %}active{% endif %}">
             <a href="/signup" title="Signup" class="btn btn-success">
               <i class="fa fa-plus fa-fw"></i>&nbsp;
-              Signup to play <strong>more games</strong>
+              {{ __('Signup to play <strong>more games</strong>')}}
             </a>
           </li>
         {% endif %}
@@ -102,7 +107,7 @@
         {% if (req.isAuthenticated()) %}
           <li id="layers">
             <a href="#" title="Create your own games!">
-                Click a layer to move it up
+                {{ __('Click a layer to move it up')}}
             </a>
           </li>
         {% endif %}

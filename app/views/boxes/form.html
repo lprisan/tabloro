@@ -10,12 +10,12 @@
   {% else %}
     {% set action = '/boxes/' + box.id %}
   {% endif %}
-  
+
   <div class="about"></div>
 
 
   <section class="bg">
-    
+
     <div class="row container">
       <div class="col-md-12">
         <form method="post" action="{{ action }}" enctype="multipart/form-data" role="form" class="form-horizontal">
@@ -27,51 +27,51 @@
           {% endif %}
 
           <div class="form-group required">
-            <label for="title" class="col-sm-3 control-label">Name of Game Box</label>
+            <label for="title" class="col-sm-3 control-label">{{ __('Name of Game Box')}}</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-asterisk fa-fw"></i>
                 </div>
-                <input type="text" name="title" value="{{ box.title }}" placeholder="Enter the name of your game box" class="form-control" id="title" required="true"/>
+                <input type="text" name="title" value="{{ box.title }}" placeholder="{{ __('Enter the name of your game box')}}" class="form-control" id="title" required="true"/>
               </div>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="link" class="col-sm-3 control-label">Link to Game</label>
+            <label for="link" class="col-sm-3 control-label">{{ __('Link to Game')}}</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-link fa-fw"></i>
                 </div>
-                <input type="text" name="link" value="{{ box.link }}" placeholder="Enter the url for this game" class="form-control" id="link"/>
+                <input type="text" name="link" value="{{ box.link }}" placeholder="{{ __('Enter the url for this game')}}" class="form-control" id="link"/>
               </div>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="description" class="col-sm-3 control-label">Description</label>
+            <label for="description" class="col-sm-3 control-label">{{ __('Description')}}</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-list fa-fw"></i>
                 </div>
-                <textarea name="description" placeholder="Enter a description for your game box" class="form-control" id="description" >{{ box.description }}</textarea>
+                <textarea name="description" placeholder="{{ __('Enter a description for your game box')}}" class="form-control" id="description" >{{ box.description }}</textarea>
               </div>
             </div>
           </div>
 
 
-            
-              <div class="form-group"> 
-                <label class="col-sm-3 control-label">List in Public?</label>
+
+              <div class="form-group">
+                <label class="col-sm-3 control-label">{{ __('List in Public?')}}</label>
                 <div class="col-sm-9">
                   <div class="btn-group" data-toggle="buttons">
-                    <label href="#" for="isPrivate2" class="btn btn btn-success {% if (!box.isPrivate) %} active {% endif %}">public
+                    <label href="#" for="isPrivate2" class="btn btn btn-success {% if (!box.isPrivate) %} active {% endif %}">{{ __('public')}}
                       <input type="radio" id="isPrivate2" name="isPrivate" value="0" />
                     </label>
-                    <label href="#" for="isPrivate1" class="btn btn btn-warning {% if (box.isPrivate) %} active {% endif %}" >private
+                    <label href="#" for="isPrivate1" class="btn btn btn-warning {% if (box.isPrivate) %} active {% endif %}" >{{ __('private')}}
                       <input type="radio" id="isPrivate1" name="isPrivate" value="1" />
                     </label>
                   </div>
@@ -80,7 +80,7 @@
               </div>
 
           <div class="form-group">
-            <label for="file" class="col-sm-3 control-label">Box Cover Image</label>
+            <label for="file" class="col-sm-3 control-label">{{ __('Box Cover Image')}}</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-addon">
@@ -92,22 +92,22 @@
           </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">Select Game type</label>
-              <div class="col-sm-9"> 
+              <label class="col-sm-3 control-label">{{ __('Select Game type')}}</label>
+              <div class="col-sm-9">
                 <div class="btn-group" data-toggle="buttons">
-                  <label href="#" for="gameType1" class="btn btn-xs btn-default {% if (box.gameType === 'Classic Game') %} active {% endif %}" >Classic Game &lt; 1950
+                  <label href="#" for="gameType1" class="btn btn-xs btn-default {% if (box.gameType === 'Classic Game') %} active {% endif %}" >{{ __('Classic Game')}} &lt; 1950
                     <input type="radio" id="gameType1" name="gameType" value="Classic Game" />
                   </label>
-                  <label href="#" for="gameType2" class="btn btn-xs btn-default {% if (box.gameType === 'Modern Game') %} active {% endif %}">Modern Game &gt; 1950
+                  <label href="#" for="gameType2" class="btn btn-xs btn-default {% if (box.gameType === 'Modern Game') %} active {% endif %}">{{ __('Modern Game')}} &gt; 1950
                     <input type="radio" id="gameType2" name="gameType" value="Modern Game" />
                   </label>
-                  <label href="#" for="gameType3" class="btn btn-xs btn-default {% if (box.gameType === 'Card Game') %} active {% endif %}">Card Game
+                  <label href="#" for="gameType3" class="btn btn-xs btn-default {% if (box.gameType === 'Card Game') %} active {% endif %}">{{ __('Card Game')}}
                     <input type="radio" id="gameType3" name="gameType" value="Card Game" />
                   </label>
-                  <label href="#" for="gameType4" class="btn btn-xs btn-default {% if (box.gameType === 'Dice Game') %} active {% endif %}">Dice Game
+                  <label href="#" for="gameType4" class="btn btn-xs btn-default {% if (box.gameType === 'Dice Game') %} active {% endif %}">{{ __('Dice Game')}}
                     <input type="radio" id="gameType4" name="gameType" value="Dice Game" />
                   </label>
-                  <label href="#" for="gameType5" class="btn btn-xs btn-default {% if (box.gameType === 'Selfmade Game') %} active {% endif %}">Selfmade Game
+                  <label href="#" for="gameType5" class="btn btn-xs btn-default {% if (box.gameType === 'Selfmade Game') %} active {% endif %}">{{ __('Selfmade Game')}}
                     <input type="radio" id="gameType5" name="gameType" value="Selfmade Game" />
                   </label>
                 </div>
@@ -121,26 +121,26 @@
             <div class="form-group">
               <label for="tags" class="col-sm-3 control-label">Tags</label>
               <div class="col-sm-9">
-                <input type="text" name="tags" value="{{ box.tags }}" placeholder="Enter the tags separated by , " class="form-control" id="tags">
-                <small>separate tags by ,</small>
+                <input type="text" name="tags" value="{{ box.tags }}" placeholder="{{ __('Enter the tags separated by , ')}}" class="form-control" id="tags">
+                <small>{{ __('separate tags by ,')}}</small>
               </div>
             </div>
           </div>
 
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-              <button class="btn btn-primary" type="submit">Create</button>
+              <button class="btn btn-primary" type="submit">{{ __('Create')}}</button>
               &nbsp;
-              <a href="/boxes" class="btn btn-link">Cancel</a>
+              <a href="/boxes" class="btn btn-link">{{ __('Cancel')}}</a>
             </div>
           </div>
         </form>
       </div>
-      
+
     </div>
   </section>
 
 <div class="about"></div>
-  
+
 
 {% endblock %}

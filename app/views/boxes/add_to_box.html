@@ -12,15 +12,15 @@
         <h4>
           <!-- <button data-toggle="collapse" data-target="#accordion" class="btn btn-success"> -->
             <i class="fa fa-plus-circle"></i>
-            Add Pieces to Game Box <strong><a href="/boxes/{{box.id}}">{{box.title}}</a></strong>
+            {{ __('Add Pieces to Game Box')}} <strong><a href="/boxes/{{box.id}}">{{box.title}}</a></strong>
           <!-- </button> -->
         </h4>
       </div>
-      
+
       <div class="panel-body" id="accordion">
 
         {% if (pages > 1) %}
-          
+
           <center>
             <ul class="pagination">
               {% autoescape false %}
@@ -39,7 +39,7 @@
 
         {% if (pages > 1) %}
           <div class="clearfix"></div>
-          
+
           <center>
             <ul class="pagination">
               {% autoescape false %}
@@ -58,10 +58,10 @@
 
   <section class="bg-primary about">
     <div class="container">
-      
+
       <a href="/boxes/{{box.id}}" class="btn btn-info">
         <i class="fa fa-backward"></i>
-        Back to box
+        {{ __('Back to box')}}
       </a>
     </div>
   </section>

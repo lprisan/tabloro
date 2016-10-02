@@ -9,11 +9,13 @@
         <link href="/css/tabloro.css" rel="stylesheet">
         <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="/css/game.css" rel="stylesheet">
+        <!-- Language icons CSS -->
+        <link href="/css/languages.min.css" rel="stylesheet">
         
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
-        
+
         {% if process.env.NODE_ENV === 'development' %}
             <script type="text/javascript" src="/js/magictouch.js"></script>
         {% endif %}
@@ -60,14 +62,14 @@
             var assets = JSON.parse('{{ JSON.stringify(assets) }}');
         </script>
     </head>
-  
+
     <body style="cursor : url(/img/cursors/{{user.selected_cursor}}.png), auto;">
         {% if process.env.NODE_ENV === 'development' %}
             <object id="tuio" type="application/x-tuio" style="width: 0px; height: 0px; position: absolute;">
                 Touch input plugin failed to load!
             </object>
         {% endif %}
-        
+
         {% block main %}{% endblock %}
 
         <div class="chat" id="chatFrame" class="no-select" style="display: none;">
@@ -77,5 +79,3 @@
 </html>
 
 {% include '../includes/toggle_menu.html' %}
-
-

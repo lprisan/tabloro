@@ -59,7 +59,7 @@ exports.index = function (req, res) {
 
         Table.count(options.criteria).exec(function (err, count) {
             res.render('tables/index', {
-                title: req.param('userId') ? 'Your Tables' : 'Public Tables',
+                title: req.param('userId') ? req.i18n.__('Your Tables') : req.i18n.__('Public Tables'),
                 tables: tables,
                 page: page + 1,
                 pages: Math.ceil(count / perPage),
@@ -78,12 +78,12 @@ exports.new = function (req, res) {
     table.setupName = req.query.setupName;
     if(!req.query.capture){
       res.render('tables/new', {
-          title: 'New Table',
+          title: req.i18n.__('New Table'),
           table: table
       });
     }else{
       res.render('tables/new', {
-          title: 'New Table',
+          title: req.i18n.__('New Table'),
           table: table,
           capture: true
       });
@@ -109,9 +109,9 @@ exports.create = function (req, res) {
         if (err || !setup) {
             console.log(err);
             return res.render('tables/new', {
-                title: 'New Table',
+                title: req.i18n.__('New Table'),
                 table: table,
-                errors: ['Setup: ' + setupName + ' could not be found!']
+                errors: [req.i18n.__('Setup: ') + setupName + req.i18n.__(' could not be found!')]
             });
         }
         table.setup = setup;
@@ -121,12 +121,12 @@ exports.create = function (req, res) {
         console.log('setup', setup, setupName);
         table.save(function (err) {
             if (!err) {
-                req.flash('success', 'Successfully created table!');
+                req.flash('success', req.i18n.__('Successfully created table!'));
                 return res.redirect('/tables/' + table.title);
             }
             console.log(err);
             res.render('tables/new', {
-                title: 'New Table',
+                title: req.i18n.__('New Table'),
                 table: table,
                 errors: utils.errors(err.errors || err)
             });
@@ -151,7 +151,7 @@ exports.show = function (req, res) {
     }, function (err) {
         if (err) {
             console.log(err);
-            req.flash('warning', 'Could not join table! Please register');
+            req.flash('warning', req.i18n.__('Could not join table! Please register'));
             // return res.redirect('/tables');
         }
 
@@ -160,7 +160,7 @@ exports.show = function (req, res) {
             if (!table) return next(new Error('not found'));
             req.table = table;
             res.render('tables/show', {
-                title: 'Table: ' + table.title,
+                title: req.i18n.__('Table: ') + table.title,
                 table: table,
                 players: req.eurecaServer.getPlayers(table.title),
                 isOwner: req.user && table.user.id === req.user.id
@@ -176,7 +176,7 @@ exports.show = function (req, res) {
 
 exports.edit = function (req, res) {
   res.render('tables/edit', {
-    title: 'Edit ' + req.table.title,
+    title: req.i18n.__('Edit ') + req.table.title,
     table: req.table
   });
 };
@@ -202,7 +202,7 @@ exports.update = function (req, res){
     console.log(req.body);
     console.error(err);
     res.render('tables/edit', {
-        title: 'Edit ' + req.table.title,
+        title: req.i18n.__('Edit ') + req.table.title,
         table: table,
         errors: utils.errors(err.errors || err)
     });
@@ -222,7 +222,7 @@ exports.play = function (req, res) {
 
     Piece.list({ criteria: {'_id': {$in: setup.pieces }}}, function (err, unsortedPieces) {
         if (err) {
-            req.flash('alert', 'Cannot test game stup!');
+            req.flash('alert', req.i18n.__('Cannot test game stup!'));
             return res.redirect('/boxes/' + box._id + '/setups/' + setup.id);
         }
 
@@ -230,7 +230,7 @@ exports.play = function (req, res) {
         console.log('assets', assets);
 
         res.render('game/play', {
-            title: 'Play - ' + table.title,
+            title: req.i18n.__('Play - ') + table.title,
             game: table.setup,
             room: table,
             user: req.user,
@@ -251,10 +251,10 @@ exports.destroy = function (req, res) {
     var table = req.table;
     table.remove(function (err) {
         if (err) {
-            req.flash('alert', 'Could not delete table');
+            req.flash('alert', req.i18n.__('Could not delete table'));
             return;
         }
-        req.flash('info', 'Deleted successfully');
+        req.flash('info', req.i18n.__('Deleted successfully'));
         res.redirect('/tables');
     });
 };

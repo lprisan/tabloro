@@ -13,16 +13,16 @@
       {% if (!pick && req.isAuthenticated()) %}
         <a class="btn btn-success" href="/boxes?pick=setup">
           <i class="fa fa-plus-circle"></i>
-          Create a game setup
+          {{ __('Create a game setup')}}
         </a>
 
         {% set model = 'setups' %}
         {% set icon = 'fa-sitemap' %}
         {% include '../includes/yours_all.html' with model; icon all %}
-        
-        <a class="btn btn-info" href="http://www.instructables.com/id/How-to-make-your-board-card-games-playable-in-the-/" target="_blank" ><i class="fa fa-info"></i> Show the Instructable Guide</a>
+
+        <!--a class="btn btn-info" href="http://www.instructables.com/id/How-to-make-your-board-card-games-playable-in-the-/" target="_blank" ><i class="fa fa-info"></i> Show the Instructable Guide</a-->
       {% endif %}
-      
+
     </div>
 
     {% if (setups.length) %}
@@ -46,15 +46,15 @@
 
     {% else %}
       <h4 class="muted">
-        No game setups yet.&nbsp;
+        {{ __('No game setups yet')}}.&nbsp;
       </h4>
       {% if (!pick) %}
         {% include 'create_setup.html' %}
       {% endif %}
     {% endif %}
-    
 
-  
+
+
 
   </div>
 

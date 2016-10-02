@@ -27,13 +27,13 @@
           {% endif %}
 
           <div class="form-group required">
-            <label for="title" class="col-sm-3 control-label">Table Name</label>
+            <label for="title" class="col-sm-3 control-label">{{ __('Table Name')}}</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-asterisk fa-fw"></i>
                 </div>
-                <input type="text" name="title" value="{{ table.title }}" placeholder="Enter the name of your table" class="form-control" id="title" required="true">
+                <input type="text" name="title" value="{{ table.title }}" placeholder="{{ __('Enter the name of your table')}}" class="form-control" id="title" required="true">
               </div>
             </div>
           </div>
@@ -52,41 +52,41 @@
 
 
           <div class="form-group required">
-            <label for="setupName" class="col-sm-3 control-label">Game Setup Name</label>
+            <label for="setupName" class="col-sm-3 control-label">{{ __('Game Setup Name')}}</label>
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-sitemap fa-fw"></i>
                 </div>
-                <input type="text" name="setupName" value="{{ table.setupName || table.setup.title }}" placeholder="Enter the name of the game setup for this table" class="form-control" id="setupName" required="true">
+                <input type="text" name="setupName" value="{{ table.setupName || table.setup.title }}" placeholder="{{ __('Enter the name of the game setup for this table')}}" class="form-control" id="setupName" required="true">
               </div>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">List in Public?</label>
+            <label class="col-sm-3 control-label">{{ __('List in Public?')}}</label>
             <div class="col-sm-9">
               <div class="btn-group" data-toggle="buttons">
-                <label href="#" for="isPrivate2" class="btn btn-xs btn-success {% if (!table.isPrivate) %} active {% endif %}">public
+                <label href="#" for="isPrivate2" class="btn btn-xs btn-success {% if (!table.isPrivate) %} active {% endif %}">{{ __('public')}}
                   <input type="radio" id="isPrivate2" name="isPrivate" value="0" />
                 </label>
-                <label href="#" for="isPrivate1" class="btn btn-xs btn-warning {% if (table.isPrivate) %} active {% endif %}" >private
+                <label href="#" for="isPrivate1" class="btn btn-xs btn-warning {% if (table.isPrivate) %} active {% endif %}" >{{ __('private')}}
                   <input type="radio" id="isPrivate1" name="isPrivate" value="1" />
                 </label>
               </div>
-              <p class="help-block">Private rooms are not listed, and can only be found by sharing the link (or guessing the room name).</p>
+              <p class="help-block">{{ __('Private rooms are not listed, and can only be found by sharing the link (or guessing the room name)')}}.</p>
             </div>
           </div>
 
 
             <div class="form-group">
-              <label for="rules" class="col-sm-3 control-label">Rules</label>
+              <label for="rules" class="col-sm-3 control-label">{{ __('Rules')}}</label>
               <div class="col-sm-9">
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-institution fa-fw"></i>
                   </div>
-                  <input type="text" name="rules" value="{{ table.rules }}" placeholder="Enter custom rules link for this table, e.g. http://myblog.com/rules..." class="form-control" id="rules">
+                  <input type="text" name="rules" value="{{ table.rules }}" placeholder="{{ __('Enter custom rules link for this table, e.g.')}} http://myblog.com/rules..." class="form-control" id="rules">
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@
                         <div class="panel-heading">
                           <h4><a data-toggle="collapse" data-target="#accordionCapture">
                           <i class="fa fa-camera"></i>
-                          Capture from paper game</a></h4>
+                          {{ __('Capture from paper game')}}</a></h4>
                         </div>
                         <div class="panel-body collapse in" id="accordionCapture">
                           <video id="webcam" autoplay style="display:none;" width="1280" height="720"></video>
@@ -106,11 +106,11 @@
                           <div id="fps" class="info"></div>
                           <div>
                             <a class="btn btn-danger btn-lg" href="javascript:capture();">
-                              Capture design! &nbsp;
+                              {{ __('Capture design!')}} &nbsp;
                               <i class="fa fa-camera"></i>
                             </a>
                             <a class="btn btn-success btn-lg" href="javascript:retry();">
-                              Retry &nbsp;
+                              {{ __('Retry')}} &nbsp;
                               <i class="fa fa-undo"></i>
                             </a>
                           </div>
@@ -219,7 +219,7 @@
             <div class="panel-heading">
               <h4><a data-toggle="collapse" data-target="#accordion">
               <i class="fa fa-settings"></i>
-              Advanced Options</a></h4>
+              {{ __('Advanced Options')}}</a></h4>
             </div>
 
             <div class="panel-body collapse" id="accordion">
@@ -227,71 +227,71 @@
 
 
               <div class="form-group">
-                <label class="col-sm-3 control-label">Use WebRTC Video</label>
+                <label class="col-sm-3 control-label">{{ __('Use WebRTC Video')}}</label>
                 <div class="col-sm-9">
                   <div class="btn-group" data-toggle="buttons">
-                    <label href="#" for="rtcVideo1" class="btn btn-xs btn-default active" >yes
+                    <label href="#" for="rtcVideo1" class="btn btn-xs btn-default active" >{{ __('yes')}}
                       <input type="radio" id="rtcVideo1" name="rtcVideo" value="1" />
                     </label>
-                    <label href="#" for="rtcVideo2" class="btn btn-xs btn-default">no
+                    <label href="#" for="rtcVideo2" class="btn btn-xs btn-default">{{ __('no')}}
                       <input type="radio" id="rtcVideo2" name="rtcVideo" value="0" />
                     </label>
                   </div>
-                  <p class="help-block">Use built-in WebRTC peer to peer video chat.</p>
+                  <p class="help-block">{{ __('Use built-in WebRTC peer to peer video chat')}}.</p>
                 </div>
               </div>
 
 
 
               <div class="form-group">
-                <label class="col-sm-3 control-label">Use WebRTC Audio</label>
+                <label class="col-sm-3 control-label">{{ __('Use WebRTC Audio')}}</label>
                 <div class="col-sm-9">
                   <div class="btn-group" data-toggle="buttons">
-                    <label href="#" for="rtcAudio1" class="btn btn-xs btn-default active" >yes
+                    <label href="#" for="rtcAudio1" class="btn btn-xs btn-default active" >{{ __('yes')}}
                       <input type="radio" id="rtcAudio1" name="rtcAudio" value="1" />
                     </label>
-                    <label href="#" for="rtcAudio2" class="btn btn-xs btn-default">no
+                    <label href="#" for="rtcAudio2" class="btn btn-xs btn-default">{{ __('no')}}
                       <input type="radio" id="rtcAudio2" name="rtcAudio" value="0" />
                     </label>
                   </div>
-                  <p class="help-block">Use built-in WebRTC peer to peer audio chat.</p>
+                  <p class="help-block">{{ __('Use built-in WebRTC peer to peer audio chat')}}.</p>
                 </div>
               </div>
 
 
             <div class="form-group">
-              <label for="phone" class="col-sm-3 control-label"> Phone Conference Number </label>
+              <label for="phone" class="col-sm-3 control-label"> {{ __('Phone Conference Number')}} </label>
               <div class="col-sm-9">
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-phone fa-fw"></i>
                   </div>
-                  <input type="text" name="phone" value="{{ table.phone }}" placeholder="Enter the conference phone number for this table, e.g. +1 123 1234 123" class="form-control" id="phone">
+                  <input type="text" name="phone" value="{{ table.phone }}" placeholder="{{ __('Enter the conference phone number for this table, e.g.')}} +1 123 1234 123" class="form-control" id="phone">
                 </div>
               </div>
             </div>
 
 
             <div class="form-group">
-              <label for="skype" class="col-sm-3 control-label">Skype Group Link</label>
+              <label for="skype" class="col-sm-3 control-label">{{ __('Skype Group Link')}}</label>
               <div class="col-sm-9">
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-skype fa-fw"></i>
                   </div>
-                  <input type="text" name="skype" value="{{ table.skype }}" placeholder="Enter a skype group link for this table, e.g. skype:?chat&blob=d6e5AV..." class="form-control" id="skype">
+                  <input type="text" name="skype" value="{{ table.skype }}" placeholder="{{ __('Enter a skype group link for this table, e.g.')}} skype:?chat&blob=d6e5AV..." class="form-control" id="skype">
                 </div>
-                <p class="help-block"><a href="http://blogs.skype.com/2013/03/08/managing-your-group-chats-like-a-boss/" target="_blank">Create</a> a skype group link</p>
+                <p class="help-block"><a href="http://blogs.skype.com/2013/03/08/managing-your-group-chats-like-a-boss/" target="_blank">{{ __('Create')}}</a> {{ __('a skype group link')}}</p>
               </div>
             </div>
 
 
 
             <div class="form-group">
-              <label for="tags" class="col-sm-3 control-label">Tags</label>
+              <label for="tags" class="col-sm-3 control-label">{{ __('Tags')}}</label>
               <div class="col-sm-9">
-                <input type="text" name="tags" value="{{ table.tags }}" placeholder="Enter the tags separated by , " class="form-control" id="tags">
-                <small>separate tags by ,</small>
+                <input type="text" name="tags" value="{{ table.tags }}" placeholder="{{ __('Enter the tags separated by , ')}}" class="form-control" id="tags">
+                <small>{{ __('separate tags by ,')}}</small>
               </div>
             </div>
           </div>
@@ -299,9 +299,9 @@
 
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-              <button class="btn btn-primary" type="submit">Create</button>
+              <button class="btn btn-primary" type="submit">{{ __('Create')}}</button>
               &nbsp;
-              <a href="/tables" class="btn btn-link">Cancel</a>
+              <a href="/tables" class="btn btn-link">{{ __('Cancel')}}</a>
             </div>
           </div>
         </form>

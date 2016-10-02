@@ -2,17 +2,17 @@
 
 {% block main %}
     {% include '../includes/game_menu.html' %}
-    
+
     {% include '../includes/please_wait.html' %}
 
 
     {% if (mode === 'setup' && isOwner) %}
         <div id="edit-container">
-            <button onclick="G.saveSetup()" class="btn btn-success">Save Setup</button>
+            <button onclick="G.saveSetup()" class="btn btn-success">{{ __('Save Setup')}}</button>
         </div>
     {% else %}
         <div id="edit-container">
-            <a href="{{backUrl}}" class="btn btn-warning">End Test</a>
+            <a href="{{backUrl}}" class="btn btn-warning">{{ __('End Test')}}</a>
         </div>
     {% endif %}
 

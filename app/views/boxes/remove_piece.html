@@ -4,27 +4,27 @@
 {% block image %}
     <div class="piece-content">
       {% include '../pieces/type.html' %}
-    
+
       {% if isOwner || !piece.isPrivate %}
         &nbsp;
         {{piece.title | title}}
 
 
-        
+
         <a href="/pieces/{{ piece.id }}" target="_blank" class="pull-right">
           {% if (piece.isPrivate) %}
             <i class="fa fa-key"></i>
           {% endif %}
-          Click to show
+          {{ __('Click to show')}}
         </a>
 
       {% endif %}
     </div>
 
 {% endblock %}
-   
 
-      
+
+
 {% block footer %}
   {% if isOwner || isAdmin %}
 
@@ -47,7 +47,7 @@
         {% if (piece.isPrivate) %}
           <i class="fa fa-key"></i>
         {% endif %}
-        <strong><i class="fa fa-minus-circle"></i> Remove set from Box</strong>
+        <strong><i class="fa fa-minus-circle"></i> {{ __('Remove set from Box')}}</strong>
       </button>
     </form>
   {% else %}
@@ -59,7 +59,7 @@
     {% else %}
         <a href="/pieces/{{ piece.id }}" target="_blank" class="btn btn-warning btn-square btn-block" {%if (!isAdmin)%}disabled="true" {%endif%}>
           <i class="fa fa-key"></i>
-          private
+          {{ __('private')}}
         </a>
     {% endif %}
   {% endif %}
@@ -68,4 +68,3 @@
   {% set owner = isOwner %}
   {% include '../pieces/sprite_script.html' with showCount; owner only %}
 {% endblock %}
-

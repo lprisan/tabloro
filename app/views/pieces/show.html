@@ -15,36 +15,36 @@
         {{piece.title | title}}
       </h2>
     </div>
-    
-   
+
+
 
 
     <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4>
-            Image spritesheet
+            {{ __('Image spritesheet')}}
             {% if (isOwner) %}
               {% include '../includes/get_help.html' %}
             {% endif %}
           </h4>
         </div>
-        
+
         <div class="panel-body">
-          
+
           <a class="btn btn-success" href="/pieces/new">
             <i class="fa fa-plus-circle"></i>
-            Create a new piece
-          </a> 
+            {{ __('Create a new piece')}}
+          </a>
 
           <a href="/pieces/{{piece.id}}/test" class="btn btn-warning " >
               <i class="fa fa-play-circle fa-fw"></i>
-              Test Piece in game
+              {{ __('Test Piece in game')}}
           </a>
 
-          
+
           <div class="spacer"></div>
-         
+
           <div class="col-md-5">
             {% if (!piece.isNew && piece.image && piece.image.files && piece.image.files.length) %}
               <img class="img-responsive" src="{{ piece.image.cdnUri + '/detail_' + piece.image.files[0] }}" alt="">
@@ -55,11 +55,11 @@
             {{piece.description}}
           </pre>
 
-          
 
 
 
-          
+
+
         </div>
 
       </div>
@@ -70,27 +70,27 @@
 
 
         <li class="list-group-item list-group-item-success">
-          Type
+          {{ __('Type')}}
           <strong class="pull-right">
             {% include 'type.html' %}
             {{piece.type}}
-            
+
           </strong>
         </li>
 
 
         {% if (piece.isPrivate) %}
-          <li class="list-group-item list-group-item-warning"><strong>Private</strong> 
-              <span class="pull-right">Can only be seen by you</span>
+          <li class="list-group-item list-group-item-warning"><strong>{{ __('Private')}}</strong>
+              <span class="pull-right">{{ __('Can only be seen by you')}}</span>
           </li>
         {% else %}
-          <li class="list-group-item list-group-item-success"><strong>Public</strong>
-              <span class="pull-right">Can be seen by anyone</span>
+          <li class="list-group-item list-group-item-success"><strong>{{ __('Public')}}</strong>
+              <span class="pull-right">{{ __('Can be seen by anyone')}}</span>
           </li>
         {% endif %}
 
         {% if (piece.isDice) %}
-          <li class="list-group-item list-group-item-warning">Dice
+          <li class="list-group-item list-group-item-warning">{{ __('Dice')}}
             <i class="fa fa-random pull-right"></i>
           </li>
         {% endif %}
@@ -99,81 +99,81 @@
         {% if (isOwner || isAdmin) %}
           {% if (!piece.isNew && piece.image && piece.image.files && piece.image.files.length) %}
             <li class="list-group-item list-group-item-default">
-              Image
-              <a href="{{ piece.image.cdnUri + '/original_' + piece.image.files[0] }}" target="_blank" class="pull-right">load full size</a>
-            </li>        
+              {{ __('Image')}}
+              <a href="{{ piece.image.cdnUri + '/original_' + piece.image.files[0] }}" target="_blank" class="pull-right">{{ __('load full size')}}</a>
+            </li>
           {% endif %}
         {% endif %}
 
         {% if (piece.flipable) %}
-          <li class="list-group-item list-group-item-info">Flipable
+          <li class="list-group-item list-group-item-info">{{ __('Flipable')}}
             <i class="fa fa-retweet pull-right"></i>
           </li>
         {% endif %}
 
         {% if (piece.isStash) %}
-          <li class="list-group-item list-group-item-info">Is Stash
+          <li class="list-group-item list-group-item-info">{{ __('Is Stash')}}
             <i class="fa fa-inbox pull-right"></i>
           </li>
         {% endif %}
 
 
         {% if (piece.handable) %}
-          <li class="list-group-item list-group-item-info">Take to Hand
+          <li class="list-group-item list-group-item-info">{{ __('Take to Hand')}}
             <i class="fa fa-hand-o-up pull-right"></i>
           </li>
         {% endif %}
 
 
         {% if (piece.lockable) %}
-          <li class="list-group-item list-group-item-default">Can be locked
+          <li class="list-group-item list-group-item-default">{{ __('Can be locked')}}
             <i class="fa fa-lock pull-right"></i>
           </li>
         {% endif %}
 
         {% if (piece.atlasjson) %}
           <li class="list-group-item list-group-item-default">
-            Json Atlas
+            {{ __('Json Atlas')}}
             <a href="{{piece.atlasjson}}" target="_blank" class="pull-right">{{piece.atlasjson}}</a>
           </li>
         {% endif %}
 
         {% if (piece.jsonAtlas) %}
           <li class="list-group-item list-group-item-default">
-            Json Atlas
+            {{ __('Json Atlas')}}
           </li>
         {% endif %}
 
         {% if (piece.frameWidth) %}
           <li class="list-group-item list-group-item-default">
-            Frame width: <strong class="pull-right">{{piece.frameWidth}} pixel</strong>
+            {{ __('Frame width')}}: <strong class="pull-right">{{piece.frameWidth}} pixel</strong>
           </li>
         {% endif %}
 
         {% if (piece.frameHeight) %}
           <li class="list-group-item list-group-item-default">
-            Frame height <strong class="pull-right">{{piece.frameHeight}} pixel</strong>
+            {{ __('Frame height')}}: <strong class="pull-right">{{piece.frameHeight}} pixel</strong>
           </li>
         {% endif %}
 
         {% if (piece.maxFrames) %}
           <li class="list-group-item list-group-item-default">
-            Max Frames <strong class="pull-right">{{piece.maxFrames}}</strong>
+            {{ __('Max Frames')}} <strong class="pull-right">{{piece.maxFrames}}</strong>
           </li>
         {% endif %}
 
         {% if (piece.spacing) %}
           <li class="list-group-item list-group-item-default">
-            Spacing <strong class="pull-right">{{piece.spacing}}</strong>
+            {{ __('Spacing')}} <strong class="pull-right">{{piece.spacing}}</strong>
           </li>
         {% endif %}
 
         <li class="list-group-item list-group-item-default">
-          Rotation <strong class="pull-right">{{piece.rotateBy}}°</strong>
+          {{ __('Rotation')}} <strong class="pull-right">{{piece.rotateBy}}°</strong>
         </li>
 
         <li class="list-group-item list-group-item-default">
-          Created by
+          {{ __('Created by')}}
           <strong class="pull-right">{{piece.user.username}}</strong>
         </li>
 
@@ -181,7 +181,7 @@
         {% if (piece.tags) %}
           <li class="list-group-item meta">
             <p>
-            Tags: &nbsp;
+            {{ __('Tags')}}: &nbsp;
             <span class="pull-right">
               {% for tag in piece.tags.split(',') %}
                 <i class="muted fa fa-tag"></i>&nbsp;
@@ -194,15 +194,15 @@
         {% endif %}
         {% if isOwner || isAdmin %}
           <li class="list-group-item list-group-item-danger">
-            <form action="{{ '/pieces/' + piece.id }}" method="post" onsubmit="return confirm('Are you sure?')">
+            <form action="{{ '/pieces/' + piece.id }}" method="post" onsubmit="return confirm({{ __('Are you sure?')}})">
               <br>
               <input type="hidden" name="_csrf" value="{{ csrf_token }}">
               <a href="{{ '/pieces/' + piece.id + '/edit' }}" title="edit" class="btn btn-default">
-                Edit
+                {{ __('Edit')}}
               </a>
               &nbsp;
               <input type="hidden" name="_method" value="DELETE">
-              <button class="btn btn-danger" type="submit">Delete</button>
+              <button class="btn btn-danger" type="submit">{{ __('Delete')}}</button>
             </form>
           </li>
         {% endif %}
@@ -214,15 +214,15 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4>
-            Preview of pieces of type <em>{{piece.type}}</em>. You can <strong>drag&drop</strong> tiles around. Click 
+            {{ __('Preview of pieces of type')}} <em>{{piece.type}}</em>. {{ __('You can <strong>drag&drop</strong> tiles around. Click')}}
             <a href="/pieces/{{piece.id}}/test" class="btn btn-warning">
-              <i class="fa fa-play-circle"></i> Test
+              <i class="fa fa-play-circle"></i> {{ __('Test')}}
             </a>
-             to verify they work ingame!.
-             <p class="muted">If your piece is <strong>too big</strong> here, it will be too big ingame. Please click "edit" and upload a smaller image in that case.</p>
+             {{ __('to verify they work ingame!')}}.
+             <p class="muted">{{ __('If your piece is <strong>too big</strong> here, it will be too big ingame. Please click "edit" and upload a smaller image in that case')}}.</p>
           </h4>
         </div>
-        
+
         <div class="panel-body smaller">
           <div style="display: none;">
             {% if (!piece.isNew && piece.image && piece.image.files && piece.image.files.length) %}
@@ -230,25 +230,25 @@
             {% endif %}
           </div>
           <div id="tiles-{{piece.id}}">
-            
+
           </div>
         </div>
 
       </div>
     </div>
-    
 
-    
+
+
   </section>
 
   <div class="spacer"></div>
 
   <section class="bg-primary about">
     <div class="container">
-      
+
       <a href="/pieces" class="btn btn-info">
         <i class="fa fa-backward"></i>
-        Back to pieces
+        {{ __('Back to pieces')}}
       </a>
     </div>
   </section>
@@ -257,8 +257,3 @@
 
 
 {% endblock %}
-
-
-
-
-

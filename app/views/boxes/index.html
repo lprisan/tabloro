@@ -12,14 +12,14 @@
       {% if (req.isAuthenticated()) && !pick %}
         <a class="btn btn-success" href="/boxes/new">
           <i class="fa fa-cube"></i>
-          Assemble your own game box
+          {{ __('Assemble your own game box')}}
         </a>
 
         {% set model = 'boxes' %}
         {% set icon = 'fa-cube' %}
         {% include '../includes/yours_all.html' with model; icon all %}
-        
-        <a class="btn btn-info" href="http://www.instructables.com/id/How-to-make-your-board-card-games-playable-in-the-/" target="_blank" ><i class="fa fa-info"></i> Show the Instructable Guide</a>
+
+        <!--a class="btn btn-info" href="http://www.instructables.com/id/How-to-make-your-board-card-games-playable-in-the-/" target="_blank" ><i class="fa fa-info"></i> Show the Instructable Guide</a-->
       {% endif %}
 
     </div>
@@ -34,7 +34,7 @@
       {% if !pick %}
         {% include 'create_box.html' %}
       {% endif %}
-      
+
       {% if (pages > 1) %}
         <div class="clearfix"></div>
         <ul class="pagination">
@@ -46,13 +46,13 @@
 
     {% else %}
       <h4 class="muted">
-        No game boxes found.&nbsp;
+        {{ __('No game boxes found')}}.&nbsp;
       </h4>
       {% include 'create_box.html' %}
     {% endif %}
 
 
-  
+
 
   </div>
 

@@ -39,7 +39,7 @@ exports.index = function (req, res) {
         perPage: perPage,
         page: page
     };
-    
+
     if (req.param('userId')) {
         options.criteria = {
             user: req.user
@@ -52,7 +52,7 @@ exports.index = function (req, res) {
         Piece.count(options.criteria).exec(function (err, count) {
             console.log('count', count);
             res.render('pieces/index', {
-                title: req.param('userId') ? 'Your Gaming Pieces' : 'Gaming Pieces',
+                title: req.param('userId') ? req.i18n.__('Your Gaming Pieces') : req.i18n.__('Gaming Pieces'),
                 pieces: pieces,
                 page: page + 1,
                 pages: Math.ceil(count / perPage),
@@ -68,7 +68,7 @@ exports.index = function (req, res) {
 
 exports.new = function (req, res) {
     res.render('pieces/new', {
-        title: 'New Gaming Piece(s)',
+        title: req.i18n.__('New Gaming Piece(s)'),
         piece: new Piece({})
     });
 };
@@ -83,7 +83,7 @@ exports.create = function (req, res) {
     console.log('create piece', req.body);
     var piece = new Piece(req.body);
     piece.user = req.user;
-    
+
     var images;
     images = req.files.image ? [req.files.image] : undefined;
     images = req.files.resized ? [req.files.resized] : images;
@@ -94,20 +94,20 @@ exports.create = function (req, res) {
 
     piece.uploadAndSave(images, function (err) {
         if (!err) {
-            req.flash('success', 'Successfully created piece!');
+            req.flash('success', req.i18n.__('Successfully created piece!'));
 
             if(req.xhr) {
                 return res.json(piece.id);
             }
             return res.redirect('/pieces/' + piece._id);
         }
-        
+
         console.log(err);
         if(req.xhr) {
             return res.status(500).json(err);
         }
         res.render('pieces/new', {
-            title: 'New Gaming Piece(s)',
+            title: req.i18n.__('New Gaming Piece(s)'),
             piece: piece,
             errors: utils.errors(err.errors || err)
         });
@@ -121,7 +121,7 @@ exports.create = function (req, res) {
 
 exports.edit = function (req, res) {
   res.render('pieces/edit', {
-    title: 'Edit ' + req.piece.title,
+    title: req.i18n.__('Edit')+' ' + req.piece.title,
     piece: req.piece
   });
 };
@@ -134,7 +134,7 @@ exports.edit = function (req, res) {
 
 exports.update = function (req, res){
   var piece = req.piece;
-    
+
     var images;
     images = req.files.image ? [req.files.image] : undefined;
     images = req.files.resized ? [req.files.resized] : images;
@@ -149,13 +149,13 @@ exports.update = function (req, res){
     if(piece.jsonAtlas) piece.jsonAtlas = JSON.parse(piece.jsonAtlas);
   } catch(e) {
     res.render('pieces/edit', {
-      title: 'Edit Piece(s)',
+      title: req.i18n.__('Edit Piece(s)'),
       piece: piece,
       errors: ['Json format wrong']
     });
     return;
   }
-  
+
 
 
 
@@ -168,12 +168,12 @@ exports.update = function (req, res){
     }
 
     res.render('pieces/edit', {
-      title: 'Edit Piece(s)',
+      title: req.i18n.__('Edit Piece(s)'),
       piece: piece,
       errors: utils.errors(err.errors || err)
     });
-  });  
-  
+  });
+
 };
 
 
@@ -190,7 +190,7 @@ exports.show = function (req, res) {
         if (!piece) return next(new Error('piece not found'));
         req.piece = piece;
         res.render('pieces/show', {
-            title: 'Piece: ' + piece.title,
+            title: req.i18n.__('Piece')+': ' + piece.title,
             piece: piece,
             isOwner: piece.user.id === req.user.id
         });
@@ -225,10 +225,10 @@ exports.test = function (req, res) {
 
 
         var assets = utils.generateAssets({counts: 1, pieces: [piece.id]}, [piece]);
-        
-        
+
+
         res.render('game/test', {
-            title: 'Test Piece: ' + piece.title,
+            title: req.i18n.__('Test Piece')+': ' + piece.title,
             game: piece,
             room: piece,
             roomName: 'Piece test: ' + piece.title,
@@ -250,22 +250,22 @@ exports.destroy = function (req, res) {
 
     Box.find({pieces: { $in: [piece.id] }}, function (err, boxes) {
         if (err) {
-            req.flash('error', 'Could not delete piece');
+            req.flash('error', req.i18n.__('Could not delete piece'));
             res.redirect('/pieces/' + piece.id);
             return;
         }
         if (boxes.length > 0) {
-            req.flash('error', 'Could not delete piece, its currently used by ' + boxes.length + ' boxes! Please delete the boxes >' + R.join(',', R.pluck('title')(boxes)) + '< first. Or remove the piece from these boxes');
+            req.flash('error', req.i18n.__('Could not delete piece, its currently used by ') + boxes.length + req.i18n.__(' boxes! Please delete the boxes >') + R.join(',', R.pluck('title')(boxes)) + req.i18n.__('< first. Or remove the piece from these boxes'));
             res.redirect('/pieces/' + piece.id);
             return;
         }
-        
+
         piece.remove(function (err) {
             if (err) {
-                req.flash('alert', 'Could not delete piece');
+                req.flash('alert', req.i18n.__('Could not delete piece'));
                 return;
             }
-            req.flash('info', 'Deleted successfully');
+            req.flash('info', req.i18n.__('Deleted successfully'));
             res.redirect('/pieces');
         });
     });

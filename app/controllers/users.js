@@ -24,7 +24,7 @@ exports.load = function (req, res, next, id) {
   };
   User.load(options, function (err, user) {
     if (err) return next(err);
-    if (!user) return next(new Error('Failed to load User ' + id));
+    if (!user) return next(new Error(req.i18n.__('Failed to load User ') + id));
     req.profile = user;
     next();
   });
@@ -39,7 +39,7 @@ exports.emails = function (req, res){
 
     User.count().exec(function (err, count) {
       res.render('users/emails', {
-        title: 'Email',
+        title: req.i18n.__('Email'),
         users: users,
         count: count
       });
@@ -79,7 +79,7 @@ exports.index = function (req, res){
 
             User.count().exec(function (err, count) {
               res.render('users/index', {
-                title: 'Users',
+                title: req.i18n.__('Users'),
                 users: users,
                 page: page + 1,
                 pages: Math.ceil(count / perPage),
@@ -111,13 +111,13 @@ exports.create = function (req, res) {
       return res.render('users/signup', {
         error: utils.errors(err.errors),
         user: user,
-        title: 'Sign up'
+        title: req.i18n.__('Sign up')
       });
     }
 
     // manually login the user once successfully signed up
     req.logIn(user, function(err) {
-      if (err) req.flash('info', 'Sorry! We are not able to log you in!');
+      if (err) req.flash('info', req.i18n.__('Sorry! We are not able to log you in!'));
       return res.redirect('/');
     });
   });
@@ -130,7 +130,7 @@ exports.create = function (req, res) {
 exports.show = function (req, res) {
   var user = req.profile;
   res.render('users/show', {
-    title: 'User: ' + user.username,
+    title: req.i18n.__('User: ') + user.username,
     user: user,
     isOwner: user.id === req.user.id
   });
@@ -143,7 +143,7 @@ exports.show = function (req, res) {
 
 exports.edit = function (req, res) {
   res.render('users/edit', {
-    title: 'Edit ' + req.user.username,
+    title: req.i18n.__('Edit ') + req.user.username,
     user: req.user
   });
 };
@@ -166,7 +166,7 @@ exports.update = function (req, res){
     }
 
     res.render('users/edit', {
-      title: 'Edit ' + user.username,
+      title: req.i18n.__('Edit ') + user.username,
       user: user,
       errors: utils.errors(err.errors || err)
     });
@@ -188,7 +188,7 @@ exports.authCallback = login;
 
 exports.login = function (req, res) {
   res.render('users/login', {
-    title: 'Login'
+    title: req.i18n.__('Login')
   });
 };
 
@@ -198,7 +198,7 @@ exports.login = function (req, res) {
 
 exports.signup = function (req, res) {
   res.render('users/signup', {
-    title: 'Sign up',
+    title: req.i18n.__('Sign up'),
     user: new User()
   });
 };

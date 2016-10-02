@@ -59,8 +59,8 @@ exports.index = function (req, res) {
 
         Setup.count(options.criteria).exec(function (err, count) {
             res.render('setups/index', {
-                title: req.query.pick ? 'Pick game setup' : req.param('userId') ? 'Your Setups': 'Game Setups',
-                subtitle: req.query.pick ? 'Pick a game setup for your ' + req.query.pick : '',
+                title: req.query.pick ? req.i18n.__('Pick game setup') : req.param('userId') ? req.i18n.__('Your Setups'): req.i18n.__('Game Setups'),
+                subtitle: req.query.pick ? req.i18n.__('Pick a game setup for your ') + req.query.pick : '',
                 setups: setups,
                 page: page + 1,
                 pages: Math.ceil(count / perPage),
@@ -77,7 +77,7 @@ exports.index = function (req, res) {
 
 exports.new = function (req, res) {
     res.render('setups/new', {
-        title: 'New Game Setup',
+        title: req.i18n.__('New Game Setup'),
         setup: new Setup({}),
         box: req.box
     });
@@ -104,12 +104,12 @@ exports.create = function (req, res) {
 
     setup.save(function (err) {
         if (!err) {
-            req.flash('success', 'Successfully created game setup!');
+            req.flash('success', req.i18n.__('Successfully created game setup!'));
             return res.redirect('/boxes/' + box.id + '/setups/' + setup.title);
         }
         console.log(err);
         res.render('setups/new', {
-            title: 'New Game Setup',
+            title: req.i18n.__('New Game Setup'),
             setup: setup,
             box: req.box,
             errors: utils.errors(err.errors || err)
@@ -132,7 +132,7 @@ exports.show = function (req, res) {
         if (!setup) return next(new Error('not found'));
         req.setup = setup;
         res.render('setups/show', {
-            title: 'Game Setup',
+            title: req.i18n.__('Game Setup'),
             setup: setup,
             box: req.box,
             isOwner: setup.user.id === req.user.id
@@ -155,16 +155,16 @@ exports.test = function (req, res) {
 
     Piece.list({ criteria: {'_id': {$in: setup.pieces }}}, function (err, unsortedPieces) {
         if (err) {
-            req.flash('alert', 'Cannot test game stup!');
+            req.flash('alert', req.i18n.__('Cannot test game stup!'));
             return res.redirect('/boxes/' + box._id + '/setups/' + setup.title);
         }
 
         var assets = utils.generateAssets(setup, unsortedPieces);
         var isOwner = setup.user.id === req.user.id;
 
-        
+
         res.render('game/test', {
-            title: 'Test Game Setup: ' + setup.title,
+            title: req.i18n.__('Test Game Setup: ') + setup.title,
             game: setup.box,
             room: setup,
             user: req.user,
@@ -187,23 +187,23 @@ exports.destroy = function (req, res) {
 
     Table.find({setup: setup}, function (err, tables) {
         if (err) {
-            req.flash('error', 'Could not delete setup');
+            req.flash('error', req.i18n.__('Could not delete setup'));
             res.redirect('/boxes/' + setup.box.id + '/setups/' + setup.title);
-           
+
             return;
         }
         if (tables.length > 0) {
-            req.flash('error', 'Could not delete setup, its currently used by ' + tables.length + ' tables! Please delete the tables >> ' + R.join(',', R.pluck('title')(tables)) + ' << before deleting this setup.');
+            req.flash('error', req.i18n.__('Could not delete setup, its currently used by ') + tables.length + req.i18n.__(' tables! Please delete the tables >> ') + R.join(',', R.pluck('title')(tables)) + req.i18n.__(' << before deleting this setup.'));
             res.redirect('/boxes/' + setup.box.id + '/setups/' + setup.title);
             return;
         }
-        
+
         setup.remove(function (err) {
             if (err) {
-                req.flash('alert', 'Could not delete game setup');
+                req.flash('alert', req.i18n.__('Could not delete game setup'));
                 return;
             }
-            req.flash('info', 'Deleted successfully');
+            req.flash('info', req.i18n.__('Deleted successfully'));
             res.redirect('/setups');
         });
     });

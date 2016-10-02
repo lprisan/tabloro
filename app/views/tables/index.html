@@ -12,7 +12,7 @@
       {% if (req.isAuthenticated()) %}
         <a class="btn btn-success" href="/setups?pick=table">
           <i class="fa fa-plus-circle"></i>
-          Open your own table
+          {{ __('Open your own table')}}
         </a>
         {% set model = 'tables' %}
         {% set icon = 'fa-play' %}
@@ -26,7 +26,7 @@
           {% include 'table.html' %}
         {% endif %}
       {% endfor %}
-      
+
       {% include 'create_table.html' %}
 
       {% if (pages > 1) %}
@@ -41,13 +41,13 @@
 
     {% else %}
       <h4 class="muted">
-        No open tables.&nbsp;
+        {{ __('No open tables')}}.&nbsp;
       </h4>
       {% include 'create_table.html' %}
     {% endif %}
-    
 
-  
+
+
 
   </div>
 

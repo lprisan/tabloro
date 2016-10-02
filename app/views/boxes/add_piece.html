@@ -11,13 +11,13 @@
         <i class="fa fa-key"></i>
       {% endif %}
 
-      Click to show
+      {{ __('Click to show')}}
     </a>
   </div>
 {% endblock %}
-   
 
-      
+
+
 {% block footer %}
 <form method="post" action="/boxes/{{box.id}}/add/{{piece.id}}" role="form" class="form-horizontal">
   <input type="hidden" name="_csrf" value="{{ csrf_token }}">
@@ -27,8 +27,7 @@
     {% if (piece.isPrivate) %}
       <i class="fa fa-key"></i>
     {% endif %}
-    <strong><i class="fa fa-plus-circle"></i> Add to Box</strong>
+    <strong><i class="fa fa-plus-circle"></i> {{ __('Add to Box')}}</strong>
   </button>
 </form>
 {% endblock %}
-

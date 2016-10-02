@@ -52,7 +52,7 @@ exports.index = function (req, res) {
 
         Box.count(options.criteria).exec(function (err, count) {
             res.render('boxes/index', {
-                title: req.query.pick ? 'Pick a box' : req.param('userId') ? 'Your Boxes' : 'Game Boxes',
+                title: req.query.pick ? req.i18n.__('Pick a box') : req.param('userId') ? req.i18n.__('Your Boxes') : req.i18n.__('Game Boxes'),
                 pick: req.query.pick,
                 boxes: boxes,
                 page: page + 1,
@@ -69,7 +69,7 @@ exports.index = function (req, res) {
 
 exports.new = function (req, res) {
     res.render('boxes/new', {
-        title: 'New Game Box',
+        title: req.i18n.__('New Game Box'),
         box: new Box({})
     });
 };
@@ -89,12 +89,12 @@ exports.create = function (req, res) {
 
     box.uploadAndSave(images, function (err) {
         if (!err) {
-            req.flash('success', 'Successfully created box!');
+            req.flash('success', req.i18n.__('Successfully created box!'));
             return res.redirect('/boxes/' + box.id);
         }
         console.log(err);
         res.render('boxes/new', {
-            title: 'New Game Box',
+            title: req.i18n.__('New Game Box'),
             box: box,
             errors: utils.errors(err.errors || err)
         });
@@ -108,7 +108,7 @@ exports.create = function (req, res) {
 
 exports.edit = function (req, res) {
   res.render('boxes/edit', {
-    title: 'Edit ' + req.box.title,
+    title: req.i18n.__('Edit ') + req.box.title,
     box: req.box
   });
 };
@@ -132,17 +132,17 @@ exports.update = function (req, res){
 
   box.uploadAndSave(images, function (err) {
     if (!err) {
-        req.flash('info', 'Updated box');
+        req.flash('info', req.i18n.__('Updated box'));
         return res.redirect('/boxes/' + box._id);
     }
 
-    req.flash('alert', 'Could not update box');
+    req.flash('alert', req.i18n.__('Could not update box'));
     res.render('boxes/edit', {
-      title: 'Edit Box',
+      title: req.i18n.__('Edit Box'),
       box: box,
       errors: utils.errors(err.errors || err)
     });
-  });  
+  });
 
 };
 
@@ -173,20 +173,20 @@ exports.addList = function (req, res) {
         Piece.count().exec(function (err, count) {
             globalPieces = pieces;
             globalPiecesCount = count;
-        
+
             Box.load(box.id, function (err, box) {
                 if (err) return next(err);
                 if (!box) return next(new Error('box not found'));
                 req.box = box;
                 res.render('boxes/add_to_box', {
-                    title: 'Add pieces to box',
+                    title: req.i18n.__('Add pieces to box'),
                     box: box,
                     pieces: globalPieces,
                     count: globalPiecesCount,
                     isOwner: box.user.id === req.user.id,
                     page: page + 1,
                     pages: Math.ceil(count / perPage)
-                
+
                 });
             });
         });
@@ -219,19 +219,19 @@ exports.add = function (req, res){
         order: order
     }, function (err) {
 
-    
+
     if (!err) {
-        req.flash('info', 'Added pieces :::' + piece.title + '::: to box');
+        req.flash('info', req.i18n.__('Added pieces :::') + piece.title + req.i18n.__('::: to box'));
         return res.redirect('/boxes/' + box._id + '/add' + pageKeeper);
     }
 
-    req.flash('alert', 'Could not add pieces to box');
+    req.flash('alert', req.i18n.__('Could not add pieces to box'));
     res.render('boxes/show', {
-      title: 'View Box',
+      title: req.i18n.__('View Box'),
       box: box,
       errors: utils.errors(err.errors || err)
     });
-  });  
+  });
 };
 
 
@@ -257,17 +257,17 @@ exports.remove = function (req, res){
         order: order
     }, function (err) {
     if (!err) {
-        req.flash('info', 'Removed piece :::' + piece.title + '::: from box');
+        req.flash('info', req.i18n.__('Removed piece :::') + piece.title + req.i18n.__('::: from box'));
         return res.redirect('/boxes/' + box._id);
     }
 
-    req.flash('alert', 'Could not remove piece from box');
+    req.flash('alert', req.i18n.__('Could not remove piece from box'));
     res.render('boxes/show', {
-      title: 'View Box',
+      title: req.i18n.__('View Box'),
       box: box,
       errors: utils.errors(err.errors || err)
     });
-  });  
+  });
 };
 
 
@@ -282,7 +282,7 @@ exports.up = function (req, res){
   // make sure no one changes the user
   delete req.body.user;
   box = extend(box, req.body);
-  
+
   var order = box.order;
   order[piece.id] = order[piece.id] || 2;
   order[piece.id] = order[piece.id] -1;
@@ -290,19 +290,19 @@ exports.up = function (req, res){
 
   box.update({ order: order}, function (err) {
 
-    
+
     if (!err) {
-        req.flash('info', 'Orderd piece :::' + piece.title + '::: upwards');
+        req.flash('info', req.i18n.__('Orderd piece :::') + piece.title + req.i18n.__('::: upwards'));
         return res.redirect('/boxes/' + box._id);
     }
 
-    req.flash('alert', 'Could not order pieces in box');
+    req.flash('alert', req.i18n.__('Could not order pieces in box'));
     res.render('boxes/show', {
-      title: 'View Box',
+      title: req.i18n.__('View Box'),
       box: box,
       errors: utils.errors(err.errors || err)
     });
-  });  
+  });
 };
 
 
@@ -319,24 +319,24 @@ exports.down = function (req, res){
   delete req.body.user;
   box = extend(box, req.body);
   var order = box.order;
-  
+
   order[piece.id] = order[piece.id] || box.pieces.length;
   order[piece.id] = order[piece.id] + 1;
   box.update({ order: order}, function (err) {
 
-    
+
     if (!err) {
-        req.flash('info', 'Orderd piece :::' + piece.title + '::: downwards');
+        req.flash('info', req.i18n.__('Orderd piece :::') + piece.title + req.i18n.__('::: downwards'));
         return res.redirect('/boxes/' + box._id);
     }
 
-    req.flash('alert', 'Could not order pieces in box');
+    req.flash('alert', req.i18n.__('Could not order pieces in box'));
     res.render('boxes/show', {
-      title: 'View Box',
+      title: req.i18n.__('View Box'),
       box: box,
       errors: utils.errors(err.errors || err)
     });
-  });  
+  });
 };
 
 
@@ -381,16 +381,16 @@ exports.show = function (req, res) {
                 var idx = R.indexOf(piece.id)(stringedPieces);
                 boxPieces[idx] = piece;
             })(unsortedPieces);
-            
+
         }
 
-            
+
         Box.load(box.id, function (err, box) {
             if (err) return next(err);
             if (!box) return next(new Error('box not found'));
             req.box = box;
             res.render('boxes/show', {
-                title: 'Box: ' + box.title,
+                title: req.i18n.__('Box: ') + box.title,
                 box: box,
                 boxPieces: boxPieces,
                 isOwner: box.user.id === req.user.id
@@ -431,7 +431,7 @@ exports.count = function (req, res) {
             if (!box) return next(new Error('box not found'));
             req.box = box;
             res.render('boxes/count', {
-                title: 'Edit contents of ' + box.title,
+                title: req.i18n.__('Edit contents of ') + box.title,
                 box: box,
                 boxPieces: boxPieces
             });
@@ -448,17 +448,17 @@ exports.count_update = function function_name (req, res) {
 
         box.save(function (err) {
             if (!err) {
-                req.flash('info', 'Updated piece counts for box.');
+                req.flash('info', req.i18n.__('Updated piece counts for box.'));
                 return res.redirect('/boxes/' + box._id);
             }
 
-            req.flash('alert', 'Could not update box counts');
+            req.flash('alert', req.i18n.__('Could not update box counts'));
             res.render('boxes/count', {
-                title: 'Edit contents of ' + box.title,
+                title: req.i18n.__('Edit contents of ') + box.title,
                 box: box,
                 errors: utils.errors(err.errors || err)
             });
-          });  
+          });
 
 
 };
@@ -473,15 +473,15 @@ exports.test = function (req, res) {
 
     Piece.list({ criteria: {'_id': {$in: box.pieces }}}, function (err, unsortedPieces) {
         if (err) {
-            req.flash('alert', 'Cannot test box!');
+            req.flash('alert', req.i18n.__('Cannot test box!'));
             return res.redirect('/boxes/' + box._id);
         }
 
         var assets = utils.generateAssets(box, unsortedPieces);
-        
-        
+
+
         res.render('game/test', {
-            title: 'Test Box: ' + box.title,
+            title: req.i18n.__('Test Box: ') + box.title,
             game: box,
             room: box,
             user: req.user,
@@ -504,20 +504,20 @@ exports.destroy = function (req, res) {
 
     Setup.find({box: box}, function (err, setups) {
         if (err) {
-            req.flash('error', 'Could not delete box');
+            req.flash('error', req.i18n.__('Could not delete box'));
             return res.redirect('/boxes/' + box._id);
         }
         if (setups.length > 0) {
-            req.flash('error', 'Could not delete box, its currently used by ' + setups.length + ' setups! Please delete the setups >' + R.join(',', R.pluck('title')(setups)) + '< first.');
+            req.flash('error', req.i18n.__('Could not delete box, its currently used by ') + setups.length + req.i18n.__(' setups! Please delete the setups >') + R.join(',', R.pluck('title')(setups)) + req.i18n.__('< first.'));
             return res.redirect('/boxes/' + box._id);
         }
-        
+
         box.remove(function (err) {
             if (err) {
-                req.flash('alert', 'Could not delete box');
+                req.flash('alert', req.i18n.__('Could not delete box'));
                 return;
             }
-            req.flash('info', 'Box deleted successfully');
+            req.flash('info', req.i18n.__('Box deleted successfully'));
             res.redirect('/boxes');
         });
     });

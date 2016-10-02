@@ -24,15 +24,15 @@
             {% endif %}
           </h4>
         </div>
-        
+
         <div class="panel-body">
-          
+
 
           <div class="col-md-7">
-            <h4>Description</h4>
+            <h4>{{ __('Description')}}</h4>
             <pre>{{box.description}}</pre>
             {% if (box.link) %}
-              <a href="{{box.link}}" title="{{box.link}}" target="_blank">Link to external website</a>
+              <a href="{{box.link}}" title="{{box.link}}" target="_blank">{{ __('Link to external website')}}</a>
             {% endif %}
 
           </div>
@@ -45,7 +45,7 @@
             {% endif %}
           </div>
 
-          
+
           <div class="clearfix"></div>
           <div class="spacer"></div>
 
@@ -55,19 +55,19 @@
             {% if isOwner %}
               <a href="/boxes/{{box.id}}/add" class="btn btn-success ">
                 <i class="fa fa-plus fa-fw"></i>
-              
-                Add Pieces to Box
+
+                {{ __('Add Pieces to Box')}}
               </a>
             {% endif %}
 
             <a href="/boxes/{{box.id}}/test" class="btn btn-warning " >
               <i class="fa fa-play-circle fa-fw"></i>
-              Test Box contents
+              {{ __('Test Box contents')}}
             </a>
 
             <a href="/boxes/{{box.id}}/setups/new" class="btn btn-info " >
               <i class="fa fa-sitemap fa-fw"></i>
-              Create game setup / layout
+              {{ __('Create game setup / layout')}}
             </a>
 
           </div>
@@ -86,7 +86,7 @@
 
 
         <li class="list-group-item list-group-item-info">
-          Type
+          {{ __('Type')}}
           <strong class="pull-right">
             {{box.gameType}}
           </strong>
@@ -94,26 +94,26 @@
 
 
         {% if (box.isPrivate) %}
-          <li class="list-group-item list-group-item-warning"><strong>Private</strong> 
-              <span class="pull-right">Can only be seen by you</span>
+          <li class="list-group-item list-group-item-warning"><strong>{{ __('Private')}}</strong>
+              <span class="pull-right">{{ __('Can only be seen by you')}}</span>
           </li>
         {% else %}
-          <li class="list-group-item list-group-item-success"><strong>Public</strong>
-              <span class="pull-right">Can be seen by anyone</span>
+          <li class="list-group-item list-group-item-success"><strong>{{ __('Public')}}</strong>
+              <span class="pull-right">{{ __('Can be seen by anyone')}}</span>
           </li>
         {% endif %}
 
 
         <li class="list-group-item list-group-item-default">
-          Created by
+          {{ __('Created by')}}
           <strong class="pull-right">{{box.user.username}}</strong>
         </li>
 
-        <li class="list-group-item list-group-item-default">Created <strong class="pull-right">{{ box.createdAt.toISOString()|date('M d,  h:i a') }}</strong></li>
+        <li class="list-group-item list-group-item-default">{{ __('Created')}} <strong class="pull-right">{{ box.createdAt.toISOString()|date('M d,  h:i a') }}</strong></li>
         {% if (box.tags) %}
           <li class="list-group-item meta">
             <p>
-            Tags: &nbsp;
+            {{ __('Tags')}}: &nbsp;
             <span class="pull-right">
               {% for tag in box.tags.split(',') %}
                 <i class="muted fa fa-tag"></i>&nbsp;
@@ -128,18 +128,18 @@
         {% if isOwner %}
           <li class="list-group-item list-group-item-warning btn-group btn-group-justified">
               <a href="{{ '/boxes/' + box.id + '/edit' }}" title="edit" class="btn btn-warning">
-                Edit Box
+                {{ __('Edit Box')}}
               </a>
               <a href="{{ '/boxes/' + box.id + '/count' }}" title="count" class="btn btn-info">
-                Change number of pieces
+                {{ __('Change number of pieces')}}
               </a>
           </li>
-          
+
           <li class="list-group-item list-group-item-danger">
-            <form action="{{ '/boxes/' + box.id }}" method="post" onsubmit="return confirm('Are you sure?')">
+            <form action="{{ '/boxes/' + box.id }}" method="post" onsubmit="return confirm({{ __('Are you sure?')}})">
               <input type="hidden" name="_csrf" value="{{ csrf_token }}">
               <input type="hidden" name="_method" value="DELETE">
-              <button class="btn btn-danger" type="submit">Delete Box</button>
+              <button class="btn btn-danger" type="submit">{{ __('Delete Box')}}</button>
             </form>
           </li>
         {% endif %}
@@ -153,14 +153,14 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4>
-            Contents of Game Box ({{boxPieces.length}} piece sets)
+            {{ __('Contents of Game Box')}} ({{boxPieces.length}} {{ __('piece sets')}})
           </h4>
           {% if isOwner || isAdmin %}
-            <p class="muted">Pieces are rendered in a certain <strong>layer order</strong>. Lower layers are drawn below, higher layers are drawn on top. You can also put pieces in the same layer, for example to allow 2 decks of cards to be shuffled/mixed.</p>
+            <p class="muted">{{ __('Pieces are rendered in a certain <strong>layer order</strong>. Lower layers are drawn below, higher layers are drawn on top. You can also put pieces in the same layer, for example to allow 2 decks of cards to be shuffled/mixed')}}.</p>
           {% endif %}
-        
+
         </div>
-        
+
         <div class="dark-brown">
           {% for piece in boxPieces %}
             {% if (piece) %}
@@ -172,17 +172,17 @@
       </div>
     </div>
 
-    
+
   </section>
 
   <div class="spacer"></div>
 
   <section class="bg-primary about">
     <div class="container">
-      
+
       <a href="/boxes" class="btn btn-info">
         <i class="fa fa-backward"></i>
-        Back to boxes
+        {{ __('Back to boxes')}}
       </a>
     </div>
   </section>
@@ -191,8 +191,3 @@
 
 
 {% endblock %}
-
-
-
-
-
