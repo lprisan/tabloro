@@ -105,11 +105,11 @@
                           <canvas id="snapshot" class="fullscreen" width="1280" height="720"></canvas>
                           <div id="fps" class="info"></div>
                           <div>
-                            <a class="btn btn-danger btn-lg" href="javascript:capture();">
+                            <a id="captureBtn" class="btn btn-danger btn-lg" href="javascript:capture();">
                               {{ __('Capture design!')}} &nbsp;
                               <i class="fa fa-camera"></i>
                             </a>
-                            <a class="btn btn-success btn-lg" href="javascript:retry();">
+                            <a id="retryBtn" class="btn btn-success btn-lg" href="javascript:retry();">
                               {{ __('Retry')}} &nbsp;
                               <i class="fa fa-undo"></i>
                             </a>
@@ -129,12 +129,52 @@
 
                           var lastTags;
 
+                          //Elements to style for capture
+                          var videoContBG = document.getElementById('snapshot');
+                          var captureBtn = document.getElementById('captureBtn');
+                          var retryBtn = document.getElementById('captureBtn');
+
+                          var BOARD_TAGS = ["2","3","4","5"];
+                          var CAPTURE_TAG = "0";
+
                           var width = canvas.width;
                           var height = canvas.height;
 
                           var fps = document.getElementById('fps');
                           var fpsText = document.createTextNode('');
                           fps.appendChild(fpsText);
+
+                          //Style elements taking into account the board tags present
+                          var checkAndStyleBoardCapture = function(tags, videocont, button){
+                              var board_present = 0;
+                              for (tag in tags){
+                                  if(BOARD_TAGS.indexOf(tag)!=-1){
+                                      board_present++;
+                                  }
+                              }
+                              if(board_present==4){ //All tags present, paint the frame with green border
+                                  videocont.style.borderWidth = '20px';
+                                  videocont.style.borderColor = 'green';
+                                  videocont.style.borderStyle = 'solid';
+                                  if(continuous) button.classList.remove("disabled");
+                              }else if(board_present==0){ //No tags present, paint frame with red border and disable button
+                                  videocont.style.borderWidth = '20px';
+                                  videocont.style.borderColor = 'red';
+                                  videocont.style.borderStyle = 'solid';
+                                  if(continuous) button.classList.add("disabled");
+                              }else if(board_present>0 && board_present<4){ //Some tags present, paint frame with yellow-orange border and disable button
+                                  videocont.style.borderWidth = '20px';
+                                  videocont.style.borderColor = 'orange';
+                                  videocont.style.borderStyle = 'solid';
+                                  if(continuous) button.classList.add("disabled");
+                              }else{
+                                  //Remove border and disable capture button, just in case
+                                  videocont.style.borderStyle = 'none';
+                                  if(continuous) button.classList.remove("disabled");
+                              }
+                              return board_present;
+                          }
+
 
                           //Checking camera
                           var hasGetUserMedia = function() {
@@ -160,6 +200,12 @@
                                   }
                                   fpsText.nodeValue = video.width+"x"+video.height+"--Chilitags processing = " + (end.getTime() - start.getTime()) + "ms  " + str;
                               }
+                              // We color the video's containters bg color, and disable the capture button,
+                              // so that we can know when the capture is possible
+                              var board_present = checkAndStyleBoardCapture(lastTags, videoContBG, captureBtn);
+                              if(board_present==4){
+                                // TODO: do homography of corners and get which tags are where
+                              }
                               if(continuous) requestAnimationFrame(snapshot);
                           }
 
@@ -169,6 +215,7 @@
                               var captured = document.getElementById('capturedElements');
                               var capturedText = document.createTextNode(str);
                               captured.appendChild(capturedText);
+                              captureBtn.classList.add("disabled");
                           }
                           var retry = function() {
                               continuous=true;
@@ -177,6 +224,7 @@
                               //captured.removeChild(captured.firstChild);
                               captured.innerHTML='';
                               captured.appendChild(capturedText);
+                              captureBtn.classList.add("disabled");
                               requestAnimationFrame(snapshot);
                           }
 

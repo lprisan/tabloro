@@ -142,5 +142,9 @@
 	"Enter the conference phone number for this table, e.g.": "Enter the conference phone number for this table, e.g.",
 	"Skype Group Link": "Skype Group Link",
 	"Enter a skype group link for this table, e.g.": "Enter a skype group link for this table, e.g.",
-	"a skype group link": "a skype group link"
+	"a skype group link": "a skype group link",
+	"Capture from paper game": "Capture from paper game",
+	"Capture design!": "Capture design!",
+	"Retry": "Retry",
+	"User: ": "User: "
 }

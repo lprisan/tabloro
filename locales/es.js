@@ -152,5 +152,6 @@
 	"Enter the conference phone number for this table, e.g.": "Introdcue el número de teléfono para la audioconferencia de esta partida, p.ej.",
 	"Skype Group Link": "Enlace al grupo Skype",
 	"Enter a skype group link for this table, e.g.": "Introduce un enlace a un grupo de Skype para esta partida, p.ej.",
-	"a skype group link": "un enlace a grupo Skype"
+	"a skype group link": "un enlace a grupo Skype",
+	"User: ": "User: "
 }
