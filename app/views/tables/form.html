@@ -175,6 +175,38 @@
                               return board_present;
                           }
 
+                          //gets a set of 4 pairs of numbers (tag corners x,y) and calculates the center
+                          var getTagCenter = function(tag){
+                            var center = [];
+                            center = [(tag[0][0]+tag[1][0]+tag[2][0]+tag[3][0])/4, // x
+                                      (tag[0][1]+tag[1][1]+tag[2][1]+tag[3][1])/4] // y
+                            return center;
+                          }
+
+                          // do homography of corners and get which tags are where, see https://uncorkedstudios.com/blog/perspective-transforms-in-javascript
+                          var getTransformedTags = function(tags, logging=false){
+                              var transTagPos = {};
+                              var srcCorners = [].concat.apply([],[ getTagCenter(tags['2']) ,
+                                                                  getTagCenter(tags['3']) ,
+                                                                  getTagCenter(tags['4']) ,
+                                                                  getTagCenter(tags['5'])]); //Detected board tags
+                              var dstCorners = [0,0,100,0,100,100,0,100]; //Ideal board (sides 0-100%)
+                              var perspT = PerspT(srcCorners, dstCorners);
+                              if(logging) console.log('Board detected at '+srcCorners);
+
+                              var newCoords = {};
+                              count = 0;
+                              for(tag in tags){
+                                  if($.inArray(tag, BOARD_TAGS)==-1){ //We check only non-board tags
+                                      var srcPt = getTagCenter(tags[tag]);
+                                      var dstPt = perspT.transform(srcPt[0], srcPt[1]);
+                                      newCoords[tag] = dstPt;
+                                      count++;
+                                  }
+                              }
+                              if(logging) console.log('Found '+count+' non-board tags: '+JSON.stringify(newCoords));
+                              return newCoords;
+                          }
 
                           //Checking camera
                           var hasGetUserMedia = function() {
@@ -204,7 +236,15 @@
                               // so that we can know when the capture is possible
                               var board_present = checkAndStyleBoardCapture(lastTags, videoContBG, captureBtn);
                               if(board_present==4){
-                                // TODO: do homography of corners and get which tags are where
+                                // do homography of corners and get which tags are where, see https://uncorkedstudios.com/blog/perspective-transforms-in-javascript
+                                transTagPositions = getTransformedTags(lastTags);
+                                if(transTagPositions[CAPTURE_TAG] && transTagPositions[CAPTURE_TAG][0]>0 &&
+                                          transTagPositions[CAPTURE_TAG][0]<100 &&
+                                          transTagPositions[CAPTURE_TAG][1]>0 &&
+                                          transTagPositions[CAPTURE_TAG][1]<100){
+                                    // if the capture card is inside the board, we call capture()
+                                    capture();
+                                }
                               }
                               if(continuous) requestAnimationFrame(snapshot);
                           }
@@ -216,6 +256,16 @@
                               var capturedText = document.createTextNode(str);
                               captured.appendChild(capturedText);
                               captureBtn.classList.add("disabled");
+
+                              var board_present = checkAndStyleBoardCapture(lastTags, videoContBG, captureBtn);
+                              if(board_present==4){
+                                  // do homography of corners and get which tags are where, see https://uncorkedstudios.com/blog/perspective-transforms-in-javascript
+                                  transTagPositions = getTransformedTags(lastTags, true); //activate console logging
+                                  //cardRegions = getBoardRegions(transTagPositions);
+                                  //TODO: Get from db what card each tag corresponds to
+                                  //TODO: Build the query for the prolog KB
+                              }
+
                           }
                           var retry = function() {
                               continuous=true;
