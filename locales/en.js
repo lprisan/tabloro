@@ -146,5 +146,8 @@
 	"Capture from paper game": "Capture from paper game",
 	"Capture design!": "Capture design!",
 	"Retry": "Retry",
-	"User: ": "User: "
+	"User: ": "User: ",
+	"Game Setup": "Game Setup",
+	"Test Game Setup: ": "Test Game Setup: ",
+	"Save Setup": "Save Setup"
 }
