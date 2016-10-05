@@ -149,5 +149,10 @@
 	"User: ": "User: ",
 	"Game Setup": "Game Setup",
 	"Test Game Setup: ": "Test Game Setup: ",
-	"Save Setup": "Save Setup"
+	"Save Setup": "Save Setup",
+	"New Game Setup": "New Game Setup",
+	"Successfully created game setup!": "Successfully created game setup!",
+	"Successfully created table!": "Successfully created table!",
+	"Table: ": "Table: ",
+	"Deleted successfully": "Deleted successfully"
 }

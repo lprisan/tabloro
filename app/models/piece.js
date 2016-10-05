@@ -33,6 +33,7 @@ var setTags = function (tags) {
 
 /**
  * Piece Schema
+ * TODO: Add (optional) observations-plain, observations-html (table), type4ts, tags (array)
  */
 
 var PieceSchema = new Schema({
@@ -89,7 +90,7 @@ var PieceSchema = new Schema({
   handable: {
     type: Boolean,
     default: false
-  }, 
+  },
   isDice: {
     type: Boolean,
     default: false
@@ -114,6 +115,21 @@ var PieceSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  observationsPlain: {
+    type: String
+  },
+  observationsHtml: {
+    type: String
+  },
+  observationsPlain: {
+    type: String
+  },
+  type4ts: {
+    type: String
+  },
+  chilitags: {
+    type: [Number]
   }
 });
 
@@ -198,7 +214,7 @@ PieceSchema.methods = {
       if (err) {
         console.error('Validation error', err);
         return cb(err);
-      } 
+      }
       imager.upload(images, function (err, cdnUri, files) {
         if (err) {
           console.error('upload error', err);

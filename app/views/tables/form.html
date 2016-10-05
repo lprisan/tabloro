@@ -120,6 +120,10 @@
                       </div>
 
                       <script>
+                          var pieces = {% if setupPieces %}{{JSON.stringify(setupPieces)}}{% else %}[]{% endif %};
+                          console.log(JSON.stringify(pieces));
+                          var table = {% if table %}{{JSON.stringify(table)}}{% else %}{}{% endif %};
+                          console.log(JSON.stringify(table));
                           var video = document.getElementById('webcam');
                           var canvas = document.getElementById('snapshot');
                           var ctx = canvas.getContext('2d');

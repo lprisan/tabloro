@@ -76,18 +76,51 @@ exports.index = function (req, res) {
 exports.new = function (req, res) {
     var table = new Table({});
     table.setupName = req.query.setupName;
-    if(!req.query.capture){
-      res.render('tables/new', {
-          title: req.i18n.__('New Table'),
-          table: table
-      });
-    }else{
+    if(!req.query.capture){ // If not capturing, just return the new table form
       res.render('tables/new', {
           title: req.i18n.__('New Table'),
           table: table,
-          capture: true
       });
-    }
+    }else{ //If capturing, we need to get the pieces in the setup
+
+      //Load the setup, if not empty
+      Setup.findOne({title: table.setupName}).exec(function (err, setup) {
+          if (err || !setup) {
+              console.log(err);
+              return res.render('tables/new', {
+                  title: req.i18n.__('New Table'),
+                  table: table,
+                  errors: [req.i18n.__('Setup: ') + setupName + req.i18n.__(' could not be found!')]
+              });
+          }
+          table.setup = setup;
+          table.box = setup.box;
+          table.tiles = setup.tiles || {};
+          //Load the pieces in the setup
+          Piece.list({ criteria: {'_id': {$in: setup.pieces }}}, function (err, unsortedPieces) {
+              if (err) {
+                  console.log(err);
+                  return res.render('tables/new', {
+                      title: req.i18n.__('New Table'),
+                      table: table,
+                      errors: [req.i18n.__('Error finding pieces for this this setup')]
+                  });
+              }
+              //Return the new/capture form, along with the data
+              return res.render('tables/new', {
+                  title: req.i18n.__('New Table'),
+                  table: table,
+                  setupPieces: unsortedPieces,
+                  capture: true
+              });
+          });
+
+
+      });
+    } //else
+
+
+
 };
 
 
