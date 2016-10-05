@@ -160,36 +160,36 @@
          id="flowPara4202-3"
          style="font-size:13.48332691px;text-align:start;text-anchor:start">Some overflow text here...</flowPara></flowRoot>    <image
        sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/technology.png"
-       xlink:href="../../icons/technology.png"
-       width="35.433071"
-       height="35.433071"
-       id="image3100"
+       xlink:href="../icons/technology.png"
+       y="890.26239"
        x="326.66666"
-       y="890.26239" />
+       id="image3100"
+       height="35.433071"
+       width="35.433071" />
     <image
        sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/time.png"
-       xlink:href="../../icons/time.png"
-       width="35.433071"
-       height="35.433071"
-       id="image3446"
+       xlink:href="../icons/time.png"
+       y="984.26251"
        x="325.33334"
-       y="984.26251" />
+       id="image3446"
+       height="35.433071"
+       width="35.433071" />
     <image
        sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/team.png"
-       xlink:href="../../icons/team.png"
-       width="42.519684"
-       height="42.519684"
-       id="image3162"
+       xlink:href="../icons/team.png"
+       y="809.84259"
        x="322.00003"
-       y="809.84259" />
+       id="image3162"
+       height="42.519684"
+       width="42.519684" />
     <image
        sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/task.png"
-       xlink:href="../../icons/task.png"
-       width="35.433071"
-       height="35.433071"
-       id="image3224"
+       xlink:href="../icons/task.png"
+       y="734.26245"
        x="326.66669"
-       y="734.26245" />
+       id="image3224"
+       height="35.433071"
+       width="35.433071" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot3227"
@@ -236,7 +236,7 @@
            x="368.66666"
            y="92.038048" /></flowRegion><flowPara
          id="flowPara4077"
-         style="font-size:12px;font-weight:600;letter-spacing:-0.75px;-inkscape-font-specification:FreeSans Semi-Bold">Study</flowPara></flowRoot>    <flowRoot
+         style="font-size:12px;font-weight:600;letter-spacing:-0.75000000000000000px;-inkscape-font-specification:FreeSans Semi-Bold">Study</flowPara></flowRoot>    <flowRoot
        transform="translate(77.377258,629.1216)"
        xml:space="preserve"
        id="flowRoot4071-5"
@@ -272,7 +272,7 @@
            x="368"
            y="170.70471" /></flowRegion><flowPara
          id="flowPara4198"
-         style="font-size:12px">Individual learner</flowPara></flowRoot>    <flowRoot
+         style="font-size:10px">Individual learner</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4192-2"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
@@ -284,7 +284,7 @@
            x="368"
            y="170.70471" /></flowRegion><flowPara
          id="flowPara4198-3"
-         style="font-size:12px">Small groups</flowPara></flowRoot>    <flowRoot
+         style="font-size:10px">Small groups</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4192-2-7"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
@@ -344,7 +344,7 @@
            x="368"
            y="170.70471" /></flowRegion><flowPara
          id="flowPara4198-5"
-         style="font-size:12px">One week</flowPara></flowRoot>    <flowRoot
+         style="font-size:10px">One week</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4192-2-6"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
@@ -356,7 +356,7 @@
            x="368"
            y="170.70471" /></flowRegion><flowPara
          id="flowPara4198-3-7"
-         style="font-size:12px">One week</flowPara></flowRoot>    <flowRoot
+         style="font-size:10px">One week</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4192-2-7-4"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
@@ -368,5 +368,5 @@
            x="368"
            y="170.70471" /></flowRegion><flowPara
          id="flowPara4198-3-2-5"
-         style="font-size:12px">Synchronous event</flowPara></flowRoot>  </g>
+         style="font-size:10px">Synchronous event</flowPara></flowRoot>  </g>
 </svg>

@@ -154,5 +154,6 @@
 	"Successfully created game setup!": "Successfully created game setup!",
 	"Successfully created table!": "Successfully created table!",
 	"Table: ": "Table: ",
-	"Deleted successfully": "Deleted successfully"
+	"Deleted successfully": "Deleted successfully",
+	"New Gaming Piece(s)": "New Gaming Piece(s)"
 }

@@ -9,6 +9,7 @@ Requires packages gspread, oauth2client, pyopenssl, lxml
 """
 import os
 import gspread
+import re
 from oauth2client.service_account import ServiceAccountCredentials
 import sys
 from lxml import etree
@@ -126,6 +127,34 @@ def loadModifyDigitalSVG(svgfile, card):
     return tree
 
 
+
+def getCutIndex(text):
+    """Decides where to cut a long text, looking for periods in the vicinity of
+    270-275 characters.
+    
+    Returns the index of the cut-point period"""
+    if(len(text)<276 or text.find(".")==-1):
+        # Short strings or strings without period, we do not cut
+        return -1
+    else:
+        idx = text.find(".",269,276)
+        if(idx==-1): 
+            # Did not find period in the range, try to find the nearest one
+            indexes = [m.start() for m in re.finditer('\.', text)]
+            idx = min(indexes, key=lambda x:abs(x-272))
+            if(idx==len(text)-1):
+                return -1 # If the period is just the last character, we are not actually breaking it
+            else:
+                return idx
+        else:
+            # Found the period in the range, this is the right index!
+            if(idx==len(text)-1):
+                return -1 # If the period is just the last character, we are not actually breaking it
+            else:
+                return idx
+                
+
+
 def loadModifyFrontSVG(svgfile, card):
     """Loads a printable front card svg file, and loads it with the data from a card
     dictionary.
@@ -158,8 +187,14 @@ def loadModifyFrontSVG(svgfile, card):
     titletext2.text = card['title']
     # Modify text paragraph
     fronttext = tree.xpath('.//*[@id="flowPara4200"]')[0]
-    # If there is a \n\n, we only put the text before it    
-    fronttext.text = card['description'].split("\n\n")[0]
+    # Check whether we have to split the description, and at what point    
+    cutIndex = getCutIndex(card['description'])
+    if(cutIndex==-1): # No need to cut, hide the continues... text
+        fronttext.text = card['description']
+        conttext = tree.xpath('.//*[@id="tspan4118-0"]')[0]
+        conttext.attrib['style'] = 'opacity:0;'+conttext.attrib['style']
+    else: # We need to cut the text, here we display only the first part, until the index inclusive
+        fronttext.text = card['description'][0:(cutIndex+1)]
     return tree
 
 
@@ -177,9 +212,13 @@ def loadModifyBackPlainSVG(svgfile, card):
     # bgrect = tree.xpath('.//xmlns:rect', namespaces=nsmap)[0]
     # Modify paragraphs... the first with only the overflow text from the front
     bcktxt = ""
-    splitdesc = card['description'].split("\n\n")
-    if(len(splitdesc)>1):
-        bcktxt = "\n\n".join(splitdesc[1:])
+    # Check whether we have to split the description, and at what point    
+    cutIndex = getCutIndex(card['description'])
+    if(cutIndex==-1): # No need to cut, hide the continues... text
+        conttext = tree.xpath('.//*[@id="tspan4118-0"]')[0]
+        conttext.attrib['style'] = 'opacity:0;'+conttext.attrib['style']
+    else: # We need to cut the text, here we display only the second part
+        bcktxt = card['description'][(cutIndex+1):len(card['description'])]
     textleft = tree.xpath('.//*[@id="flowPara4202-3"]')[0]
     textleft.text = bcktxt
     textright = tree.xpath('.//*[@id="flowPara4202"]')[0]
@@ -201,9 +240,13 @@ def loadModifyBackTableSVG(svgfile, card):
     # bgrect = tree.xpath('.//xmlns:rect', namespaces=nsmap)[0]
     # Modify paragraphs... the first with only the overflow text from the front
     bcktxt = ""
-    splitdesc = card['description'].split("\n\n")
-    if(len(splitdesc)>1):
-        bcktxt = "\n\n".join(splitdesc[1:])
+    # Check whether we have to split the description, and at what point    
+    cutIndex = getCutIndex(card['description'])
+    if(cutIndex==-1): # No need to cut, hide the continues... text
+        conttext = tree.xpath('.//*[@id="tspan4118-0"]')[0]
+        conttext.attrib['style'] = 'opacity:0;'+conttext.attrib['style']
+    else: # We need to cut the text, here we display only the second part
+        bcktxt = card['description'][(cutIndex+1):len(card['description'])]
     textleft = tree.xpath('.//*[@id="flowPara4202-3"]')[0]
     textleft.text = bcktxt
     task1 = tree.xpath('.//*[@id="flowPara4077"]')[0]
