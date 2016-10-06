@@ -169,5 +169,6 @@
 	"Successfully created table!": "Diseño creado con éxito!",
 	"Table: ": "Diseño: ",
 	"Play - ": "Jugar - ",
-	"Deleted successfully": "Eliminado correctamente"
+	"Deleted successfully": "Eliminado correctamente",
+	"Board Map and Feedback": "Board Map and Feedback"
 }

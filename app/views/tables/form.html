@@ -119,11 +119,42 @@
                         </div>
                       </div>
 
+
+
+                      <div class="panel panel-default col-sm-offset-3" id="mapcontainer">
+                        <div class="panel-heading" id="mapareahead">
+                          <h4>
+                          <i class="fa fa-settings"></i>
+                          {{ __('Board Map and Feedback')}}</h4>
+                        </div>
+
+                        <div class="panel-body" id="maparea">
+                          <div class="row">
+                            <div id="mapfb" class="col-sm-3 feedbacklist">
+                                <ul class="list-group">
+                                    <li class="list-group-item" id="fb1"> <strong>Feedback</strong> </li>
+                                    <li class="list-group-item" id="fb1"> Some fake feedback... </li>
+                                    <li class="list-group-item" id="fb2"> Some more feedback </li>
+                                </ul>
+                            </div>
+                            <div id="mapboard">
+                              <canvas id="boardcanvas" width="1412" height="875" style="border:1px solid #d3d3d3;">
+                                Your browser does not support the HTML5 canvas tag.
+                              </canvas>
+
+                            </div>
+                        </div>
+
+                      </div>
+
+
+
+
                       <script>
                           var pieces = {% if setupPieces %}{{JSON.stringify(setupPieces)}}{% else %}[]{% endif %};
-                          console.log(JSON.stringify(pieces));
+                          console.log("Pieces: "+JSON.stringify(pieces));
                           var table = {% if table %}{{JSON.stringify(table)}}{% else %}{}{% endif %};
-                          console.log(JSON.stringify(table));
+                          console.log("Table: "+JSON.stringify(table));
                           var video = document.getElementById('webcam');
                           var canvas = document.getElementById('snapshot');
                           var ctx = canvas.getContext('2d');
@@ -140,6 +171,7 @@
 
                           var BOARD_TAGS = ["2","3","4","5"];
                           var CAPTURE_TAG = "0";
+                          var AreaMap100 = {"capture":[[3.270803270803271,0],[20.105820105820104,14.075286415711947]],"context":[[3.751803751803752,18.821603927986907],[20.105820105820104,31.26022913256956]],"goals":[[3.751803751803752,35.3518821603928],[20.105820105820104,68.08510638297872]],"content":[[3.751803751803752,72.50409165302783],[20.105820105820104,104.9099836333879]],"c1-csw-technique":[[22.02982202982203,4.25531914893617],[40.4040404040404,23.895253682487724]],"c1-aba-css-task":[[22.02982202982203,24.713584288052374],[31.072631072631072,44.189852700490995]],"c1-aba-css-team":[[31.457431457431458,24.713584288052374],[40.4040404040404,44.189852700490995]],"c1-aba-css-tec1":[[22.02982202982203,44.84451718494272],[31.072631072631072,64.48445171849427]],"c1-aba-css-tec2":[[31.457431457431458,44.84451718494272],[40.4040404040404,64.48445171849427]],"c1-abb-css-task":[[22.02982202982203,65.13911620294598],[31.072631072631072,84.61538461538461]],"c1-abb-css-team":[[31.457431457431458,65.13911620294598],[40.4040404040404,84.61538461538461]],"c1-abb-css-tec1":[[22.02982202982203,85.27004909983633],[31.072631072631072,104.74631751227496]],"c1-abb-css-tec2":[[31.457431457431458,85.27004909983633],[40.4040404040404,104.74631751227496]],"c2-csw-technique":[[40.78884078884079,4.25531914893617],[59.06685906685907,23.895253682487724]],"c2-aba-css-task":[[40.78884078884079,24.713584288052374],[49.735449735449734,44.189852700490995]],"c2-aba-css-team":[[50.12025012025012,24.713584288052374],[59.06685906685907,44.189852700490995]],"c2-aba-css-tec1":[[40.78884078884079,44.84451718494272],[49.735449735449734,64.48445171849427]],"c2-aba-css-tec2":[[50.12025012025012,44.84451718494272],[59.06685906685907,64.48445171849427]],"c2-abb-css-task":[[40.78884078884079,65.13911620294598],[49.735449735449734,84.61538461538461]],"c2-abb-css-team":[[50.12025012025012,65.13911620294598],[59.06685906685907,84.61538461538461]],"c2-abb-css-tec1":[[40.78884078884079,85.27004909983633],[49.735449735449734,104.74631751227496]],"c2-abb-css-tec2":[[50.12025012025012,85.27004909983633],[59.06685906685907,104.74631751227496]],"c3-csw-technique":[[59.45165945165945,4.25531914893617],[77.82587782587782,23.895253682487724]],"c3-aba-css-task":[[59.45165945165945,24.713584288052374],[68.3982683982684,44.189852700490995]],"c3-aba-css-team":[[68.78306878306879,24.713584288052374],[77.82587782587782,44.189852700490995]],"c3-aba-css-tec1":[[59.45165945165945,44.84451718494272],[68.3982683982684,64.48445171849427]],"c3-aba-css-tec2":[[68.78306878306879,44.84451718494272],[77.82587782587782,64.48445171849427]],"c3-abb-css-task":[[59.45165945165945,65.13911620294598],[68.3982683982684,84.61538461538461]],"c3-abb-css-team":[[68.78306878306879,65.13911620294598],[77.82587782587782,84.61538461538461]],"c3-abb-css-tec1":[[59.45165945165945,85.27004909983633],[68.3982683982684,104.74631751227496]],"c3-abb-css-tec2":[[68.78306878306879,85.27004909983633],[77.82587782587782,104.74631751227496]],"c4-csw-technique":[[78.21067821067821,4.25531914893617],[96.48869648869649,23.895253682487724]],"c4-aba-css-task":[[78.21067821067821,24.713584288052374],[87.06108706108706,44.189852700490995]],"c4-aba-css-team":[[87.44588744588745,24.713584288052374],[96.48869648869649,44.189852700490995]],"c4-aba-css-tec1":[[78.21067821067821,44.84451718494272],[87.06108706108706,64.48445171849427]],"c4-aba-css-tec2":[[87.44588744588745,44.84451718494272],[96.48869648869649,64.48445171849427]],"c4-abb-css-task":[[78.21067821067821,65.13911620294598],[87.06108706108706,84.61538461538461]],"c4-abb-css-team":[[87.44588744588745,65.13911620294598],[96.48869648869649,84.61538461538461]],"c4-abb-css-tec1":[[78.21067821067821,85.27004909983633],[87.06108706108706,104.74631751227496]],"c4-abb-css-tec2":[[87.44588744588745,85.27004909983633],[96.48869648869649,104.74631751227496]]}
 
                           var width = canvas.width;
                           var height = canvas.height;
@@ -147,6 +179,18 @@
                           var fps = document.getElementById('fps');
                           var fpsText = document.createTextNode('');
                           fps.appendChild(fpsText);
+
+                          //Finds y value of given object
+                          var findPos = function(obj) {
+                              var curtop = 0;
+                              if (obj.offsetParent) {
+                                  do {
+                                      curtop += obj.offsetTop;
+                                  } while (obj = obj.offsetParent);
+                              return [curtop];
+                              }
+                          }
+
 
                           //Style elements taking into account the board tags present
                           var checkAndStyleBoardCapture = function(tags, videocont, button){
@@ -242,11 +286,11 @@
                               if(board_present==4){
                                 // do homography of corners and get which tags are where, see https://uncorkedstudios.com/blog/perspective-transforms-in-javascript
                                 transTagPositions = getTransformedTags(lastTags);
-                                if(transTagPositions[CAPTURE_TAG] && transTagPositions[CAPTURE_TAG][0]>0 &&
-                                          transTagPositions[CAPTURE_TAG][0]<100 &&
-                                          transTagPositions[CAPTURE_TAG][1]>0 &&
-                                          transTagPositions[CAPTURE_TAG][1]<100){
-                                    // if the capture card is inside the board, we call capture()
+                                if(transTagPositions[CAPTURE_TAG] && transTagPositions[CAPTURE_TAG][0]>AreaMap100['capture'][0][0] &&
+                                          transTagPositions[CAPTURE_TAG][0]<AreaMap100['capture'][1][0] &&
+                                          transTagPositions[CAPTURE_TAG][1]>AreaMap100['capture'][0][1] &&
+                                          transTagPositions[CAPTURE_TAG][1]<AreaMap100['capture'][1][1]){
+                                    // if the capture card is inside the capture area, we call capture()
                                     capture();
                                 }
                               }
@@ -268,9 +312,14 @@
                                   //cardRegions = getBoardRegions(transTagPositions);
                                   //TODO: Get from db what card each tag corresponds to
                                   //TODO: Build the query for the prolog KB
+                                  //scroll to the board map and feedback
+                                  //$('mapareahead').collapse('show'); //For now, the map is always visible
+                                  drawBoard();
+                                  window.scroll(0,findPos(document.getElementById("mapcontainer")));
                               }
 
                           }
+
                           var retry = function() {
                               continuous=true;
                               var captured = document.getElementById('capturedElements');
@@ -282,12 +331,33 @@
                               requestAnimationFrame(snapshot);
                           }
 
+                          var drawBoard = function(){
+                              var c = document.getElementById("boardcanvas");
+                              var ctx = c.getContext("2d");
+                              var boardimg = new Image();
+                              boardimg.id = "boardimg";
+                              //Look for the board piece _id  57f58b985dcddd50009e8b1a or lockable true
+                              boardpiece = {};
+                              for(var i = 0; i < pieces.length; i++){
+                                  piece = pieces[i];
+                                  if(piece['_id']=='57f58b985dcddd50009e8b1a'){
+                                      boardpiece = piece;
+                                      break;
+                                  }
+                              }
+                              var boardUri = boardpiece['image']['cdnUri']+'/original_'+boardpiece['image']['files'][0];
+                              console.log("Trying to draw "+boardUri);
+                              boardimg.src = boardUri;
+                              ctx.drawImage(boardimg, 0, 0);
+                          }
+
                           if (hasGetUserMedia()) {
                               console.log("Camera OK");
                           } else {
                               alert("Invalid!");
                           }
 
+                          drawBoard();
 
                           window.URL = window.URL || window.webkitURL;
                           navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia ||
@@ -313,6 +383,11 @@
                           video.addEventListener('play', function() {setTimeout('snapshot()', 2500);}, false);
 
                       </script>
+
+
+
+
+
             {% endif %}
 
 

@@ -155,5 +155,6 @@
 	"Successfully created table!": "Successfully created table!",
 	"Table: ": "Table: ",
 	"Deleted successfully": "Deleted successfully",
-	"New Gaming Piece(s)": "New Gaming Piece(s)"
+	"New Gaming Piece(s)": "New Gaming Piece(s)",
+	"Board Map and Feedback": "Board Map and Feedback"
 }
