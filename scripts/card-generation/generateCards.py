@@ -296,6 +296,7 @@ if __name__ == '__main__':
         filenameD = './output/digital/'+card['title'].replace(" ","_")+'_'+str(card['tag'])+'_DIGITAL.svg'
         print('Saving digital card at '+filenameD)
         digitalsvg.write(filenameD)
+	# TODO: Maybe joint all the similar digital images into a single strip? montage -mode Concatenate -tile 4x1 WIKI_SOFTWARE_*.png WIKI_SOFTWARE_ALL_DIGITAL.png
         # Export the file to png for uploading in tabloro
         call(["inkscape", filenameD, "--export-png="+filenameD+".png", "-h140"]) # Should be 100x140 max
         frontsvg = loadModifyFrontSVG(TEMPLATE_PRINT_FRONT, card)
