@@ -170,5 +170,9 @@
 	"Table: ": "Diseño: ",
 	"Play - ": "Jugar - ",
 	"Deleted successfully": "Eliminado correctamente",
-	"Board Map and Feedback": "Board Map and Feedback"
+	"Board Map and Feedback": "Board Map and Feedback",
+	"Pick a box": "Pick a box",
+	"Frame width": "Frame width",
+	"Frame height": "Frame height",
+	"Max Frames": "Max Frames"
 }
