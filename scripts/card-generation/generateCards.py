@@ -14,6 +14,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import sys
 from lxml import etree
 from subprocess import call
+import json
 
 #print 'Number of arguments:', len(sys.argv), 'arguments.'
 #print 'Argument List:', str(sys.argv)
@@ -96,6 +97,9 @@ def extractFromSpreadsheet(url):
                 card['ind_tech3'] = cardind_tech3
                 card['ind_time3'] = cardind_time3
                 card['tag'] = int(cardtags[j])
+                #TODELETE: Clone a few fields for compatibility with DB structure 
+                card['type4ts'] = cardtype
+                card['chilitags'] = [ card['tag'] ]
                 cardinstances.append(card)
                 #print('Adding new card, now %d' % len(cardinstances))                
             i = i+1
@@ -333,7 +337,8 @@ if __name__ == '__main__':
             call(["pdftk", filenameF+".pdf", filenameBP+".pdf", "cat", "output", filenamePrint])
             print("Pasted both card sides")
     print("=================================\nCard generation complete!")
-
+    with open('./card-dictionary-en.json', 'w') as fp:
+        json.dump(cardinstances, fp)
 
 
 # Upload the images to the platform via S3?
