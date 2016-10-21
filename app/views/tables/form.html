@@ -131,10 +131,8 @@
                         <div class="panel-body" id="maparea">
                           <div class="row">
                             <div id="mapfb" class="col-sm-3 feedbacklist">
-                                <ul class="list-group">
-                                    <li class="list-group-item" id="fb1"> <strong>Feedback</strong> </li>
-                                    <li class="list-group-item" id="fb1"> Some fake feedback... </li>
-                                    <li class="list-group-item" id="fb2"> Some more feedback </li>
+                                <ul class="list-group" id="fblist">
+                                    <li class="list-group-item" id="fb0"> <strong>Feedback</strong> </li>
                                 </ul>
                             </div>
                             <div id="mapboard">
@@ -181,7 +179,9 @@
                           var fpsText = document.createTextNode('');
                           fps.appendChild(fpsText);
 
-                          var modifyXMLField = function(xmlDoc,field,value){
+                          //Takes an xml document, a field in the board and a value,
+                          //and modifies the xmldoc accordingly
+                          var modifyXMLField = function(xmlDoc,field,value,displaySuggest=true){
                               var QUESTIONTAG = "call-for-suggestion";
                               //var tech1 = xmlDoc.getElementById("1").getElementsByTagName("csw-technique")[0].getElementsByTagName("technique-name")[0];
                               //tech1.textContent = "?";
@@ -203,10 +203,12 @@
                                   if(!value){
                                       //Do nothing
                                   }
-                                  // If value is a ?, we add the special question tag
+                                  // If value is a ?, we add the special question tag (if displaySuggest=true)
                                   else if(value=="?"){
-                                       var qtag = xmlDoc.createElement(QUESTIONTAG);
-                                       fieldtag.appendChild(qtag);
+                                      if(displaySuggest){
+                                          var qtag = xmlDoc.createElement(QUESTIONTAG);
+                                          fieldtag.appendChild(qtag);
+                                      }
                                   }
                                   // If it is a technique field, we have to split the value in two tags
                                   else if(restfield=="csw-technique"){
@@ -235,10 +237,6 @@
 
                           //returns the XML string corresponding to a query to the DB that mimics a board object passed
                           //displaySuggest indicates whether to include the ? card (not needed on certain KB calls)
-                          //CONTINUE: do method so that tag nrs are looked up in the tag list, and the xml is generated!
-                          //TODO: We need a setup with all the pieces uploaded there!!
-                          // Do a spreadsheet to JSON converter for now (http://stackoverflow.com/questions/17043860/python-dump-dict-to-json-file),
-                          //and add the object as a var instead of 'pieces'
                           var getXMLFromBoard = function(board, displaySuggest=true){
                               //get the base XML template
                               var emptyXML = '<?xml version="1.0"?><!DOCTYPE board SYSTEM "kb_in.dtd"><board><context>This is a text describing the context</context><goals><goal>This is a text describing a goal</goal><goal>This is a text describing another goal</goal></goals><content>This is a text describing some content</content><columns><column id="1"><csw-technique><technique-name/><technique-phase/></csw-technique><aba-css-task/><aba-css-team/><aba-css-tec1/><aba-css-tec2/><abb-css-task/><abb-css-team/><abb-css-tec1/><abb-css-tec2/></column><column id="2"><csw-technique><technique-name/><technique-phase/></csw-technique><aba-css-task/><aba-css-team/><aba-css-tec1/><aba-css-tec2/><abb-css-task/><abb-css-team/><abb-css-tec1/><abb-css-tec2/></column><column id="3"><csw-technique><technique-name/><technique-phase/></csw-technique><aba-css-task/><aba-css-team/><aba-css-tec1/><aba-css-tec2/><abb-css-task/><abb-css-team/><abb-css-tec1/><abb-css-tec2/></column><column id="4"><csw-technique><technique-name/><technique-phase/></csw-technique><aba-css-task/><aba-css-team/><aba-css-tec1/><aba-css-tec2/><abb-css-task/><abb-css-team/><abb-css-tec1/><abb-css-tec2/></column></columns></board>';
@@ -247,7 +245,7 @@
 
                               //Modify the empty xml file with the board data
                               for(field in board){
-                                  xmlDoc = modifyXMLField(xmlDoc,field,board[field]);
+                                  xmlDoc = modifyXMLField(xmlDoc,field,board[field],displaySuggest);
                               }
 
                               //var tech1 = xmlDoc.getElementById("1").getElementsByTagName("csw-technique")[0].getElementsByTagName("technique-name")[0];
@@ -338,7 +336,7 @@
 
 
                           //Get the board regions and which cards are in them, and returns that javascript object
-                          getBoardRegions = function(transTagPositions, AreaMap100){
+                          var getBoardRegions = function(transTagPositions, AreaMap100){
                             //Clone the object
                             tagsBoard = $.extend(true, {}, AreaMap100);
                             tagsBoard.noarea = []; //For tags in the board but outside the delimited areas (will flag up in syntactic check)
@@ -433,6 +431,88 @@
                               if(continuous) requestAnimationFrame(snapshot);
                           }
 
+
+                          //Gets the captured board with cards, and checks if they breach
+                          //any of the game's syntax rules.
+                          //Returns an array of error messages to be displayed
+                          var doSyntaxChecks = function(cardRegions,pieces){
+                            var errors = [];
+                            //TODO!
+                            return errors;
+
+                          }
+
+                          //Converts an object with regions and the associated Chilitags
+                          //To a similar object with the card titles instead, for later XML generation
+                          var lookupCardRegions = function(cardRegions,pieces){
+                              var board = {};
+                              for(vars in cardRegions){
+                                  var cardsInRegion = cardRegions[vars];
+                                  if(!cardsInRegion){
+                                      board[vars] = "";
+                                  }else{
+                                      if(typeof cardsInRegion == "string"){
+                                          var result = $.grep(pieces, function(e){  if(e.chilitags && e.chilitags[0]){
+                                                                                      return (e.chilitags[0] == parseInt(cardsInRegion,10));
+                                                                                    }else{
+                                                                                      return false;
+                                                                                    };});
+                                          if(result.length>=1){//we found a card with that chilitag
+                                              console.log('found one');
+                                              var res = result[0];
+                                              board[vars] = res.title.substring(0,res.title.lastIndexOf(' ',res.title.lastIndexOf(' ')-1));
+                                          }else{
+                                              board[vars] = "";
+                                          }
+
+                                      }else{ //it's and object i.e. an array
+                                          for(var i = 0;i<cardsInRegion.length;i++){
+                                              var card = cardsInRegion[i];
+                                              var result = $.grep(pieces, function(e){  if(e.chilitags && e.chilitags[0]){
+                                                                                          return (e.chilitags[0] == parseInt(card,10));
+                                                                                        }else{
+                                                                                          return false;
+                                                                                        };});
+                                              if(result.length>=1){//we found a card with that chilitag
+                                                  console.log('found one');
+                                                  var res = result[0];
+                                                  board[vars] = res.title.substring(0,res.title.lastIndexOf(' ',res.title.lastIndexOf(' ')-1)); //TODO: eliminate the part of the title with tag number and language
+                                              }else{
+                                                  board[vars] = "";
+                                              }
+                                          }
+                                      }
+
+                                  }
+                              }
+                              console.log('Looked up card regions:\n'+JSON.stringify(board));
+                              return board;
+                          }
+
+
+                          //Gets a xmlBoard in a string, and POSTs it (directly or through our server)
+                          //to the KB, redirecting the response to a callback and putting a loading icon
+                          var doSemanticChecks = function(xmlstring){
+                              //TODO!
+                              console.log('Will be sending this file to the KB:\n'+xmlstring);
+
+                          }
+
+                          var displaySyntaxErrors = function(errors){
+                              if(errors.length==0){
+                                  //We display a no errors found message
+                                  $('#fblist').empty();
+                                  $('#fblist').append('<li class="list-group-item" id="fb0"> <strong>Feedback</strong> </li>');
+                                  $('#fblist').append('<li class="list-group-item" id="fb1"> <i class="fa fa-check"></i> The board appears to be syntactically correct! </li>');
+                              }else{
+                                  //TODO: Generate and place the error messages
+
+                              }
+                          }
+
+
+                          //This function is triggered by the capture button/card. Performs all the corresponding checks
+                          //and stores the board in DB
                           var capture = function() {
                               continuous=false;
                               var str = JSON.stringify(lastTags);
@@ -444,10 +524,17 @@
                               var board_present = checkAndStyleBoardCapture(lastTags, videoContBG, captureBtn);
                               if(board_present==4){
                                   // do homography of corners and get which tags are where, see https://uncorkedstudios.com/blog/perspective-transforms-in-javascript
-                                  transTagPositions = getTransformedTags(lastTags, true); //activate console logging
-                                  cardRegions = getBoardRegions(transTagPositions, AreaMap100);
-                                  //TODO: Get from db what card each tag corresponds to
-                                  //TODO: Build the query for the prolog KB
+                                  var transTagPositions = getTransformedTags(lastTags, true); //activate console logging
+                                  var cardRegions = getBoardRegions(transTagPositions, AreaMap100);
+                                  var errors=[];
+                                  errors = doSyntaxChecks(cardRegions,pieces);
+                                  displaySyntaxErrors(errors);
+                                  if(errors.length==0){
+                                      var capturedBoard = lookupCardRegions(cardRegions,pieces);
+                                      var xmlBoard = getXMLFromBoard(capturedBoard);
+                                      doSemanticChecks(xmlBoard); //TODO: should probably have some kind of callback to the next part of the code
+                                  }
+                                  //TODO: save board as a table into the database
                                   //scroll to the board map and feedback
                                   //$('mapareahead').collapse('show'); //For now, the map is always visible
                                   drawBoard();
