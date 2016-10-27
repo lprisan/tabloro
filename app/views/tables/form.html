@@ -444,6 +444,19 @@
                           //Returns an array of error messages to be displayed
                           var doSyntaxChecks = function(cardRegions,pieces){
                             var errors = [];
+                            console.log('Syntax check of cardRegions:\n'+JSON.stringify(cardRegions));
+                            // 0. No card should be outside the designated areas of the board??
+                            if(cardRegions.noarea && cardRegions.noarea.length>0){
+                                var error = {};
+                                error.message = 'There are cards not clearly placed in board cells: ';
+                                error.refs = [];
+                                for(i=0; i<cardRegions.noarea.length; i++){
+                                    error.message = error.message + lookupCardTitleInPieces(cardRegions.noarea[i],pieces) +', ';
+                                    error.refs.push(cardRegions.noarea[i]);
+                                }
+                                error.message = error.message.substring(0,error.message.length-2)
+                                errors.push(error);
+                            }
                             // 1.	There can only be zero or ONE card in single-card cells (all colours except green).
                             // 2.	There can only be zero or one or two cards in a double-card green cell.
                             // 3.	Blue cards can only be on blue cells
@@ -460,6 +473,28 @@
 
                           }
 
+
+                          //Looks up a chilitag number in the array of pieces, and returns the title (without the last part of language and tagno)
+                          var lookupCardTitleInPieces = function(cardNo, pieces){
+
+                              var response = "";
+                              var result = $.grep(pieces, function(e){  if(e.chilitags && e.chilitags[0]){
+                                                                          return (e.chilitags[0] == parseInt(cardNo,10));
+                                                                        }else{
+                                                                          return false;
+                                                                        };});
+                              if(result.length>=1){//we found a card with that chilitag
+                                  console.log('found one');
+                                  var res = result[0];
+                                  response = res.title.substring(0,res.title.lastIndexOf(' ',res.title.lastIndexOf(' ')-1));
+                              }else{
+                                  //Do nothing
+                              }
+                              return response;
+
+                          }
+
+
                           //Converts an object with regions and the associated Chilitags
                           //To a similar object with the card titles instead, for later XML generation
                           var lookupCardRegions = function(cardRegions,pieces){
@@ -470,19 +505,7 @@
                                       board[vars] = "";
                                   }else{
                                       if(typeof cardsInRegion == "string"){
-                                          var result = $.grep(pieces, function(e){  if(e.chilitags && e.chilitags[0]){
-                                                                                      return (e.chilitags[0] == parseInt(cardsInRegion,10));
-                                                                                    }else{
-                                                                                      return false;
-                                                                                    };});
-                                          if(result.length>=1){//we found a card with that chilitag
-                                              console.log('found one');
-                                              var res = result[0];
-                                              board[vars] = res.title.substring(0,res.title.lastIndexOf(' ',res.title.lastIndexOf(' ')-1));
-                                          }else{
-                                              board[vars] = "";
-                                          }
-
+                                          board[vars] = lookupCardTitleInPieces(cardsInRegion,pieces);
                                       }else{ //it's and object i.e. an array
                                           for(var i = 0;i<cardsInRegion.length;i++){
                                               var card = cardsInRegion[i];
@@ -524,6 +547,12 @@
                                   $('#fblist').append('<li class="list-group-item" id="fb1"> <i class="fa fa-check"></i> The board appears to be syntactically correct! </li>');
                               }else{
                                   //TODO: Generate and place the error messages
+                                  $('#fblist').empty();
+                                  $('#fblist').append('<li class="list-group-item" id="fb0"> <strong>Feedback</strong> </li>');
+                                  for(i=0;i<errors.length;i++){
+                                      //TODO: Add also the references to the items for highlighting in the map
+                                      $('#fblist').append('<li class="list-group-item" id="fb'+(i+1)+'"> <i class="fa fa-times"></i> '+errors[i].message+' </li>');
+                                  }
 
                               }
                           }
