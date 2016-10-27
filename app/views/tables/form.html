@@ -206,6 +206,13 @@
                                   // If value is a ?, we add the special question tag (if displaySuggest=true)
                                   else if(value=="?"){
                                       if(displaySuggest){
+                                          //If the ? is in the technique tag, we have to remove the two subtags
+                                          if(restfield=="csw-technique"){
+                                              while (fieldtag.firstChild) {
+                                                  fieldtag.removeChild(fieldtag.firstChild);
+                                              }
+                                          }
+
                                           var qtag = xmlDoc.createElement(QUESTIONTAG);
                                           fieldtag.appendChild(qtag);
                                       }
@@ -437,7 +444,18 @@
                           //Returns an array of error messages to be displayed
                           var doSyntaxChecks = function(cardRegions,pieces){
                             var errors = [];
-                            //TODO!
+                            // 1.	There can only be zero or ONE card in single-card cells (all colours except green).
+                            // 2.	There can only be zero or one or two cards in a double-card green cell.
+                            // 3.	Blue cards can only be on blue cells
+                            // 4.	Red cards can only be on red cells
+                            // 5.	Yellow cards can only be on yellow cells
+                            // 6.	Green cards can only be on green cells
+                            // 7.	Question mark cards can be on any cell of a column that already contains some card(s), or of a column that is directly adjacent to a complete column
+                            // 8.	White cards can be on any cell (-> this is still to be defined, because it has to do with the wild cards  !!!)
+                            // 9.	Objectives, contents and context cards must be on board before starting filling in cells.
+                            // 10.	Blue cells can be empty, even when other cells of the column are full.
+                            // 11.	Request for check card can only be placed on the top left slot devoted to it.
+
                             return errors;
 
                           }
