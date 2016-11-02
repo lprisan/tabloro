@@ -1,6 +1,7 @@
 //TODELETE: short-circuit the capture to test the functionality
 var capturetest = function(){
-  var transTagPositions = {'28': [52.0,50.0]};
+  var transTagPositions = {'28': [52.0,50.0],
+                            '32': [52.1,50.1]};
   var cardRegions = getBoardRegions(transTagPositions, AreaMap100);
   console.log('cardRegions:\n'+JSON.stringify(cardRegions));
   var errors=[];

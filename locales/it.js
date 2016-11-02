@@ -143,5 +143,20 @@
 	"Skype Group Link": "Skype Group Link",
 	"Enter a skype group link for this table, e.g.": "Enter a skype group link for this table, e.g.",
 	"a skype group link": "a skype group link",
-	"User: ": "User: "
+	"User: ": "User: ",
+	"Capture from paper game": "Capture from paper game",
+	"Capture design!": "Capture design!",
+	"Retry": "Retry",
+	"Board Map and Feedback": "Board Map and Feedback",
+	"There are cards not clearly placed in board cells: ": "There are cards not clearly placed in board cells: ",
+	"There too many cards in a single slot: ": "There too many cards in a single slot: ",
+	"Blue cards can only be on the blue slots: ": "Blue cards can only be on the blue slots: ",
+	"Red cards can only be on the red slots: ": "Red cards can only be on the red slots: ",
+	"Yellow cards can only be on the yellow slots: ": "Yellow cards can only be on the yellow slots: ",
+	"Green cards can only be on the green slots: ": "Green cards can only be on the green slots: ",
+	"The content box must be occupied": "The content box must be occupied",
+	"The context box must be occupied": "The context box must be occupied",
+	"The objectives box must be occupied": "The objectives box must be occupied",
+	"The capture card should be placed in the capture slot": "The capture card should be placed in the capture slot",
+	"The question card cannot be placed in a column to the right of an empty column": "The question card cannot be placed in a column to the right of an empty column"
 }
