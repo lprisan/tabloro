@@ -23,13 +23,14 @@ var EurecaServer = require('eureca.io').EurecaServer;
 
 var app = express();
 var port = process.env.PORT || 3000;
-var server = require('http').createServer(app);
-//var https = require('https');
-//var options = {
-//   key  : fs.readFileSync('server.key'),
-//   cert : fs.readFileSync('server.crt')
-//};
-//var server = https.createServer(options, app).listen(3000, function () {console.log('Started HTTPS server!');});
+//var server = require('http').createServer(app);
+//Setup the HTTPS server, see https://www.sitepoint.com/how-to-use-ssltls-with-node-js/
+var https = require('https');
+var opt = {
+   key  : fs.readFileSync('server.key'),
+   cert : fs.readFileSync('server.crt')
+};
+var server = https.createServer(opt, app).listen(3000, function () {console.log('Started HTTPS server!');});
 
 var eurecaServer = new EurecaServer({
   allow: [ // Network client methods
