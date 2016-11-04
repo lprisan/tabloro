@@ -2,7 +2,7 @@
 /*!
  * Tabloro
  * Copyright(c) 2014 Franky Trigub frankyyyy@live.com
- * 
+ *
  */
 /**
  * Module dependencies
@@ -24,7 +24,12 @@ var EurecaServer = require('eureca.io').EurecaServer;
 var app = express();
 var port = process.env.PORT || 3000;
 var server = require('http').createServer(app);
-
+//var https = require('https');
+//var options = {
+//   key  : fs.readFileSync('server.key'),
+//   cert : fs.readFileSync('server.crt')
+//};
+//var server = https.createServer(options, app).listen(3000, function () {console.log('Started HTTPS server!');});
 
 var eurecaServer = new EurecaServer({
   allow: [ // Network client methods
