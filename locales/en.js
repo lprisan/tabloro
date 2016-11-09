@@ -169,5 +169,7 @@
 	"The context box must be occupied": "The context box must be occupied",
 	"The objectives box must be occupied": "The objectives box must be occupied",
 	"The capture card should be placed in the capture slot": "The capture card should be placed in the capture slot",
-	"The question card cannot be placed in a column to the right of an empty column": "The question card cannot be placed in a column to the right of an empty column"
+	"The question card cannot be placed in a column to the right of an empty column": "The question card cannot be placed in a column to the right of an empty column",
+	"The board appears to be syntactically correct!": "The board appears to be syntactically correct!",
+	"Back to capture mode": "Back to capture mode"
 }

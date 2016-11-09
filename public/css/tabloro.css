@@ -637,3 +637,8 @@ a.skype {
     position: absolute;
     left: -30px;
 }
+
+#backCaptBtn {
+    position: relative;
+    float: right;
+}

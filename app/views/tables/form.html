@@ -94,7 +94,7 @@
 
             {% if capture %}
 
-                      <div class="panel panel-default col-sm-offset-3">
+                      <div class="panel panel-default col-sm-offset-3" id="captureWindow">
                         <div class="panel-heading">
                           <h4><a data-toggle="collapse" data-target="#accordionCapture">
                           <i class="fa fa-camera"></i>
@@ -125,7 +125,11 @@
                         <div class="panel-heading" id="mapareahead">
                           <h4>
                           <i class="fa fa-settings"></i>
-                          {{ __('Board Map and Feedback')}}</h4>
+                          {{ __('Board Map and Feedback')}} <a id="backCaptBtn" href="javascript:backCapture();">
+                            {{ __('Back to capture mode')}} &nbsp;
+                            <i class="fa fa-arrow-up"></i>
+                          </a></h4>
+
                         </div>
 
                         <div class="panel-body" id="maparea">
@@ -516,7 +520,7 @@
                             var occupiedCols = [false, false, false, false];
                             for (region in cardRegions){
                                 value = cardRegions[region];
-                                console.log('Syntax checking types of '+JSON.stringify(value));
+                                //console.log('Syntax checking types of '+JSON.stringify(value));
                                 //If There is a card in the slot
                                 if(region!="noarea" && value && typeof value == "string"){
 
@@ -630,10 +634,7 @@
                                 }
                             }
 
-
                             //8. (nothing to do)	White cards can be on any cell (-> this is still to be defined, because it has to do with the wild cards  !!!)
-
-
                             return errors;
 
                           }
@@ -709,7 +710,7 @@
                               $('#fblist').append('<li class="list-group-item" id="fb0"> <strong>Feedback</strong> </li>');
                               if(errors.length==0){
                                   //We display a no errors found message
-                                  $('#fblist').append('<li class="list-group-item" id="fb1"> <i class="fa fa-check"></i> The board appears to be syntactically correct! </li>');
+                                  $('#fblist').append('<li class="list-group-item" id="fb1"> <i class="fa fa-check"></i> '+"{{ __('The board appears to be syntactically correct!')}}"+' </li>');
                               }else{
                                   // Generate and place the error messages
                                   for(i=0;i<errors.length;i++){
@@ -717,7 +718,7 @@
                                       $('#fblist').append('<li class="list-group-item" id="'+fbid+'"> <i class="fa fa-times"></i> '+errors[i].message+' </li>');
                                       //TODO: Add also the references to the items for highlighting in the map
                                       var elem = $('#'+fbid)[0];
-                                      console.log('added element '+elem.innerHTML);
+                                      //console.log('added element '+elem.innerHTML);
                                       elem.refs = errors[i].refs;
                                       elem.addEventListener("mouseover",addCardContour,false);
                                       elem.addEventListener("mouseout",backToOriginalMap,false);
@@ -785,7 +786,7 @@
                                       if(n_preload>=n_images){
                                           preloaded=true;
                                           console.log("Finished preloading images!");
-                                          //capturetest();
+                                          capturetest();
                                       }
                                   };
                                   img.src = image;
@@ -837,6 +838,11 @@
                               captured.appendChild(capturedText);
                               captureBtn.classList.add("disabled");
                               requestAnimationFrame(snapshot);
+                          }
+
+                          var backCapture = function(){
+                              window.scroll(0,findPos(document.getElementById("captureWindow")));
+                              retry();
                           }
 
                           var drawCards = function(tags100, allpieces){
@@ -933,7 +939,7 @@
                             captureBtn.classList.add("disabled");
 
                             var transTagPositions = {'28': [40.0,50.0],
-                                                      '32': [52.5,50.5],
+                                                      '32': [27.5,35.5],
                                                       '24': [54.0,36.0]};
                             drawBoard();
                             drawCards(transTagPositions, pieces, 1412, 875);
