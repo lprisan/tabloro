@@ -701,8 +701,10 @@
                           //to the KB, redirecting the response to a callback and putting a loading icon
                           var doSemanticChecks = function(xmlstring){
                               //TODO!
-                              console.log('Will be sending this file to the KB:\n'+xmlstring);
-
+                              var message = 'Will be sending this file to the KB: '+xmlstring;
+                              console.log(message);
+                              $('#fblist').append('<li class="list-group-item" id="fbZZ"></li>');
+                              $('#fbZZ').append(document.createTextNode(message));
                           }
 
                           var displaySyntaxErrors = function(errors){
@@ -786,7 +788,7 @@
                                       if(n_preload>=n_images){
                                           preloaded=true;
                                           console.log("Finished preloading images!");
-                                          capturetest();
+                                          //capturetest();
                                       }
                                   };
                                   img.src = image;
