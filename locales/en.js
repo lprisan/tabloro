@@ -171,5 +171,15 @@
 	"The capture card should be placed in the capture slot": "The capture card should be placed in the capture slot",
 	"The question card cannot be placed in a column to the right of an empty column": "The question card cannot be placed in a column to the right of an empty column",
 	"The board appears to be syntactically correct!": "The board appears to be syntactically correct!",
-	"Back to capture mode": "Back to capture mode"
+	"Back to capture mode": "Back to capture mode",
+	"Frame width": "Frame width",
+	"Frame height": "Frame height",
+	"Max Frames": "Max Frames",
+	"Successfully created piece!": "Successfully created piece!",
+	"Add to Box": "Add to Box",
+	"Added pieces :::": "Added pieces :::",
+	"::: to box": "::: to box",
+	"Orderd piece :::": "Ordered piece :::",
+	"::: downwards": "::: downwards",
+	"::: upwards": "::: upwards"
 }
