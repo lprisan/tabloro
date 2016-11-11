@@ -171,6 +171,9 @@
                           var captureBtn = document.getElementById('captureBtn');
                           var retryBtn = document.getElementById('captureBtn');
 
+                          var framesSinceCapture = 999; //This counts the frames since last capture, to avoid capture
+                          var FRAMESBETWEENCAPTURES = 10;
+
                           var BOARD_TAGS = ["2","3","4","5"];
                           var OBJECTIVE_TAG = "6";
                           var CONTEXT_TAG = "7";
@@ -451,10 +454,15 @@
                                     if(transTagPositions[CAPTURE_TAG] && transTagPositions[CAPTURE_TAG][0]>AreaMap100['capture'][0][0] &&
                                               transTagPositions[CAPTURE_TAG][0]<AreaMap100['capture'][1][0] &&
                                               transTagPositions[CAPTURE_TAG][1]>AreaMap100['capture'][0][1] &&
-                                              transTagPositions[CAPTURE_TAG][1]<AreaMap100['capture'][1][1]){
+                                              transTagPositions[CAPTURE_TAG][1]<AreaMap100['capture'][1][1] && framesSinceCapture>FRAMESBETWEENCAPTURES){
                                         // if the capture card is inside the capture area, we call capture()
                                         capture();
                                     }
+                                  }
+                                  if(framesSinceCapture>FRAMESBETWEENCAPTURES){
+                                      framesSinceCapture=0;
+                                  }else{
+                                      framesSinceCapture++;
                                   }
 
                               }
@@ -800,7 +808,7 @@
                           //This function is triggered by the capture button/card. Performs all the corresponding checks
                           //and stores the board in DB
                           var capture = function() {
-                            if(preloaded){ //We only allow capture once all piece images have been preloaded and can be drawn
+                            if(preloaded && framesSinceCapture>FRAMESBETWEENCAPTURES){ //We only allow capture once all piece images have been preloaded and can be drawn
                               continuous=false;
                               var str = JSON.stringify(lastTags);
                               var captured = document.getElementById('capturedElements');
@@ -858,26 +866,28 @@
                                       tags100[tag][1]<100){ // We draw only the cards INSIDE the four board tags -- that are not contesto, objettivi, contenuto!
                                         //console.log('found tag '+tag+' at position '+tags100[tag]);
                                         piece = {};
-                                        for(var i = 0; i < pieces.length; i++){
+                                        for(var i = 0; i < allpieces.length; i++){
                                             var tmppiece = allpieces[i];
                                             if(tmppiece['chilitags'][0]==tag){
                                                 piece = tmppiece;
                                                 break;
                                             }
                                         }
-                                        imgid = "img"+piece['image']['files'][0].substring(0,piece['image']['files'][0].indexOf('.'));
-                                        //console.log('Retrieving image '+imgid);
-                                        var img = $('#'+imgid)[0];
-                                        img.xpos = tags100[tag][0]*c.width/100;
-                                        img.ypos = tags100[tag][1]*c.height/100;
-                                        //console.log("Trying to draw "+img.src+" at "+img.xpos+","+img.ypos+" size "+img.width+"x"+img.height);
-                                        ctx.drawImage(img, img.xpos-(img.width/2), img.ypos-(img.height/2)); //we draw the image with the center where the detected tag is
-                                        drawnMap = ctx.getImageData(0,0,c.width,c.height);
-                                        drawnCards[tag] = {
-                                            xpos: img.xpos,
-                                            ypos: img.ypos
-                                        };
-                                        //console.log('added to drawnCards: '+JSON.stringify(drawnCards[tag]));
+                                        if(piece['image'] && piece['image']['files'] && piece['image']['files'][0]){ //If the piece has an image --i.e. we found a piece with that chilitag
+                                            imgid = "img"+piece['image']['files'][0].substring(0,piece['image']['files'][0].indexOf('.'));
+                                            //console.log('Retrieving image '+imgid);
+                                            var img = $('#'+imgid)[0];
+                                            img.xpos = tags100[tag][0]*c.width/100;
+                                            img.ypos = tags100[tag][1]*c.height/100;
+                                            //console.log("Trying to draw "+img.src+" at "+img.xpos+","+img.ypos+" size "+img.width+"x"+img.height);
+                                            ctx.drawImage(img, img.xpos-(img.width/2), img.ypos-(img.height/2)); //we draw the image with the center where the detected tag is
+                                            drawnMap = ctx.getImageData(0,0,c.width,c.height);
+                                            drawnCards[tag] = {
+                                                xpos: img.xpos,
+                                                ypos: img.ypos
+                                            };
+                                            //console.log('added to drawnCards: '+JSON.stringify(drawnCards[tag]));
+                                        }
                                   }
                               }
                           }
