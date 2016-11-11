@@ -658,9 +658,12 @@
                                                                           return false;
                                                                         };});
                               if(result.length>=1){//we found a card with that chilitag
-                                  console.log('found one');
+                                  //console.log('found one');
                                   var res = result[0];
                                   response = res.title.substring(0,res.title.lastIndexOf(' ',res.title.lastIndexOf(' ')-1));
+                                  if(response.length==0){//if we cut out too much of the title, we just cut the last number
+                                      response = res.title.substring(0,res.title.lastIndexOf(' '));
+                                  }
                               }else{
                                   //Do nothing
                               }
