@@ -45,7 +45,8 @@ module.exports = {
       key: process.env.IMAGER_S3_KEY,
       secret: process.env.IMAGER_S3_SECRET,
       bucket: process.env.IMAGER_S3_BUCKET,
-      region: 'us-standard'
+      region: 'us-standard',
+      cdn: 'https://'+process.env.IMAGER_S3_BUCKET+'.s3.amazonaws.com'
     }
   },
 
