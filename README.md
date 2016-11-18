@@ -30,6 +30,7 @@ Released under MIT License https://opensource.org/licenses/MIT
 
 * [Install NodeJS 6](https://nodejs.org/en/download/package-manager/) (as per https://github.com/madhums/node-express-mongoose-demo)
 * [Install MongoDB 3.2](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#install-mongodb-community-edition) (as per https://github.com/madhums/node-express-mongoose-demo)
+* Install libgraphicsmagick, needed for image resizing, etc `sudo apt-get install libgraphicsmagick1-dev`
 * Once you have cloned and checked out this project using git...
 * Run `npm install` (as per https://github.com/madhums/node-express-mongoose-demo)
 * (Optional, if using forever to keep the server up) Run `sudo npm install -g grunt-cli bower forever`
