@@ -446,7 +446,7 @@
                                   fpsText.nodeValue = video.width+"x"+video.height+"--Chilitags processing = " + (end.getTime() - start.getTime()) + "ms  " + str;
                                   // We color the video's containters bg color, and disable the capture button,
                                   // so that we can know when the capture is possible
-
+                                  var rancapture = false;
                                   var board_present = checkAndStyleBoardCapture(lastTags, videoContBG, captureBtn);
                                   if(board_present==4){
                                     // do homography of corners and get which tags are where, see https://uncorkedstudios.com/blog/perspective-transforms-in-javascript
@@ -457,9 +457,10 @@
                                               transTagPositions[CAPTURE_TAG][1]<AreaMap100['capture'][1][1] && framesSinceCapture>FRAMESBETWEENCAPTURES){
                                         // if the capture card is inside the capture area, we call capture()
                                         capture();
+                                        rancapture=true;
                                     }
                                   }
-                                  if(framesSinceCapture>FRAMESBETWEENCAPTURES){
+                                  if(rancapture && framesSinceCapture>FRAMESBETWEENCAPTURES){
                                       framesSinceCapture=0;
                                   }else{
                                       framesSinceCapture++;
