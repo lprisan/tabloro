@@ -825,8 +825,7 @@
                                   // do homography of corners and get which tags are where, see https://uncorkedstudios.com/blog/perspective-transforms-in-javascript
                                   var transTagPositions = getTransformedTags(lastTags, true); //activate console logging
                                   drawBoard();
-                                  
-                                (transTagPositions, pieces);
+                                  drawCards(transTagPositions, pieces);
                                   var cardRegions = getBoardRegions(transTagPositions, AreaMap100);
                                   var errors=[];
                                   errors = doSyntaxChecks(cardRegions,pieces);
