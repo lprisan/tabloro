@@ -825,7 +825,8 @@
                                   // do homography of corners and get which tags are where, see https://uncorkedstudios.com/blog/perspective-transforms-in-javascript
                                   var transTagPositions = getTransformedTags(lastTags, true); //activate console logging
                                   drawBoard();
-                                  drawCards(transTagPositions, pieces);
+                                  
+                                (transTagPositions, pieces);
                                   var cardRegions = getBoardRegions(transTagPositions, AreaMap100);
                                   var errors=[];
                                   errors = doSyntaxChecks(cardRegions,pieces);
@@ -862,6 +863,13 @@
                           var drawCards = function(tags100, allpieces){
                               var c = document.getElementById("boardcanvas");
                               var ctx = c.getContext("2d");
+                              //Board dimensions and how much of it we actually use (between the centers of the corner tags)
+                              var boardw = 1412;
+                              var boardh = 875;
+                              var board_efw = 1299;
+                              var board_efh = 764;
+                              var offsetx = 55;
+                              var offsety = 55;
                               drawnCards = {}; //we erase the data of previously drawn cards
                               for(tag in tags100){
                                   if(tags100[tag][0]>0 &
@@ -881,10 +889,10 @@
                                             imgid = "img"+piece['image']['files'][0].substring(0,piece['image']['files'][0].indexOf('.'));
                                             //console.log('Retrieving image '+imgid);
                                             var img = $('#'+imgid)[0];
-                                            img.xpos = tags100[tag][0]*c.width/100;
-                                            img.ypos = tags100[tag][1]*c.height/100;
+                                            img.xpos = offsetx+(tags100[tag][0]*board_efw/100);
+                                            img.ypos = offsety+(tags100[tag][1]*board_efh/100);
                                             //console.log("Trying to draw "+img.src+" at "+img.xpos+","+img.ypos+" size "+img.width+"x"+img.height);
-                                            ctx.drawImage(img, img.xpos-(img.width/2), img.ypos-(img.height/2)); //we draw the image with the center where the detected tag is
+                                            ctx.drawImage(img, img.xpos-(img.width/2), img.ypos-(img.height*11/20)); //we draw the image with the center where the detected tag is
                                             drawnMap = ctx.getImageData(0,0,c.width,c.height);
                                             drawnCards[tag] = {
                                                 xpos: img.xpos,
