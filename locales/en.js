@@ -181,5 +181,6 @@
 	"::: to box": "::: to box",
 	"Orderd piece :::": "Ordered piece :::",
 	"::: downwards": "::: downwards",
-	"::: upwards": "::: upwards"
+	"::: upwards": "::: upwards",
+	"Successfully created box!": "Successfully created box!"
 }

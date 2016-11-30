@@ -27,6 +27,12 @@ import time
 SPREADSHEET_URL_EN = "https://docs.google.com/spreadsheets/d/17aQHUptQw1W779G23sNhume_IS5h2TMmsOJVh2vo4B0/edit#gid=0"
 SPREADSHEET_URL_IT = ""
 
+BOXNAME_EN = "COMPLETE 4TS BOX EN"
+BOXNAME_IT = ""
+SETUPNAME_EN = "COMPLETE 4TS SETUP EN"
+SETUPNAME_IT = ""
+
+
 def extractFromSpreadsheet(url):
     """Connects to a (authorized) google spreadsheet, and extracts the data 
     from it about the card titles, descriptions, types etc.
@@ -139,9 +145,13 @@ if __name__ == '__main__':
     elem = driver.find_element_by_id("image")
     elem.clear()
     elem.send_keys(filepath)
-    elem.submit() # TODO: Check success and get the piece id?
+    elem.submit() 
+    # TODO: Check success and get the piece id?
+    elem = driver.find_element_by_tag_name("form")
+    cardid = elem.get_attribute('action')
+    card['mongoid'] = cardid #TODO: clean the id!!
+    cardinstances[0] = card #TODO: put the updated card info in cardinstances, for later processing
     # assert "alert-success" in driver.page_source # This does not work
-    print("=================================\nCard upload complete!")
+    print("=================================\nCard upload complete!"+cardid)
     # TODO: For each card, add it to the box set (directly in Mongo?)
-    
     driver.close()
