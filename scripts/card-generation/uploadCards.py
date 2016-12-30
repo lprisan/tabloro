@@ -19,6 +19,12 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 #print 'Number of arguments:', len(sys.argv), 'arguments.'
 #print 'Argument List:', str(sys.argv)
@@ -28,8 +34,10 @@ SPREADSHEET_URL_EN = "https://docs.google.com/spreadsheets/d/17aQHUptQw1W779G23s
 SPREADSHEET_URL_IT = ""
 
 BOXNAME_EN = "COMPLETE 4TS BOX EN"
+#BOXNAME_EN = "4Ts DEMO BOX GENOA OCTOBER"
 BOXNAME_IT = ""
 SETUPNAME_EN = "COMPLETE 4TS SETUP EN"
+#SETUPNAME_EN = "4Ts DEMO SETUP GENOA OCTOBER"
 SETUPNAME_IT = ""
 
 
@@ -90,7 +98,6 @@ def extractFromSpreadsheet(url):
                 card['ind_tech3'] = cardind_tech3
                 card['ind_time3'] = cardind_time3
                 card['tag'] = int(cardtags[j])
-                #TODELETE: Clone a few fields for compatibility with DB structure 
                 card['type4ts'] = cardtype
                 card['chilitags'] = [ card['tag'] ]
                 cardinstances.append(card)
@@ -131,27 +138,68 @@ if __name__ == '__main__':
     assert "capture=true" in driver.page_source
     print('Successful login!')
 
-    # TODO: For each card, we upload the piece
-    #for card in cardinstances:
-    card = cardinstances[0]
-    uploadtitle = (card['title']+' '+lang+' '+str(time.time())).replace("-","_").replace(".","_").replace("(","_").replace(")","_")
-    filepath = dir_path+"/output/digital/"+card['title'].replace(" ","_")+'_'+str(card['tag'])+'_DIGITAL.svg.png'
-    assert os.path.isfile(filepath) 
-    print('Starting upload of '+uploadtitle+' from file '+filepath)
-    driver.get("http://localhost:3000/pieces/new")
-    elem = driver.find_element_by_id("title")
-    elem.clear()
-    elem.send_keys(uploadtitle)
-    elem = driver.find_element_by_id("image")
-    elem.clear()
-    elem.send_keys(filepath)
-    elem.submit() 
-    # TODO: Check success and get the piece id?
-    elem = driver.find_element_by_tag_name("form")
-    cardid = elem.get_attribute('action')
-    card['mongoid'] = cardid #TODO: clean the id!!
-    cardinstances[0] = card #TODO: put the updated card info in cardinstances, for later processing
-    # assert "alert-success" in driver.page_source # This does not work
-    print("=================================\nCard upload complete!"+cardid)
-    # TODO: For each card, add it to the box set (directly in Mongo?)
+    # For each card, we upload the piece
+    for i in range(0,len(cardinstances)-1):
+        #i = 0
+        card = cardinstances[i]
+        uploadtitle = (card['title']+' '+lang+' '+str(time.time())).replace("-","_").replace(".","_").replace("(","_").replace(")","_")
+        filepath = dir_path+"/output/digital/"+card['title'].replace(" ","_")+'_'+str(card['tag'])+'_DIGITAL.svg.png'
+        assert os.path.isfile(filepath) 
+        print('Starting upload of '+uploadtitle+' from file '+filepath)
+        driver.get("http://localhost:3000/pieces/new")
+        elem = driver.find_element_by_id("title")
+        elem.clear()
+        elem.send_keys(uploadtitle)
+        elem = driver.find_element_by_id("image")
+        elem.clear()
+        elem.send_keys(filepath)
+        elem.submit() 
+        # Check success and wait for response to get the piece id?
+        try:
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//h1[starts-with(.,"Piece: ")]')))
+        except TimeoutException:
+            raise Exception('Unable to find text in this element after waiting 10 seconds')
+        elem = driver.find_element_by_tag_name("form")
+        cardid = elem.get_attribute('action')
+        print('cardid '+cardid)
+        pieceid = cardid[(cardid.rindex('/')+1):]
+        card['mongoid'] = pieceid 
+        cardinstances[0] = card
+        print("=================================\nCard upload complete! _id: "+pieceid)
+        client = MongoClient()
+        db = client['noobjs_dev']
+        mypiece = db.pieces.find_one({"_id": ObjectId(pieceid)})    
+        print("Trying to update piece "+str(mypiece['_id']))
+        print(str(card['chilitags']))
+        result = db.pieces.update_one({"_id": ObjectId(pieceid)},
+                                       {
+                                             "$set": {"chilitags": card['chilitags'] , "type4ts": card['type4ts'] }                                  
+                                       })
+        print("Updated "+str(result.modified_count)+" records")                             
+        mybox = db.boxes.find_one({"title": BOXNAME_EN}) # Find the box with the corresponding title BOXNAME_EN
+        print("Trying to update box "+str(mybox['_id']))
+        result = db.boxes.update_one({"title": BOXNAME_EN},
+                                     { 
+                                         "$addToSet": {"pieces": ObjectId(pieceid) },
+                                        "$set": { "order."+str(pieceid) : 3}
+                                     }) # Update the box, adding the piece and the layer (order)
+        print("Updated "+str(result.modified_count)+" record")                             
+        mysetup = db.setups.find_one({"title": SETUPNAME_EN}) # Find the setup with the corresponding title SETUPNAME_EN
+        print("Trying to update setup "+str(mysetup['_id']))
+        mytile = {
+            "frame" : 0,
+            "rotation" : 0,
+            "y" : (250+(2*i)),
+            "x" : (1800+(2*i))
+            }
+        l = len(mysetup['pieces'])
+        result = db.setups.update_one({"title": SETUPNAME_EN},
+                                     { 
+                                         "$addToSet": {"pieces": ObjectId(pieceid) },
+                                        "$set": { "tiles."+str(l) : mytile }
+                                     }) # Update the box, adding the piece and the layer (order)
+        print("Updated "+str(result.modified_count)+" record")       # Update the setup, adding the piece and the tiles 
+        print("--------------------\nCard "+pieceid+" modified, added to box "+str(mybox['_id'])+" and to setup "+str(mysetup['_id']))
+    print("=================================\nCard modifications in DB complete!!")
+    client.close()    
     driver.close()
