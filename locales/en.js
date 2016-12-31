@@ -182,5 +182,9 @@
 	"Orderd piece :::": "Ordered piece :::",
 	"::: downwards": "::: downwards",
 	"::: upwards": "::: upwards",
-	"Successfully created box!": "Successfully created box!"
+	"Successfully created box!": "Successfully created box!",
+	"Could not delete piece, its currently used by ": "Could not delete piece, its currently used by ",
+	" boxes! Please delete the boxes >": " boxes! Please delete the boxes >",
+	"< first. Or remove the piece from these boxes": "< first. Or remove the piece from these boxes",
+	"Test Box: ": "Test Box: "
 }

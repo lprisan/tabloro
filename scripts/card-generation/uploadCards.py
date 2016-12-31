@@ -189,8 +189,8 @@ if __name__ == '__main__':
         mytile = {
             "frame" : 0,
             "rotation" : 0,
-            "y" : (250+(2*i)),
-            "x" : (1800+(2*i))
+            "y" : (1000+(3*i)),
+            "x" : (200+(3*i))
             }
         l = len(mysetup['pieces'])
         result = db.setups.update_one({"title": SETUPNAME_EN},
