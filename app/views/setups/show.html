@@ -30,7 +30,7 @@
           </p>
           {% if (setup.description) %}
             <hr>
-            <h4>Description</h4>
+            <h4>{{ __('Description')}}</h4>
             <pre>{{setup.description}}</pre>
           {% endif %}
         </div>
@@ -39,21 +39,21 @@
 
             {% if (isOwner) %}
               <a class="btn btn-success btn-lg" href="/setups/{{setup.title}}/test" target="_blank">
-                Position Game Tiles &nbsp;
+                {{ __('Position Game Tiles')}} &nbsp;
                 <i class="fa fa-sitemap"></i>
               </a>
             {% else %}
               <a class="btn btn-info btn-lg" href="/setups/{{setup.title}}/test">
-                Test Setup&nbsp;
+                {{ __('Test Setup')}} &nbsp;
                 <i class="fa fa-sitemap"></i>
               </a>
             {% endif %}
             <a class="btn btn-primary btn-lg" href="/tables/new/?setupName={{setup.title}}">
-              Create New Table &nbsp;
+              {{ __('Create New Table')}} &nbsp;
               <i class="fa fa-user"></i>
             </a>
             <a class="btn btn-danger btn-lg" href="/tables/new/?setupName={{setup.title}}&capture=true">
-              Capture a design &nbsp;
+              {{ __('Capture a design')}} &nbsp;
               <i class="fa fa-camera"></i>
             </a>
 

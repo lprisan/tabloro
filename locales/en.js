@@ -18,7 +18,7 @@
 	"Board me Up!": "Board me Up!",
 	"Login": "Login",
 	"Latest Public Tables": "Latest Public Designs",
-	"Capture a design": "Capture a design",
+	"Capture a design": "Capture a NEW design",
 	"Latest Tables": "Latest Designs",
 	"Signup": "Signup",
 	"All Tables": "All Designs",
@@ -186,5 +186,7 @@
 	"Could not delete piece, its currently used by ": "Could not delete piece, its currently used by ",
 	" boxes! Please delete the boxes >": " boxes! Please delete the boxes >",
 	"< first. Or remove the piece from these boxes": "< first. Or remove the piece from these boxes",
-	"Test Box: ": "Test Box: "
+	"Test Box: ": "Test Box: ",
+	"Successfully created design starting point!": "Successfully created design starting point!",
+	"New Design": "New Design"
 }

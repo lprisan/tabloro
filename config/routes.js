@@ -15,6 +15,7 @@ var boxes = require('boxes');
 var setups = require('setups');
 var comments = require('comments');
 var tags = require('tags');
+var designs = require('designs');
 var auth = require('./middlewares/authorization');
 
 /**
@@ -30,6 +31,8 @@ var boxAuth = [auth.requiresLogin, auth.box.hasAuthorization];
 var boxView = [auth.requiresLogin, auth.box.canShow];
 var setupAuth = [auth.requiresLogin, auth.setup.hasAuthorization];
 var setupView = [auth.requiresLogin, auth.setup.canShow];
+var designAuth = [auth.requiresLogin, auth.setup.hasAuthorization];
+var designView = [auth.requiresLogin, auth.setup.canShow];
 var commentAuth = [auth.requiresLogin, auth.comment.hasAuthorization];
 var userAuth = [auth.requiresLogin, auth.user.hasAuthorization];
 
@@ -113,6 +116,9 @@ module.exports = function (app, passport) {
   app.put('/tables/:tableName', tableAuth, tables.update);
   app.get('/tables/:tableName/play', tables.play);
   app.delete('/tables/:tableName', tableAuth, tables.destroy);
+
+  // Design
+  app.get('/designs/new', auth.requiresLogin, designs.new);
 
   // Piece
   app.param('pieceId', pieces.load);

@@ -18,7 +18,7 @@
 	"Board me Up!": "Board me Up!",
 	"Login": "Login",
 	"Latest Public Tables": "Latest Public Tables",
-	"Capture a design": "Capture a design",
+	"Capture a design": "Acquisire un NUOVO progetto",
 	"Latest Tables": "Latest Designs",
 	"Signup": "Signup",
 	"All Tables": "All Designs",

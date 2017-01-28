@@ -40,7 +40,8 @@ var SetupSchema = new Schema({
   user: {type : Schema.ObjectId, ref : 'User'},
   box: {type : Schema.ObjectId, ref : 'Box'},
   pieces: [{type : Schema.ObjectId, ref : 'Piece', unique: true}],
-  counts: {type: Object, default: {}}
+  counts: {type: Object, default: {}},
+  is4Ts: {type: Boolean, default : false}
 });
 
 /**

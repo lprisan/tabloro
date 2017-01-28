@@ -18,7 +18,7 @@
 	"Board me Up!": "¡Regístrame!",
 	"Login": "Entrar",
 	"Latest Public Tables": "Últimos diseños (públicos)",
-	"Capture a design": "Captura tu diseño",
+	"Capture a design": "Captura un NUEVO diseño",
 	"Latest Tables": "Últimos diseños",
 	"Signup": "Registrarse",
 	"All Tables": "Todos los diseños",
