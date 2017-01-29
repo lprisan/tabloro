@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var Setup = mongoose.model('Setup');
 var Piece = mongoose.model('Piece');
 var Table = mongoose.model('Table');
+var Box = mongoose.model('Box');
 var utils = require('../../lib/utils');
 var R = require('../../public/js/ramda.js');
 
@@ -86,6 +87,7 @@ exports.new = function (req, res) {
 
           setup._id = mongoose.Types.ObjectId();
           setup.isNew = true; //<--------------------IMPORTANT
+          setup.is4Ts = true;
           setup.title = req.param('designName');
           setup.save(function (err) {
               if (!err) {
@@ -100,17 +102,41 @@ exports.new = function (req, res) {
               if(req.param('capture')){
                   capture = (req.param('capture') === 'true');
               }
-              //Render new/capture design form, with the duplicate setup already associated there
-              res.render('designs/new', {
-                  title: req.i18n.__('New Design') + ': ' + setup.title,
-                  setup: setup,
-                  box: req.box,
-                  capture: capture
-              });
-          });
-      });
-    }
-};
+              var table = new Table({});
+              table.setup = setup;
+              table.box = setup.box;
+              table.tiles = setup.tiles || {};
+              //Load the pieces in the setup
+              Piece.list({ criteria: {'_id': {$in: setup.pieces }}}, function (err, unsortedPieces) {
+                  if (err) {
+                      console.log(err);
+                      req.flash('alert', err);
+                      return res.redirect('/');
+                      //TODO: Fix this redirection and showing of error message!
+                  }
+                  //TODO: ensure that the pieces are listed in the same order as they appear in the setup.pieces array!!
+                  //Get the box too, we need it to know the board piece
+                  Box.load(setup.box, function (err, box) {
+                      if (err) return next(err);
+                      if (!box) return next(new Error('not found'));
+                      //Return the new/capture form, along with the data
+                      //Render new/capture design form, with the duplicate setup already associated there
+                      res.render('designs/new', {
+                          title: req.i18n.__('New Design') + ': ' + setup.title,
+                          setup: setup,
+                          box: box.order,
+                          capture: capture,
+                          setupPieces: unsortedPieces,
+                          table: table
+                      });//end render
+                  });//end box load
+              });//end piece list
+
+
+          }); //end setup.save
+      });//end setup.load
+    }//end if
+};//end exports.new
 
 
 

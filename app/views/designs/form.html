@@ -29,7 +29,7 @@
                 <div class="input-group-addon">
                   <i class="fa fa-asterisk fa-fw"></i>
                 </div>
-                <input type="text" disabled name="title" value="{{ setup.title }}" placeholder="{{ __('Enter the name of your table')}}" class="form-control" id="title" required="true">
+                <input type="text" disabled name="title" value="" placeholder="{{ __('Enter the name of your table')}}" class="form-control" id="title" required="true">
               </div>
             </div>
           </div>
@@ -148,7 +148,29 @@
 
                       <div id="invisibleimgs" style="display:none;"></div>
 
-                      <script>
+                      <script type="text/javascript">
+                          //already included in the table??
+                          var pieces = {% if setupPieces %}{{JSON.stringify(setupPieces)}}{% else %}[]{% endif %};
+                          console.log("Pieces (UNSORTED!): "+JSON.stringify(pieces));
+                          var table = {% if table %}{{JSON.stringify(table)}}{% else %}{}{% endif %};
+                          console.log("Table: "+JSON.stringify(table));
+                          //Additional variables with the localized error messages, used in capturedesign.js
+                          var MSG_NOTCLEARPLACE = "{{ __('There are cards not clearly placed in board cells: ')}}";
+                          var MSG_TOOMANY = "{{ __('There too many cards in a single slot: ')}}";
+                          var MSG_BLUECARDSLOTS = "{{ __('Blue cards can only be on the blue slots: ')}}";
+                          var MSG_REDCARDSLOTS = "{{ __('Red cards can only be on the red slots: ')}}";
+                          var MSG_YELLOWCARDSLOTS = "{{ __('Yellow cards can only be on the yellow slots: ')}}";
+                          var MSG_GREENCARDSLOTS = "{{ __('Green cards can only be on the green slots: ')}}";
+                          var MSG_CONTENTBOX = "{{ __('The content box must be occupied')}}";
+                          var MSG_CONTEXTBOX = "{{ __('The context box must be occupied')}}";
+                          var MSG_OBJECTIVEBOX = "{{ __('The objectives box must be occupied')}}";
+                          var MSG_CAPTURECARDSLOT = "{{ __('The capture card should be placed in the capture slot')}}";
+                          var MSG_QUESTIONEMPTY = "{{ __('The question card cannot be placed in a column to the right of an empty column')}}";
+                          var MSG_SYNTAXCORRECT = "{{ __('The board appears to be syntactically correct!')}}";
+
+                      </script>
+                      <script src='/js/capturedesign.js'></script>
+                      <!--script>
                           var pieces = {% if setupPieces %}{{JSON.stringify(setupPieces)}}{% else %}[]{% endif %};
                           console.log("Pieces: "+JSON.stringify(pieces));
                           var table = {% if table %}{{JSON.stringify(table)}}{% else %}{}{% endif %};
@@ -981,7 +1003,7 @@
                           }
 
 
-                      </script>
+                      </script-->
 
 
 
