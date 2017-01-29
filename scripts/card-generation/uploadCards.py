@@ -200,6 +200,14 @@ if __name__ == '__main__':
                                      }) # Update the box, adding the piece and the layer (order)
         print("Updated "+str(result.modified_count)+" record")       # Update the setup, adding the piece and the tiles 
         print("--------------------\nCard "+pieceid+" modified, added to box "+str(mybox['_id'])+" and to setup "+str(mysetup['_id']))
+    # Add the is4Ts parameter to the setup
+    mysetup = db.setups.find_one({"title": SETUPNAME_EN}) # Find the setup with the corresponding title SETUPNAME_EN
+    print("Trying to finalize update setup "+str(mysetup['_id']))
+    result = db.setups.update_one({"title": SETUPNAME_EN},
+                                     { 
+                                        "$set": { "is4Ts" : true }
+                                     }) # Update the setup, is4Ts
+    print("Updated "+str(result.modified_count)+" record")
     print("=================================\nCard modifications in DB complete!!")
     client.close()    
     driver.close()
