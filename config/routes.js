@@ -118,7 +118,10 @@ module.exports = function (app, passport) {
   app.delete('/tables/:tableName', tableAuth, tables.destroy);
 
   // Design
-  app.get('/designs/new', auth.requiresLogin, designs.new);
+  app.param('designId', designs.load);
+  app.get('/designs/new', auth.requiresLogin, designs.new); //This creates the design starting point (setup)
+  app.get('/designs/:designId/capture', auth.requiresLogin, designs.capture);
+  app.post('/designs/:designId/createVersion', auth.requiresLogin, designs.createVersion);
 
   // Piece
   app.param('pieceId', pieces.load);

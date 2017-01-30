@@ -188,5 +188,7 @@
 	"< first. Or remove the piece from these boxes": "< first. Or remove the piece from these boxes",
 	"Test Box: ": "Test Box: ",
 	"Successfully created design starting point!": "Successfully created design starting point!",
-	"New Design": "New Design"
+	"New Design": "New Design",
+	"Latest Stored Design Version": "Latest Stored Design Version",
+	"Latest design version Name/ID": "Latest design version Name/ID"
 }

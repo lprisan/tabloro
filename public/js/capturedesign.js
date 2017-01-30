@@ -698,7 +698,7 @@ var updateTableTilesCapture = function(tags100){
                     break;
                 }
             }
-            //TODO: Modify the tiles of the table to reflect positions
+            //Modify the tiles of the table to reflect positions
             //Find the tile index for this piece
             var tileindex = 0;
             for(var index=0; index<table.setup.pieces.length; index++){
@@ -742,22 +742,47 @@ var capture = function() {
         table.rawchilitags = transTagPositions;
         drawBoard();
         drawCards(transTagPositions, pieces);
+        console.log('Tiles before update: '+table.tiles);
         updateTableTilesCapture(transTagPositions);
+        console.log('Tiles after update: '+table.tiles);
 
         var cardRegions = getBoardRegions(transTagPositions, AreaMap100);
         var capturedBoard = lookupCardRegions(cardRegions,pieces);
         console.log('DELETEME: Capture! card regions: '+JSON.stringify(capturedBoard));
         table.cardsboard = capturedBoard;
-        //TODO: save board as a table into the database
+        //save board as a table into the database
         table.title = table.setup.title + ' ' + Date.now();
-        console.log('DELETEME: Here I would try to insert in db the table: '+JSON.stringify(table));
+        console.log('DELETEME: try to insert in db the table: '+JSON.stringify(table));
+        var fd = new FormData(document.forms[0]); //To get the csrf token and other stuff
+        fd.append('table', JSON.stringify(table));
+        $.ajax({
+          url: "/designs/"+table.setup._id+"/createVersion",
+          type: "POST",
+          data: fd,
+          processData: false,
+          contentType: false,
+          success: function(id) {
+            console.log('id', id);
+            $('#title').val(table.title+' ('+id+')');
+            //TODO: establish two semaphores for both this call and the call to KB?
+            //document.location.pathname = '/pieces/' + id;
+          },
+          error: function (err) {
+            console.error(err);
+            alert(err.responseJSON ? err.responseJSON.errors.title.message + ': ' + err.responseJSON.errors.title.value : err.statusText );
+            //TODO: establish two semaphores for both this call and the call to KB?
+            return false;
+          }
+        });
+
 
         var errors=[];
         errors = doSyntaxChecks(cardRegions,pieces);
         displaySyntaxErrors(errors);
         if(errors.length==0){
             var xmlBoard = getXMLFromBoard(capturedBoard);
-            doSemanticChecks(xmlBoard); //TODO: should probably have some kind of callback to the next part of the code
+            doSemanticChecks(xmlBoard);
+            //TODO: should probably have some kind of callback to the next part of the code (via semaphores?)
         }
 
 

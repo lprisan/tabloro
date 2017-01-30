@@ -85,6 +85,21 @@ SetupSchema.methods = {
 SetupSchema.statics = {
 
   /**
+   * Find setup by title
+   *
+   * @param {String} title
+   * @param {Function} cb
+   * @api private
+   */
+
+  load: function (title, cb) {
+    this.findOne({ title : title })
+    .populate('user', 'name username')
+    .populate('box', 'title gameType image order')
+    .exec(cb);
+  },
+
+  /**
    * Find setup by id
    *
    * @param {ObjectId} id
@@ -92,8 +107,8 @@ SetupSchema.statics = {
    * @api private
    */
 
-  load: function (title, cb) {
-    this.findOne({ title : title })
+  loadById: function (id, cb) {
+    this.findOne({ _id : id })
     .populate('user', 'name username')
     .populate('box', 'title gameType image order')
     .exec(cb);

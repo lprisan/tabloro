@@ -46,6 +46,8 @@ var TableSchema = new Schema({
   user: {type : Schema.ObjectId, ref : 'User'},
   setup: {type : Schema.ObjectId, ref : 'Setup'},
   box: {type : Schema.ObjectId, ref : 'Box'},
+  rawchilitags: {type: Object, default: {}},
+  cardsboard: {type: Object, default: {}},
 });
 
 /**
