@@ -1,0 +1,69 @@
+{% extends 'design_frame.html' %}
+
+
+{% block image %}
+  <span class="text-center small text-primary">Started {{ design.createdAt.toISOString()|date('G:i') }}</span>
+
+  <br>
+
+    <!--span class="text-primary">
+      {% if (table.rtcAudio) %}
+          &nbsp;
+          <i class="fa fa-microphone"></i>
+      {% endif %}
+      {% if (table.rtcVideo) %}
+          &nbsp;
+          <i class="fa fa-video-camera"></i>
+      {% endif %}
+      {% if (table.phone) %}
+          &nbsp;
+          <i class="fa fa-phone"></i>
+      {% endif %}
+      {% if (table.skype) %}
+          &nbsp;
+          <i class="fa fa-skype"></i>
+      {% endif %}
+      {% if (table.rules) %}
+          &nbsp;
+          <i class="fa fa-institution fa-fw"></i>
+    {% endif %}
+  </span-->
+
+<!--TODO: Re-introduce or modify tags functionality?-->
+<!--    {% if design.tags.length %}
+      <span class="small">
+        tags &nbsp;
+        {% for tag in design.tags.split(',') %}
+          <i class="muted fa fa-tag"></i>&nbsp;
+          <a href="{{ '/tags/' + tag }}" class="tag">{{ tag }}</a>
+          &nbsp;&nbsp;
+        {% endfor %}
+      </span>
+    <br/>
+    {% endif %}-->
+
+<!--TODO: Re-introduce or modify the counting of players?-->
+<!--    {% if table.players.length === 0 %}
+      <em>no players yet</em>
+    {% else %}
+      {% for user in table.players %}
+        &nbsp;<i class="fa fa-user fa-lg" style="color: #7F9"></i>
+      {% endfor %}
+    {% endif %}-->
+
+{% endblock %}
+
+
+
+{% block footer %}
+  <a href="{% if (req.isAuthenticated()) %}/designs/{{ design._id.toString() }}{% else %}/login{%endif%}" class="btn {% if (design.isPrivate) %}btn-warning{% else %}btn-primary{% endif %} btn-block btn-square">
+    <i class="fa fa-play"></i>&nbsp;
+    {% if (design.isPrivate) %}
+      <i class="fa fa-key"></i>
+    {% endif %}
+    {% if (design.user.id === req.user.id) %}
+      <i class="fa fa-home" title="Yours"></i>
+    {% endif %}
+    <strong>{{design.title | title}}</strong>
+  </a>
+{% endblock %}

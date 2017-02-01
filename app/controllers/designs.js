@@ -46,25 +46,25 @@ exports.index = function (req, res) {
     var perPage = 30;
     var options = {
         perPage: perPage,
-        page: page
+        page: page,
+        criteria: {
+          is4Ts: true,     //Designs are setups with is4Ts=true
+          _id : { "$ne": mongoose.Types.ObjectId("583f1c5f6d504c9100d6ff8b") } //TODO: This is the 'original' setup for designs. Maybe add other exceptions later (in other languages)
+        }
     };
 
     if (req.param('userId')) {
-        options.criteria = {
-            user: req.user
-        };
+        options.criteria.user = req.user;
     }
-    //Designs are setups with is4Ts=true
-    options.criteria.is4Ts = true;
 
-    Setup.list(options, function (err, setups) {
+    Setup.list(options, function (err, designs) {
         if (err) return res.render('500');
 
         Setup.count(options.criteria).exec(function (err, count) {
             res.render('designs/index', {
                 title: req.query.pick ? req.i18n.__('Pick design') : req.param('userId') ? req.i18n.__('Your Designs'): req.i18n.__('Designs'),
                 subtitle: req.query.pick ? req.i18n.__('Pick a design for your ') + req.query.pick : '',
-                setups: setups,
+                designs: designs,
                 page: page + 1,
                 pages: Math.ceil(count / perPage),
                 pick: req.query.pick

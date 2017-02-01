@@ -154,27 +154,26 @@
                   {% if (req.isAuthenticated()) %}
 
                   <a class="btn btn-danger btn-lg" id="captureDesignLink" href="#">
-                    {{ __('Capture a design')}} &nbsp;
+                    {{ __('Capture a NEW design')}} &nbsp;
                     <i class="fa fa-camera"></i>
                   </a>
 
                   {% endif %}
 
 
-                    <h4>{{ __('Latest Public Tables')}}
-                        <a class="btn btn-info btn-s" href="/tables">
+                    <h4>{{ __('Latest Public Designs')}}
+                        <a class="btn btn-info btn-s" href="/designs">
                             <i class="fa fa-search"></i>
                             &nbsp; {{ __('find more...')}}
                         </a>
                     </h4>
                     <br/>
                     <div class="row">
-                        {% if (tables.length) %}
-                            {% for table in tables %}
-                                {% include '../tables/table.html' %}
+                        {% if (designs.length) %}
+                            {% for design in designs %}
+                                {% include '../designs/design.html' %}
                             {% endfor %}
                         {% endif %}
-                        {% include '../tables/create_table.html' %}
                     </div>
                     </a>
                 </div>

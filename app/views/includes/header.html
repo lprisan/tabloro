@@ -61,15 +61,21 @@
         <li>
             <a href="/#current_games">
               <i class="fa fa-rocket fa-fw"></i>&nbsp;
-              {{ __('Latest Tables')}}
+              {{ __('Latest Public Designs')}}
             </a>
         </li>
 
         {% if (req.isAuthenticated()) %}
             <li>
-                <a href="/tables">
+                <a href="/designs">
                     <i class="fa fa-search fa-fw"></i>&nbsp;
-                    {{ __('All Tables')}}
+                    {{ __('All Designs')}}
+                </a>
+            </li>
+            <li>
+              <a id="captureDesignLinkMenu" href="#">
+                    <i class="fa fa-camera fa-fw"></i>&nbsp;
+                    {{ __('Capture a NEW design')}}
                 </a>
             </li>
         {% endif %}
@@ -87,14 +93,13 @@
               {% if (req.isAuthenticated()) %}
                 <ul class="list-unstyled" >
 
-                  <li>
-                    <a id="captureDesignLinkMenu" href="#">
-                          <i class="fa fa-camera fa-fw"></i>&nbsp;
-                          {{ __('Capture a design')}}
-                      </a>
-                  </li>
+
+
 
                   {% if (isAdmin) %}
+                  <p class="navbar-text">-----Tabloro [DANGER ZONE]-----</p>
+                  <div class="clearfix"></div>
+
                   <li>
                       <a href="/pieces">
                           <i class="fa fa-puzzle-piece fa-fw"></i>&nbsp;
@@ -113,6 +118,13 @@
                       <a href="/setups">
                           <i class="fa fa-sitemap fa-fw"></i>&nbsp;
                           {{ __('Game Setups')}}
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="/tables">
+                          <i class="fa fa-gamepad fa-fw"></i>&nbsp;
+                          {{ __('Tabloro Tables')}}
                       </a>
                   </li>
                 </ul>

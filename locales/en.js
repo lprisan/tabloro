@@ -19,9 +19,9 @@
 	"Login": "Login",
 	"Latest Public Tables": "Latest Public Designs",
 	"Capture a design": "Capture a NEW design",
-	"Latest Tables": "Latest Designs",
+	"Latest Tables": "Latest Tables",
 	"Signup": "Signup",
-	"All Tables": "All Designs",
+	"All Tables": "All Tables",
 	"Gaming Pieces": "Gaming Pieces",
 	"Game Boxes": "Game Boxes",
 	"Game Setups": "Game Setups",
@@ -190,5 +190,12 @@
 	"Successfully created design starting point!": "Successfully created design starting point!",
 	"New Design": "New Design",
 	"Latest Stored Design Version": "Latest Stored Design Version",
-	"Latest design version Name/ID": "Latest design version Name/ID"
+	"Latest design version Name/ID": "Latest design version Name/ID",
+	"Latest Public Designs": "Latest Public Designs",
+	"Designs": "Designs",
+	"Capture a NEW design": "Capture a NEW design",
+	"Your Designs": "Your Designs",
+	"All Designs": "All Designs",
+	"Tabloro Tables": "Tabloro Tables",
+	"No designs yet": "No designs yet"
 }

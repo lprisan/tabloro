@@ -1,0 +1,63 @@
+{% extends '../layouts/default.html' %}
+
+{% block main %}
+    <h1>{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+
+  <div class="text-center">
+
+    <div class="about">
+      <h2>{{subtitle}}</h2>
+      {% if (!pick && req.isAuthenticated()) %}
+        <a class="btn btn-success" id="captureDesignLink" href="#">
+          <i class="fa fa-plus-circle"></i>
+          {{ __('Capture a NEW design')}}
+        </a>
+
+        {% set model = 'designs' %}
+        {% set icon = 'fa-sitemap' %}
+        {% include '../includes/yours_all.html' with model; icon all %}
+
+        <!--a class="btn btn-info" href="http://www.instructables.com/id/How-to-make-your-board-card-games-playable-in-the-/" target="_blank" ><i class="fa fa-info"></i> Show the Instructable Guide</a-->
+      {% endif %}
+
+    </div>
+
+    {% if (designs.length) %}
+      {% for design in designs %}
+        {% if (!design.isPrivate || design.user.id === req.user.id || isAdmin) %}
+          {% include 'design.html' %}
+        {% endif %}
+      {% endfor %}
+
+      {% if (!pick) %}
+      {% endif %}
+      {% if (pages > 1) %}
+        <div class="clearfix"></div>
+        <ul class="pagination">
+          {% autoescape false %}
+            {{ createPagination(pages, page) }}
+          {% endautoescape %}
+        </ul>
+      {% endif %}
+
+    {% else %}
+      <h4 class="muted">
+        {{ __('No designs yet')}}.&nbsp;
+      </h4>
+      {% if (!pick) %}
+      {% endif %}
+    {% endif %}
+
+
+
+
+  </div>
+
+  <div class="clearfix"></div>
+  <div class="about"></div>
+
+
+{% endblock %}
