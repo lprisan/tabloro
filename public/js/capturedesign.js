@@ -693,7 +693,8 @@ var updateTableTilesCapture = function(tags100){
             //Find the piece for this tag
             for(var i = 0; i < pieces.length; i++){
                 var tmppiece = pieces[i];
-                if(tmppiece['chilitags'][0]==tag){
+                if(tmppiece['chilitags'][0].toString()===tag){
+                    console.log("DELETEME found piece during update"+JSON.stringify(tmppiece));
                     piece = tmppiece;
                     break;
                 }
@@ -703,6 +704,7 @@ var updateTableTilesCapture = function(tags100){
             var tileindex = 0;
             for(var index=0; index<table.setup.pieces.length; index++){
                 if(table.setup.pieces[index]==piece._id){
+                    console.log("DELETEME piece has an index "+index);
                     tileindex = index;
                     break;
                 }
@@ -714,6 +716,7 @@ var updateTableTilesCapture = function(tags100){
             absx = boardtile.x - (boardw/2) + xpos;
             absy = boardtile.y - (boardh/2) + ypos;
             //Update the tile position
+            console.log("DELETEME trying to update piece "+JSON.stringify(table.tiles[tileindex]));
             table.tiles[tileindex].x = Math.floor(absx);
             table.tiles[tileindex].y = Math.floor(absy);
             console.log('DELETEME: updated tile position for piece: '+piece._id+' - '+JSON.stringify(table.tiles[tileindex]));

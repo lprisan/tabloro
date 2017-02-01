@@ -95,7 +95,7 @@
     <div class="container">
       <ul class="list-group">
           <li class="list-group-item list-group-item-warning">{{ __('Design versions')}}</li>
-          {% if (versions) %}
+          {% if (versions && versions.length>0) %}
               {% for version in versions %}
               <li class="list-group-item meta">
                 <i class="muted fa fa-code-fork"></i>&nbsp;
