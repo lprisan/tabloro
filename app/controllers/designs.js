@@ -86,6 +86,8 @@ exports.new = function (req, res) {
           if (!setup) return next(new Error('not found'));
 
           setup._id = mongoose.Types.ObjectId();
+          setup.user = req.user;
+
           setup.isNew = true; //<--------------------IMPORTANT
           setup.is4Ts = true;
           setup.title = req.param('designName');
@@ -114,6 +116,7 @@ exports.capture = function (req, res) {
   // }
   var capture=true; //By default, this is always true now
   var table = new Table({});
+  table.user = req.user;
   table.setup = req.setup;
   table.box = req.setup.box;
   table.tiles = req.setup.tiles || {};
