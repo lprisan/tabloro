@@ -197,5 +197,15 @@
 	"Your Designs": "Your Designs",
 	"All Designs": "All Designs",
 	"Tabloro Tables": "Tabloro Tables",
-	"No designs yet": "No designs yet"
+	"No designs yet": "No designs yet",
+	"Position Game Tiles": "Position Game Tiles",
+	"Create New Table": "Create New Table",
+	"Design": "Design",
+	"Capture a version of this design": "Capture a version of this design",
+	"This Design is Public": "This Design is Public",
+	"Delete Design": "Delete Design",
+	"Design versions": "Design versions",
+	"There are no recorded versions of this design yet": "There are no recorded versions of this design yet",
+	"Back to designs": "Back to designs",
+	"Test Setup": "Test Setup"
 }

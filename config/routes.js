@@ -124,6 +124,8 @@ module.exports = function (app, passport) {
   app.post('/designs/:designId/createVersion', auth.requiresLogin, designs.createVersion);
   app.get('/designs', designs.index);
   app.get('/users/:userId/designs', userAuth, designs.index);
+  app.get('/designs/:designId', auth.requiresLogin, designs.show);
+  //app.delete('/designs/:designId', setupAuth, designs.destroy); //Wait until we decide what to do with it
 
   // Piece
   app.param('pieceId', pieces.load);

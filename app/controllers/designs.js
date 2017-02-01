@@ -150,6 +150,7 @@ exports.createVersion = function (req, res) {
     formtable._id = mongoose.Types.ObjectId();
     formtable.user = req.user;
     formtable.stacks = {};
+    formtable.createdAt = Date.now();
     formtable.tags = ""; //For now, we do not use tags of the tables/designversions
     console.log('DELETEME parsed table from form, and added new fields: '+ formtable._id);
     var table = new Table(formtable);
@@ -183,100 +184,55 @@ exports.createVersion = function (req, res) {
 
 
 /**
- * Create a design
+ * Show
  */
-// TODO!!!
-// exports.create = function (req, res) {
-//     console.log('create design', req.body);
-//     var setup = new Setup(req.body);
-//
-//     var box = req.box;
-//     setup.box = box;
-//
-//     setup.user = req.user;
-//     setup.tiles = new TILE_DEFAULTS();
-//     setup.counts = box.counts;
-//     setup.pieces = box.pieces;
-//     setup.isPrivate = box.isPrivate;
-//
-//     setup.save(function (err) {
-//         if (!err) {
-//             req.flash('success', req.i18n.__('Successfully created game setup!'));
-//             return res.redirect('/boxes/' + box.id + '/setups/' + setup.title);
-//         }
-//         console.log(err);
-//         res.render('setups/new', {
-//             title: req.i18n.__('New Game Setup'),
-//             setup: setup,
-//             box: req.box,
-//             errors: utils.errors(err.errors || err)
-//         });
-//     });
-// };
-//
-//
-//
-// /**
-//  * Show
-//  */
-//
-// exports.show = function (req, res) {
-//     var setup = req.setup;
-//
-//
-//     Setup.load(setup.title, function (err, setup) {
-//         if (err) return next(err);
-//         if (!setup) return next(new Error('not found'));
-//         req.setup = setup;
-//         res.render('setups/show', {
-//             title: req.i18n.__('Game Setup'),
-//             setup: setup,
-//             box: req.box,
-//             isOwner: setup.user.id === req.user.id
-//         });
-//     });
-//
-// };
-//
-//
+
+exports.show = function (req, res) {
+    var setup = req.setup;
+
+    var criteria = {
+      setup: setup._id
+    }
+
+    Table.list({ criteria , sort: {createdAt:-1} }, function (err, sortedTables) {
+        if (err) {
+            console.log(err);
+            req.flash('alert', err);
+            return res.redirect('/designs');
+            //TODO: Fix this redirection and showing of error message!
+        }
+        req.setup = setup;
+        console.log('rendering design with versions '+sortedTables.length)
+        //Getting the box too IS NOT NEEDED, it comes with the table, we need it to know the board piece
+        res.render('designs/show', {
+          title: req.i18n.__('Design'),
+          setup: setup,
+          box: req.box,
+          versions: sortedTables,
+          isOwner: setup.user.id === req.user.id
+        });//end render
+    });//end piece list
+
+    //setup load not needed again??
+    // Setup.load(setup.title, function (err, setup) {
+    //     if (err) return next(err);
+    //     if (!setup) return next(new Error('not found'));
+    //     req.setup = setup;
+    //
+    //     res.render('setups/show', {
+    //         title: req.i18n.__('Design'),
+    //         setup: setup,
+    //         box: req.box,
+    //         versions:
+    //         isOwner: setup.user.id === req.user.id
+    //     });
+    // });
+
+};
+
 //
 // /**
-//  * Test a setup
-//  */
-//
-// exports.test = function (req, res) {
-//     var setup = req.setup;
-//     var box = setup.box;
-//     setup.order = setup.box.order;
-//
-//
-//     Piece.list({ criteria: {'_id': {$in: setup.pieces }}}, function (err, unsortedPieces) {
-//         if (err) {
-//             req.flash('alert', req.i18n.__('Cannot test game stup!'));
-//             return res.redirect('/boxes/' + box._id + '/setups/' + setup.title);
-//         }
-//
-//         var assets = utils.generateAssets(setup, unsortedPieces);
-//         var isOwner = setup.user.id === req.user.id;
-//
-//
-//         res.render('game/test', {
-//             title: req.i18n.__('Test Game Setup: ') + setup.title,
-//             game: setup.box,
-//             room: setup,
-//             user: req.user,
-//             assets: assets,
-//             mode: 'setup',
-//             isOwner: isOwner,
-//             backUrl: '/boxes/' + setup.box.id + '/setups/' + setup.title
-//         });
-//
-//     });
-// };
-//
-//
-// /**
-//  * Delete a setup
+//  * Delete a setup (actually, for now just mark it as deleted, we may want to preserve it for analysis)
 //  */
 //
 // exports.destroy = function (req, res) {

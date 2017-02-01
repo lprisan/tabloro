@@ -1,0 +1,130 @@
+{% extends '../layouts/default.html' %}
+
+{% block main %}
+  <h1>
+
+    {{ title }}
+  </h1>
+{% endblock %}
+
+{% block content %}
+  <section class="container">
+    <div class="spacer"></div>
+
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>
+            <i class="fa fa-sitemap pull-left muted"></i>
+            {{setup.title | title}}
+          </h4>
+        </div>
+        <div class="panel-body">
+          {% if (setup.description) %}
+            <hr>
+            <h4>{{ __('Description')}}</h4>
+            <pre>{{setup.description}}</pre>
+          {% endif %}
+        </div>
+        <div class="panel-footer">
+          <div class="btn-group btn-group-justified">
+
+            <a class="btn btn-danger btn-lg" href="/designs/{{setup._id.toString()}}/capture">
+              {{ __('Capture a version of this design')}} &nbsp;
+              <i class="fa fa-camera"></i>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <ul class="list-group">
+        {% if (setup.isPrivate) %}
+          <li class="list-group-item list-group-item-warning">{{ __('This Design is Private')}}</li>
+        {% else %}
+          <li class="list-group-item list-group-item-success">{{ __('This Design is Public')}}</li>
+        {% endif %}
+
+
+        <li class="list-group-item list-group-item-default">
+          {{ __('Created by')}}
+          <strong class="pull-right">{{setup.user.username}}</strong>
+        </li>
+
+
+
+        <li class="list-group-item list-group-item-default">Created {{ setup.createdAt.toISOString()|date('M d,  h:i a') }}</li>
+        {% if (setup.tags) %}
+          <li class="list-group-item meta">
+            <p>
+            {{ __('Tags')}}: &nbsp;
+            {% for tag in setup.tags.split(',') %}
+              <i class="muted fa fa-tag"></i>&nbsp;
+              <a href="{{ '/tags/' + tag }}" class="tag">{{ tag }}</a>
+              &nbsp;&nbsp;
+            {% endfor %}
+            </p>
+          </li>
+        {% endif %}
+        {% if isOwner || isAdmin %}
+<!--           <li class="list-group-item list-group-item-warning">
+            <a href="{{ '/setups/' + setup.title + '/edit' }}" title="edit" class="btn btn-warning">
+              Edit Game Setup
+            </a>
+          </li> -->
+          <li class="list-group-item list-group-item-danger">
+            <form action="{{ '/designs/' + setup._id }}" method="post" onsubmit="return confirm('{{ __('Are you sure?')}}')">
+              <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+              <input type="hidden" name="_method" value="DELETE">
+              <button class="btn btn-danger" type="submit">{{ __('Delete Design')}}</button>
+            </form>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+
+
+  </section>
+
+  <div class="spacer"></div>
+
+  <section class="bg-warning about">
+    <div class="container">
+      <ul class="list-group">
+          <li class="list-group-item list-group-item-warning">{{ __('Design versions')}}</li>
+          {% if (versions) %}
+              {% for version in versions %}
+              <li class="list-group-item meta">
+                <i class="muted fa fa-code-fork"></i>&nbsp;
+                <a href="{{ '/tables/' + version.title + '/play' }}" target="_new">{{ version._id.toString() }}</a>
+                &nbsp;&nbsp;
+                {{ version.createdAt.toISOString() }}
+              </li>
+              {% endfor %}
+          {% else %}
+          <li class="list-group-item meta">
+            <span class="">{{ __('There are no recorded versions of this design yet')}}</span>
+          </li>
+          {% endif %}
+
+
+    </div>
+  </section>
+
+
+
+  <div class="spacer"></div>
+
+  <section class="bg-primary about">
+    <div class="container">
+
+      <a href="/designs" class="btn btn-info">
+        <i class="fa fa-backward"></i>
+        {{ __('Back to designs')}}
+      </a>
+    </div>
+  </section>
+{% endblock %}
