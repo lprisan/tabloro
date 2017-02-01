@@ -207,5 +207,6 @@
 	"Design versions": "Design versions",
 	"There are no recorded versions of this design yet": "There are no recorded versions of this design yet",
 	"Back to designs": "Back to designs",
-	"Test Setup": "Test Setup"
+	"Test Setup": "Test Setup",
+	"Back to This Design Page": "Back to This Design Page"
 }

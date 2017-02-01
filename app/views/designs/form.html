@@ -263,9 +263,9 @@
 
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-              <button class="btn btn-primary" type="submit">{{ __('Create')}}</button>
+              <!--button class="btn btn-primary" type="submit">{{ __('Create')}}</button-->
               &nbsp;
-              <a href="/tables" class="btn btn-link">{{ __('Cancel')}}</a>
+              <a href="/designs/{{table.setup._id.toString()}}" class="btn btn-link"><i class="fa fa-backward"></i>&nbsp;&nbsp;{{ __('Back to This Design Page')}}</a>
             </div>
           </div>
         </form>
