@@ -121,6 +121,7 @@ module.exports = function (app, passport) {
   app.param('designId', designs.load);
   app.get('/designs/new', auth.requiresLogin, designs.new); //This creates the design starting point (setup)
   app.get('/designs/:designId/capture', auth.requiresLogin, designs.capture);
+  app.get('/designs/:designId/copy', auth.requiresLogin, designs.copy);
   app.post('/designs/:designId/createVersion', auth.requiresLogin, designs.createVersion);
   app.get('/designs', designs.index);
   app.get('/users/:userId/designs', userAuth, designs.index);

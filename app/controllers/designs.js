@@ -108,6 +108,77 @@ exports.new = function (req, res) {
 };//end exports.new
 
 
+/**
+ * Copy design (create base setup by copying the original one, as well as a table with the latest version, and redirect to show page)
+ */
+
+exports.copy = function (req, res) {
+    //Duplicate the original setup with all the cards and everything, and the provided name and current owner
+    if (req.setup && req.setup._id && req.param('designName')) {
+      var setup = req.setup;
+      var oldid = req.setup._id;
+
+      setup._id = mongoose.Types.ObjectId();
+      setup.user = req.user;
+      setup.isNew = true; //<--------------------IMPORTANT
+      setup.is4Ts = true;
+      setup.title = req.param('designName');
+      setup.createdAt = Date.now();
+      setup.save(function (err) {
+          if (!err) {
+              req.flash('success', req.i18n.__('Successfully created design starting point!'));
+
+              var criteria = {
+                setup: oldid
+              }
+
+              //Plus, if there's versions/tables of the design, copy also the latest one, associated with the new design
+              Table.list({ criteria , sort: {createdAt:-1} }, function (err, sortedTables) {
+                  if (err) {
+                      console.log(err);
+                      req.flash('alert', err);
+                      return res.render('500');
+                      //TODO: Fix this redirection and showing of error message!
+                  }
+                  console.log("listing tables for design to copy: "+criteria.setup+" - "+sortedTables.length);
+                  if(sortedTables && sortedTables.length>0){
+                    //Copy latest version of the table
+                    var table = sortedTables[0];
+                    table._id = mongoose.Types.ObjectId();
+                    table.user = req.user;
+                    table.isNew = true; //<--------------------IMPORTANT
+                    table.setup = setup._id;
+                    table.title = req.param('designName')+" "+Date.now();
+                    table.createdAt = Date.now();
+                    table.save(function (err) {
+                        if (err){
+                          console.log(err);
+                          //req.flash('alert', err);
+                          //return res.render('500');
+                          //TODO: Since the design was created, we silently fail...
+                        }
+                      } );
+
+                  }//end if sorted tables
+
+
+                  //req.flash('success', req.i18n.__('Successfully created design starting point!'));
+                  res.redirect('/designs/'+setup._id);
+              });//end piece list
+
+          }else{
+              console.log(err);
+              req.flash('alert', err);
+              return res.render('500');
+              //TODO: Fix this redirection and showing of error message!
+          }
+
+      }); //end setup.save
+
+    }//end if
+};//end exports.new
+
+
 exports.capture = function (req, res) {
   console.log('entering capture req '+req.body);
   // var capture=false;

@@ -575,15 +575,15 @@ var doSemanticChecks = function(xmlstring){
 
 var displaySyntaxErrors = function(errors){
     $('#fblist').empty();
-    $('#fblist').append('<li class="list-group-item" id="fb0"> <strong>Feedback</strong> </li>');
+    $('#fblist').append('<li class="list-group-item lead" id="fb0"> <strong>Feedback</strong> </li>');
     if(errors.length==0){
         //We display a no errors found message
-        $('#fblist').append('<li class="list-group-item" id="fb1"> <i class="fa fa-check"></i> '+MSG_SYNTAXCORRECT+' </li>');
+        $('#fblist').append('<li class="list-group-item lead" id="fb1"> <i class="fa fa-check"></i> '+MSG_SYNTAXCORRECT+' </li>');
     }else{
         // Generate and place the error messages
         for(i=0;i<errors.length;i++){
             var fbid = "fb"+(i+1);
-            $('#fblist').append('<li class="list-group-item" id="'+fbid+'"> <i class="fa fa-times"></i> '+errors[i].message+' </li>');
+            $('#fblist').append('<li class="list-group-item lead" id="'+fbid+'"> <i class="fa fa-times"></i> '+errors[i].message+' </li>');
             //TODO: Add also the references to the items for highlighting in the map
             var elem = $('#'+fbid)[0];
             //console.log('added element '+elem.innerHTML);
