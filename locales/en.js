@@ -214,5 +214,8 @@
 	" tables! Please delete the tables >> ": " tables! Please delete the tables >> ",
 	" << before deleting this setup.": " << before deleting this setup.",
 	"Deleted design version successfully": "Deleted design version successfully",
-	"Deleted design successfully": "Deleted design successfully"
+	"Deleted design successfully": "Deleted design successfully",
+	"Edit description": "Edit description",
+	"Could not update version description": "Could not update version description",
+	"Version description successfully updated!": "Version description successfully updated!"
 }

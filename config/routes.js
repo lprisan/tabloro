@@ -107,6 +107,7 @@ module.exports = function (app, passport) {
 
   // Table
   app.param('tableName', tables.load);
+  app.param('tableID', tables.loadID);
   app.get('/tables', tables.index);
   app.get('/users/:userId/tables', userAuth, tables.index);
   app.get('/tables/new', auth.requiresLogin, tables.new);
@@ -116,6 +117,8 @@ module.exports = function (app, passport) {
   app.put('/tables/:tableName', tableAuth, tables.update);
   app.get('/tables/:tableName/play', tables.play);
   app.delete('/tables/:tableName', tableAuth, tables.destroy);
+  app.get('/tables/:tableID/updateDesc', tableAuth, tables.updateDesc);
+//  app.get('/tables/:tableName/play4Ts', tables.play4Ts);
 
   // Design
   app.param('designId', designs.load);

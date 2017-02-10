@@ -106,6 +106,12 @@
                 <a href="{{ '/tables/' + version.title + '/play' }}" target="_new">{{ version._id.toString() }}</a>
                 &nbsp;&nbsp;
                 {{ version.createdAt.toISOString() }}
+                &nbsp;&nbsp;
+                -- {% if (version.description) %}{{version.description}}{% endif %}
+                &nbsp;&nbsp;
+                -- 
+                <a href="#" onclick="askDesignDescription('{% if (version.description) %}{{version.description}}{% endif %}','{{ '/tables/' + version._id + '/updateDesc' }}');">{{ __('Edit description')}} <i class="muted fa fa-pencil-square-o"></i></a>
+
               </li>
               {% endfor %}
           {% else %}

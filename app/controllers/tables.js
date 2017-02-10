@@ -28,6 +28,21 @@ exports.load = function (req, res, next, title) {
     });
 };
 
+
+/**
+ * LoadID - load by id instead of title
+ */
+
+exports.loadID = function (req, res, next, id) {
+    Table.loadById(id, function (err, table) {
+        if (err) return next(err);
+        if (!table) return next(new Error('not found'));
+        req.table = table;
+        next();
+    });
+};
+
+
 /**
  * List
  */
@@ -244,6 +259,31 @@ exports.update = function (req, res){
 };
 
 
+/**
+ * Update table's description only
+ */
+
+exports.updateDesc = function (req, res){
+  var table = req.table;
+
+  // make sure no one changes the user
+  //delete req.body.user;
+  //table = extend(table, req.body);
+  console.log('Updating desc for table '+table._id+' '+table.setup._id+': '+JSON.stringify(req.param('desc')));
+  table.description = req.param('desc');
+
+  table.save(function (err) {
+    if (err) {
+      console.error(err);
+      req.flash('warning', req.i18n.__('Could not update version description'));
+      return res.redirect('/designs/' + table.setup._id);
+    }
+    console.log(req.body);
+    req.flash('success', req.i18n.__('Version description successfully updated!'));
+     return res.redirect('/designs/' + table.setup._id);
+  });
+
+};
 
 
 

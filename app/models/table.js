@@ -93,7 +93,7 @@ TableSchema.methods = {
 TableSchema.statics = {
 
   /**
-   * Find table by id
+   * Find table by  title
    *
    * @param {ObjectId} id
    * @param {Function} cb
@@ -108,6 +108,24 @@ TableSchema.statics = {
     .populate('box', 'title image description link order')
     .exec(cb);
   },
+
+  /**
+   * Find table by id
+   *
+   * @param {ObjectId} id
+   * @param {Function} cb
+   * @api private
+   */
+
+  loadById: function (id, cb) {
+    this.findOne({ _id : id })
+    .populate('users', 'username')
+    .populate('user', 'name username')
+    .populate('setup', 'title pieces counts box')
+    .populate('box', 'title image description link order')
+    .exec(cb);
+  },
+
 
   /**
    * List tables

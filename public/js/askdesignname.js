@@ -48,6 +48,15 @@ var askDesignCopy = function(url){
 };
 
 
+var askDesignDescription = function(original,url){
+  var versionDesc = prompt('Please add a short description of this version',original);
+  if(versionDesc || versionDesc===''){
+    var linkUrl = url+"?desc="+encodeURIComponent(versionDesc);
+    window.location.href = linkUrl;
+  }
+}
+
+
 var validateTitle = function (string) {
   var match = string.match(/[a-zA-Z0-9_ ]/gi);
   return match && match.join('').length === string.length;
