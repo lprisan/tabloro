@@ -30,12 +30,18 @@
           <div class="btn-group btn-group-justified">
             {% if isOwner %}
             <a class="btn btn-danger btn-lg" href="/designs/{{setup._id.toString()}}/capture">
-              {{ __('Capture a version of this design')}} &nbsp;
+              {{ __('Capture')}} &nbsp;
               <i class="fa fa-camera"></i>
             </a>
+              {% if (versions && versions.length>0) %}
+                <a class="btn btn-success btn-lg" href="/tables/{{encodeURIComponent(versions[0].title)}}/play4Ts" target="_new">
+                  {{ __('Play (virtually)')}} &nbsp;
+                  <i class="fa fa-play"></i>
+                </a>
+              {% endif %}
             {% endif %}
             <a class="btn btn-info btn-lg" href="#" onclick="askDesignCopy('/designs/{{setup._id.toString()}}/copy');">
-              {{ __('Create my own copy of this design')}} &nbsp;
+              {{ __('Create copy')}} &nbsp;
               <i class="fa fa-files-o"></i>
             </a>
           </div>
@@ -98,18 +104,18 @@
   <section class="bg-warning about">
     <div class="container">
       <ul class="list-group">
-          <li class="list-group-item list-group-item-warning">{{ __('Design versions')}}</li>
+          <li class="list-group-item list-group-item-warning">{{ __('Design versions')}} ({{ __('Click to play virtually over that version')}})</li>
           {% if (versions && versions.length>0) %}
               {% for version in versions %}
               <li class="list-group-item meta">
                 <i class="muted fa fa-code-fork"></i>&nbsp;
-                <a href="{{ '/tables/' + version.title + '/play' }}" target="_new">{{ version._id.toString() }}</a>
+                <a href="{{ '/tables/' + version.title + '/play4Ts' }}" target="_new">{{ version._id.toString() }}</a>
                 &nbsp;&nbsp;
                 {{ version.createdAt.toISOString() }}
                 &nbsp;&nbsp;
                 -- {% if (version.description) %}{{version.description}}{% endif %}
                 &nbsp;&nbsp;
-                -- 
+                --
                 <a href="#" onclick="askDesignDescription('{% if (version.description) %}{{version.description}}{% endif %}','{{ '/tables/' + version._id + '/updateDesc' }}');">{{ __('Edit description')}} <i class="muted fa fa-pencil-square-o"></i></a>
 
               </li>

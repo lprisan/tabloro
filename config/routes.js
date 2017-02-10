@@ -118,7 +118,7 @@ module.exports = function (app, passport) {
   app.get('/tables/:tableName/play', tables.play);
   app.delete('/tables/:tableName', tableAuth, tables.destroy);
   app.get('/tables/:tableID/updateDesc', tableAuth, tables.updateDesc);
-//  app.get('/tables/:tableName/play4Ts', tables.play4Ts);
+  app.get('/tables/:tableName/play4Ts', tables.play4Ts);
 
   // Design
   app.param('designId', designs.load);

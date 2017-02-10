@@ -286,33 +286,62 @@ exports.updateDesc = function (req, res){
 };
 
 
-
+ /**
+  * Play a normal Tabloro table
+  */
 
 exports.play = function (req, res) {
+
+     var table = req.table;
+     var setup = table.setup;
+     setup.order = table.box.order;
+
+     Piece.list({ criteria: {'_id': {$in: setup.pieces }}}, function (err, unsortedPieces) {
+         if (err) {
+             req.flash('alert', req.i18n.__('Cannot test game stup!'));
+             return res.redirect('/boxes/' + box._id + '/setups/' + setup.id);
+         }
+
+         var assets = utils.generateAssets(setup, unsortedPieces);
+         console.log('assets', assets);
+
+         res.render('game/play', {
+             title: req.i18n.__('Play - ') + table.title,
+             game: table.setup,
+             room: table,
+             user: req.user,
+             assets: assets,
+             mode: 'play'
+         });
+
+     });
+
+};
+
+/**
+ * Play a 4Ts table: create a new copy of the table and open it
+ */
+
+exports.play4Ts = function (req, res) {
+
     var table = req.table;
-    var setup = table.setup;
-    setup.order = table.box.order;
+    var oldid = table._id;
+    table._id = mongoose.Types.ObjectId();
+    table.description = undefined;
+    table.isNew = true; //<--------------------IMPORTANT
+    table.title = table.setup.title+" "+Date.now();
+    table.createdAt = Date.now();
 
-    Piece.list({ criteria: {'_id': {$in: setup.pieces }}}, function (err, unsortedPieces) {
-        if (err) {
-            req.flash('alert', req.i18n.__('Cannot test game stup!'));
-            return res.redirect('/boxes/' + box._id + '/setups/' + setup.id);
-        }
-
-        var assets = utils.generateAssets(setup, unsortedPieces);
-        console.log('assets', assets);
-
-        res.render('game/play', {
-            title: req.i18n.__('Play - ') + table.title,
-            game: table.setup,
-            room: table,
-            user: req.user,
-            assets: assets,
-            mode: 'play'
-        });
+    table.save(function (err) {
+      if (err) {
+        console.error(err);
+        req.flash('alert', req.i18n.__('Could not create new version of the design to play virtually!'));
+        return res.render('500');
+      }
+      console.log('created copy of the design version '+oldid+' --> '+table._id);
+      return res.redirect('/tables/'+table.title+'/play');
 
     });
-
 };
 
 

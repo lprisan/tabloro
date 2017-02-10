@@ -217,5 +217,13 @@
 	"Deleted design successfully": "Deleted design successfully",
 	"Edit description": "Edit description",
 	"Could not update version description": "Could not update version description",
-	"Version description successfully updated!": "Version description successfully updated!"
+	"Version description successfully updated!": "Version description successfully updated!",
+	"Play virtually over latest version": "Play virtually over latest version",
+	"Click to play virtually over that version": "Click to play virtually over that version",
+	"Capture new design version": "Capture new design version",
+	"Play virtually (latest version)": "Play virtually (latest version)",
+	"Create my own design copy": "Create my own design copy",
+	"Capture": "Capture",
+	"Play (virtually)": "Play (virtually)",
+	"Create copy": "Create copy"
 }
