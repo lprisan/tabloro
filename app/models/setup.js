@@ -41,7 +41,8 @@ var SetupSchema = new Schema({
   box: {type : Schema.ObjectId, ref : 'Box'},
   pieces: [{type : Schema.ObjectId, ref : 'Piece', unique: true}],
   counts: {type: Object, default: {}},
-  is4Ts: {type: Boolean, default : false}
+  is4Ts: {type: Boolean, default : false},
+  deleted: {type : Date}
 });
 
 /**
@@ -108,7 +109,7 @@ SetupSchema.statics = {
    */
 
   loadById: function (id, cb) {
-    this.findOne({ _id : id })
+    this.findOne({ _id : id , deleted : null})
     .populate('user', 'name username')
     .populate('box', 'title gameType image order')
     .exec(cb);

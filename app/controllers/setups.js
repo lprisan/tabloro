@@ -182,30 +182,30 @@ exports.test = function (req, res) {
  * Delete a setup
  */
 
-exports.destroy = function (req, res) {
-    var setup = req.setup;
+ exports.destroy = function (req, res) {
+     var setup = req.setup;
 
-    Table.find({setup: setup}, function (err, tables) {
-        if (err) {
-            req.flash('error', req.i18n.__('Could not delete setup'));
-            res.redirect('/boxes/' + setup.box.id + '/setups/' + setup.title);
+     Table.find({setup: setup}, function (err, tables) {
+         if (err) {
+             req.flash('error', req.i18n.__('Could not delete setup'));
+             res.redirect('/boxes/' + setup.box.id + '/setups/' + setup.title);
 
-            return;
-        }
-        if (tables.length > 0) {
-            req.flash('error', req.i18n.__('Could not delete setup, its currently used by ') + tables.length + req.i18n.__(' tables! Please delete the tables >> ') + R.join(',', R.pluck('title')(tables)) + req.i18n.__(' << before deleting this setup.'));
-            res.redirect('/boxes/' + setup.box.id + '/setups/' + setup.title);
-            return;
-        }
+             return;
+         }
+         if (tables.length > 0) {
+             req.flash('error', req.i18n.__('Could not delete setup, its currently used by ') + tables.length + req.i18n.__(' tables! Please delete the tables >> ') + R.join(',', R.pluck('title')(tables)) + req.i18n.__(' << before deleting this setup.'));
+             res.redirect('/boxes/' + setup.box.id + '/setups/' + setup.title);
+             return;
+         }
 
-        setup.remove(function (err) {
-            if (err) {
-                req.flash('alert', req.i18n.__('Could not delete game setup'));
-                return;
-            }
-            req.flash('info', req.i18n.__('Deleted successfully'));
-            res.redirect('/setups');
-        });
-    });
+         setup.remove(function (err) {
+             if (err) {
+                 req.flash('alert', req.i18n.__('Could not delete game setup'));
+                 return;
+             }
+             req.flash('info', req.i18n.__('Deleted successfully'));
+             res.redirect('/setups');
+         });
+     });
 
-};
+ };

@@ -48,6 +48,8 @@ var TableSchema = new Schema({
   box: {type : Schema.ObjectId, ref : 'Box'},
   rawchilitags: {type: Object, default: {}},
   cardsboard: {type: Object, default: {}},
+  deleted: {type : Date},
+  description: {type : String}
 });
 
 /**

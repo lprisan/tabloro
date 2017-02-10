@@ -126,7 +126,7 @@ module.exports = function (app, passport) {
   app.get('/designs', designs.index);
   app.get('/users/:userId/designs', userAuth, designs.index);
   app.get('/designs/:designId', auth.requiresLogin, designs.show);
-  //app.delete('/designs/:designId', setupAuth, designs.destroy); //Wait until we decide what to do with it
+  app.delete('/designs/:designId', designAuth, designs.destroy); //Wait until we decide what to do with it
 
   // Piece
   app.param('pieceId', pieces.load);

@@ -29,7 +29,7 @@ var TILE_DEFAULTS = function () {
  */
 
 exports.load = function (req, res, next, id) {
-    Setup.loadById(id, function (err, setup) {
+    Setup.loadById(id, function (err, setup) { // the function already includes non-null delete (do not load deleted ones)
         if (err) return next(err);
         if (!setup) return next(new Error('not found'));
         req.setup = setup;
@@ -49,6 +49,7 @@ exports.index = function (req, res) {
         page: page,
         criteria: {
           is4Ts: true,     //Designs are setups with is4Ts=true
+          deleted: null,
           _id : { "$ne": mongoose.Types.ObjectId("583f1c5f6d504c9100d6ff8b") } //TODO: This is the 'original' setup for designs. Maybe add other exceptions later (in other languages)
         }
     };
@@ -265,7 +266,8 @@ exports.show = function (req, res) {
     var setup = req.setup;
 
     var criteria = {
-      setup: setup._id
+      setup: setup._id,
+      deleted: null
     }
 
     Table.list({ criteria , sort: {createdAt:-1} }, function (err, sortedTables) {
@@ -287,52 +289,45 @@ exports.show = function (req, res) {
         });//end render
     });//end piece list
 
-    //setup load not needed again??
-    // Setup.load(setup.title, function (err, setup) {
-    //     if (err) return next(err);
-    //     if (!setup) return next(new Error('not found'));
-    //     req.setup = setup;
-    //
-    //     res.render('setups/show', {
-    //         title: req.i18n.__('Design'),
-    //         setup: setup,
-    //         box: req.box,
-    //         versions:
-    //         isOwner: setup.user.id === req.user.id
-    //     });
-    // });
-
 };
 
-//
-// /**
-//  * Delete a setup (actually, for now just mark it as deleted, we may want to preserve it for analysis)
-//  */
-//
-// exports.destroy = function (req, res) {
-//     var setup = req.setup;
-//
-//     Table.find({setup: setup}, function (err, tables) {
-//         if (err) {
-//             req.flash('error', req.i18n.__('Could not delete setup'));
-//             res.redirect('/boxes/' + setup.box.id + '/setups/' + setup.title);
-//
-//             return;
-//         }
-//         if (tables.length > 0) {
-//             req.flash('error', req.i18n.__('Could not delete setup, its currently used by ') + tables.length + req.i18n.__(' tables! Please delete the tables >> ') + R.join(',', R.pluck('title')(tables)) + req.i18n.__(' << before deleting this setup.'));
-//             res.redirect('/boxes/' + setup.box.id + '/setups/' + setup.title);
-//             return;
-//         }
-//
-//         setup.remove(function (err) {
-//             if (err) {
-//                 req.flash('alert', req.i18n.__('Could not delete game setup'));
-//                 return;
-//             }
-//             req.flash('info', req.i18n.__('Deleted successfully'));
-//             res.redirect('/setups');
-//         });
-//     });
-//
-// };
+
+/**
+ * Delete a design (actually, for now just mark it as deleted, we may want to preserve it for analysis)
+ */
+
+ exports.destroy = function (req, res) {
+     var setup = req.setup;
+
+     Table.list({setup: setup}, function (err, tables) {
+         if (err) {
+             req.flash('error', req.i18n.__('Could not delete setup'));
+             res.redirect('/designs');
+             return;
+         }
+         console.log(tables.length+' versions of the design ['+Object.prototype.toString.call(tables)+']: '+JSON.stringify(tables));
+         if (tables.length > 0) {
+           tables.forEach(function(tab) {
+             console.log('Deleting table '+tab._id+' from design '+setup._id);
+             tab.deleted = Date.now();
+             tab.save(function (err) {
+                 if (err) {
+                     req.flash('alert', req.i18n.__('Could not delete design completely'));
+                     res.redirect('/designs');
+                 }
+                 req.flash('info', req.i18n.__('Deleted design version successfully'));
+              });
+            });
+         }
+         setup.deleted = Date.now();
+         setup.save(function (err) {
+             if (err) {
+                 req.flash('alert', req.i18n.__('Could not delete design completely'));
+                 res.redirect('/designs');
+             }
+             req.flash('info', req.i18n.__('Deleted design successfully'));
+             res.redirect('/designs');
+         });
+     });
+
+ };

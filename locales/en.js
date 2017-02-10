@@ -209,5 +209,10 @@
 	"Back to designs": "Back to designs",
 	"Test Setup": "Test Setup",
 	"Back to This Design Page": "Back to This Design Page",
-	"Create my own copy of this design": "Create my own copy of this design"
+	"Create my own copy of this design": "Create my own copy of this design",
+	"Could not delete setup, its currently used by ": "Could not delete setup, its currently used by ",
+	" tables! Please delete the tables >> ": " tables! Please delete the tables >> ",
+	" << before deleting this setup.": " << before deleting this setup.",
+	"Deleted design version successfully": "Deleted design version successfully",
+	"Deleted design successfully": "Deleted design successfully"
 }
