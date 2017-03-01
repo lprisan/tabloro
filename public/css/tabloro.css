@@ -633,9 +633,32 @@ a.skype {
 
 /* Capture screen */
 
-.feedbacklist {
+.fb-container {
     position: absolute;
     left: -30px;
+}
+
+.fb-head {
+    font-size: 200%;
+}
+
+.fb-item {
+    font-size: 150%;
+    border: 4px solid black;
+    margin: 5px;
+}
+
+.fb-item p {
+    padding-left: 50px;
+}
+
+.bignumber {
+    padding: 5px;
+    padding-top: 20px;
+    font-size: 400%;
+    font-weight: bolder;
+    line-height: 30px;
+    position: absolute;
 }
 
 #backCaptBtn {

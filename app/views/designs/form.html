@@ -130,9 +130,9 @@
 
                         <div class="panel-body" id="maparea">
                           <div class="row">
-                            <div id="mapfb" class="col-sm-3 feedbacklist">
-                                <ul class="list-group" id="fblist">
-                                    <li class="list-group-item" id="fb0"> <strong>Feedback</strong> </li>
+                            <div id="mapfb" class="col-sm-3 fb-container">
+                                <ul class="list-group fb-list" id="fblist">
+                                    <li class="list-group-item fb-head lead" id="fb0"> <strong>Feedback</strong> </li>
                                 </ul>
                             </div>
                             <div id="mapboard">
@@ -167,7 +167,7 @@
                           var MSG_CAPTURECARDSLOT = "{{ __('The capture card should be placed in the capture slot')}}";
                           var MSG_QUESTIONEMPTY = "{{ __('The question card cannot be placed in a column to the right of an empty column')}}";
                           var MSG_SYNTAXCORRECT = "{{ __('The board appears to be syntactically correct!')}}";
-
+                          var MSG_FBSECTION1 = "{{ __('Position errors')}}";
                       </script>
                       <script src='/js/capturedesign.js'></script>
 

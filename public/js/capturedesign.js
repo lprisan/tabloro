@@ -355,7 +355,7 @@ var doSyntaxChecks = function(cardRegions,pieces){
       var error = {};
       error.message = MSG_NOTCLEARPLACE;
       error.refs = [];
-      for(i=0; i<cardRegions.noarea.length; i++){
+      for(var i=0; i<cardRegions.noarea.length; i++){
           error.message = error.message + lookupCardTitleInPieces(cardRegions.noarea[i],pieces) +', ';
           error.refs.push(cardRegions.noarea[i]);
       }
@@ -371,7 +371,7 @@ var doSyntaxChecks = function(cardRegions,pieces){
           var error = {};
           error.message = MSG_TOOMANY;
           error.refs = [];
-          for(i=0; i<value.length; i++){
+          for(var i=0; i<value.length; i++){
               error.message = error.message + lookupCardTitleInPieces(value[i],pieces) +', ';
               error.refs.push(value[i]);
           }
@@ -575,21 +575,30 @@ var doSemanticChecks = function(xmlstring){
 
 var displaySyntaxErrors = function(errors){
     $('#fblist').empty();
-    $('#fblist').append('<li class="list-group-item lead" id="fb0"> <strong>Feedback</strong> </li>');
+    $('#fblist').append('<li class="list-group-item fb-head lead" id="fb0"> <strong>Feedback</strong> </li>');
+    $('#fblist').append('<li class="list-group-item fb-head lead" id="fb0s1"> I. '+MSG_FBSECTION1+'</li>');
     if(errors.length==0){
         //We display a no errors found message
-        $('#fblist').append('<li class="list-group-item lead" id="fb1"> <i class="fa fa-check"></i> '+MSG_SYNTAXCORRECT+' </li>');
+        $('#fblist').append('<li class="list-group-item fb-item lead" id="fb1"> <i class="fa fa-check"></i> '+MSG_SYNTAXCORRECT+' </li>');
     }else{
-        // Generate and place the error messages
-        for(i=0;i<errors.length;i++){
-            var fbid = "fb"+(i+1);
-            $('#fblist').append('<li class="list-group-item lead" id="'+fbid+'"> <i class="fa fa-times"></i> '+errors[i].message+' </li>');
-            //TODO: Add also the references to the items for highlighting in the map
-            var elem = $('#'+fbid)[0];
-            //console.log('added element '+elem.innerHTML);
-            elem.refs = errors[i].refs;
-            elem.addEventListener("mouseover",addCardContour,false);
-            elem.addEventListener("mouseout",backToOriginalMap,false);
+        if(errors.length>0){
+          console.log("Displaying feedback for "+errors.length+" errors... actually, "+Math.min(errors.length, 4));
+          // Generate and place the error messages
+          for(var i=0;i<Math.min(errors.length, 4);i++){
+              var fbid = "fb"+(i+1);
+              $('#fblist').append('<li class="list-group-item fb-item lead" id="'+fbid+'"> <span class="bignumber">'+(i+1)+'</span><p> '+errors[i].message+' </p></li>');
+
+              //var elem = $('#'+fbid)[0];
+              //console.log('added element '+elem.innerHTML);
+              var elem = {};
+              elem.refs = errors[i].refs;
+              addCardContourStatic(elem, (i+1));
+              //elem.addEventListener("mouseover",addCardContour,false);
+              //elem.addEventListener("mouseout",backToOriginalMap,false);
+          }
+          if(errors.length>4){
+              $('#fblist').append('<li class="list-group-item lead" id="fbdots"> <p> ... </p></li>');
+          }
         }
 
     }
@@ -605,7 +614,7 @@ var addCardContour = function(){
     errorrefs = this.refs;
     var c = document.getElementById("boardcanvas");
     var ctx = c.getContext("2d");
-    for(i=0;i<errorrefs.length;i++){
+    for(var i=0;i<errorrefs.length;i++){
         var tag = errorrefs[i];
         var dcard = drawnCards[tag];
         console.log('drawing contour on '+JSON.stringify(dcard));
@@ -616,6 +625,26 @@ var addCardContour = function(){
         ctx.stroke();
     }
 }
+
+var addCardContourStatic = function(elem, bignumber){
+    console.log("addCardContourStatic "+JSON.stringify(elem));
+    errorrefs = elem.refs;
+    var c = document.getElementById("boardcanvas");
+    var ctx = c.getContext("2d");
+    for(var i=0;i<errorrefs.length;i++){
+        var tag = errorrefs[i];
+        var dcard = drawnCards[tag];
+        console.log('drawing contour on '+JSON.stringify(dcard));
+        ctx.beginPath();
+        ctx.lineWidth=""+CONTOUR_WIDTH;
+        //ctx.strokeStyle="red";
+        ctx.rect(dcard.xpos-(99/2)-(CONTOUR_WIDTH/2),dcard.ypos-(140/2)-(CONTOUR_WIDTH/2),99,140);//TODO: change this to take it from the image
+        ctx.stroke();
+        ctx.font="90px Arial";
+        ctx.fillText(""+bignumber,dcard.xpos-10,dcard.ypos);
+    }
+}
+
 
 //Returns the drawn canvas to the un-contoured one
 var backToOriginalMap = function(){
@@ -640,7 +669,7 @@ var preloadImages = function(){
       });
     n_images = images.length;
     //console.log('images ('+pieces.length+'): '+JSON.stringify(images));
-    for(i=0;i<images.length;i++){
+    for(var i=0;i<images.length;i++){
         var image = images[i];
         var piece = pieces[i];
         var img = new Image();
