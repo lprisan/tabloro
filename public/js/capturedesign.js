@@ -631,6 +631,7 @@ var addCardContourStatic = function(elem, bignumber){
     errorrefs = elem.refs;
     var c = document.getElementById("boardcanvas");
     var ctx = c.getContext("2d");
+    //console.log("DELETEME in addCardContourStatic drawnCards "+JSON.stringify(drawnCards));
     for(var i=0;i<errorrefs.length;i++){
         var tag = errorrefs[i];
         var dcard = drawnCards[tag];
@@ -722,8 +723,8 @@ var updateTableTilesCapture = function(tags100){
             //Find the piece for this tag
             for(var i = 0; i < pieces.length; i++){
                 var tmppiece = pieces[i];
-                if(tmppiece['chilitags'] && tmppiece['chilitags'][0] && tmppiece['chilitags'][0].toString()===tag){
-                    console.log("DELETEME found piece during update"+JSON.stringify(tmppiece));
+                if(tmppiece['chilitags'] && (typeof tmppiece['chilitags'][0] != 'undefined') && tmppiece['chilitags'][0].toString()==tag){
+                    //console.log("DELETEME found piece during update"+JSON.stringify(tmppiece));
                     piece = tmppiece;
                     break;
                 }
@@ -733,7 +734,7 @@ var updateTableTilesCapture = function(tags100){
             var tileindex = 0;
             for(var index=0; index<table.setup.pieces.length; index++){
                 if(table.setup.pieces[index]==piece._id){
-                    console.log("DELETEME piece has an index "+index);
+                    //console.log("DELETEME piece has an index "+index);
                     tileindex = index;
                     break;
                 }
@@ -745,10 +746,10 @@ var updateTableTilesCapture = function(tags100){
             absx = boardtile.x - (boardw/2) + xpos;
             absy = boardtile.y - (boardh/2) + ypos;
             //Update the tile position
-            console.log("DELETEME trying to update piece "+JSON.stringify(table.tiles[tileindex]));
+            //console.log("DELETEME trying to update piece "+JSON.stringify(table.tiles[tileindex]));
             table.tiles[tileindex].x = Math.floor(absx);
             table.tiles[tileindex].y = Math.floor(absy);
-            console.log('DELETEME: updated tile position for piece: '+piece._id+' - '+JSON.stringify(table.tiles[tileindex]));
+            //console.log('DELETEME: updated tile position for piece: '+piece._id+' - '+JSON.stringify(table.tiles[tileindex]));
       }
   }
 
@@ -770,21 +771,24 @@ var capture = function() {
     if(board_present==4){
         // do homography of corners and get which tags are where, see https://uncorkedstudios.com/blog/perspective-transforms-in-javascript
         var transTagPositions = getTransformedTags(lastTags, true); //activate console logging
-        console.log('DELETEME: Capture! transformed tag positions: '+JSON.stringify(transTagPositions));
+        //console.log('DELETEME: Capture! transformed tag positions: '+JSON.stringify(transTagPositions));
         table.rawchilitags = transTagPositions;
         drawBoard();
         drawCards(transTagPositions, pieces);
+        //console.log("DELETEME in capture point A drawnCards "+JSON.stringify(drawnCards));
+
         console.log('Tiles before update: '+table.tiles);
         updateTableTilesCapture(transTagPositions);
         console.log('Tiles after update: '+table.tiles);
 
         var cardRegions = getBoardRegions(transTagPositions, AreaMap100);
         var capturedBoard = lookupCardRegions(cardRegions,pieces);
-        console.log('DELETEME: Capture! card regions: '+JSON.stringify(capturedBoard));
+        //console.log("DELETEME in capture point B drawnCards "+JSON.stringify(drawnCards));
+        //console.log('DELETEME: Capture! card regions: '+JSON.stringify(capturedBoard));
         table.cardsboard = capturedBoard;
         //save board as a table into the database
         table.title = table.setup.title + ' ' + Date.now();
-        console.log('DELETEME: try to insert in db the table: '+JSON.stringify(table));
+        //console.log('DELETEME: try to insert in db the table: '+JSON.stringify(table));
         var fd = new FormData(document.forms[0]); //To get the csrf token and other stuff
         fd.append('table', JSON.stringify(table));
         $.ajax({
@@ -807,6 +811,7 @@ var capture = function() {
           }
         });
 
+        //console.log("DELETEME in capture point C drawnCards "+JSON.stringify(drawnCards));
 
         var errors=[];
         errors = doSyntaxChecks(cardRegions,pieces);
@@ -846,21 +851,24 @@ var backCapture = function(){
 var drawCards = function(tags100, allpieces){
     var c = document.getElementById("boardcanvas");
     var ctx = c.getContext("2d");
+    console.log("(re-)initializing drawnCards");
     drawnCards = {}; //we erase the data of previously drawn cards
-    for(tag in tags100){
+    for(var tag in tags100){
         if(tags100[tag][0]>0 &
             tags100[tag][0]<100 &
             tags100[tag][1]>0 &
             tags100[tag][1]<100){ // We draw only the cards INSIDE the four board tags -- that are not contesto, objettivi, contenuto!
-              //console.log('found tag '+tag+' at position '+tags100[tag]);
-              piece = {};
+              console.log('found tag '+tag+' at position '+tags100[tag]);
+              var piece = {};
               for(var i = 0; i < allpieces.length; i++){
                   var tmppiece = allpieces[i];
-                  if(tmppiece['chilitags'] && tmppiece['chilitags'][0] && tmppiece['chilitags'][0]===tag){
+                  //console.log("DELETEME in drawCards "+tmppiece['chilitags']+" "+(typeof tmppiece['chilitags'][0] != 'undefined')+" "+tmppiece['chilitags'][0]+" "+tag);
+                  if(tmppiece['chilitags'] && (typeof tmppiece['chilitags'][0] != 'undefined') && tmppiece['chilitags'][0]==tag){
                       piece = tmppiece;
                       break;
                   }
               }
+              //console.log("DELETEME previous to drawing cards "+JSON.stringify(piece)+" \ndrawnCards "+JSON.stringify(drawnCards));
               if(piece['image'] && piece['image']['files'] && piece['image']['files'][0]){ //If the piece has an image --i.e. we found a piece with that chilitag
                   imgid = "img"+piece['image']['files'][0].substring(0,piece['image']['files'][0].indexOf('.'));
                   //console.log('Retrieving image '+imgid);
@@ -874,7 +882,7 @@ var drawCards = function(tags100, allpieces){
                       xpos: img.xpos,
                       ypos: img.ypos
                   };
-                  //console.log('added to drawnCards: '+JSON.stringify(drawnCards[tag]));
+                  console.log('added to drawnCards: '+JSON.stringify(drawnCards[tag]));
               }
         }
     }
@@ -886,7 +894,7 @@ var drawBoard = function(){
     //Look for the board piece _id  57f58b985dcddd50009e8b1a or lockable true
     boardpiece = {};
     for(var i = 0; i < pieces.length; i++){
-        piece = pieces[i];
+        var piece = pieces[i];
         if(piece['_id']=='57f58b985dcddd50009e8b1a'){
             boardpiece = piece;
             break;
