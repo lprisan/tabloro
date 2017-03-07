@@ -722,7 +722,7 @@ var updateTableTilesCapture = function(tags100){
             //Find the piece for this tag
             for(var i = 0; i < pieces.length; i++){
                 var tmppiece = pieces[i];
-                if(tmppiece['chilitags'][0].toString()===tag){
+                if(tmppiece['chilitags'] && tmppiece['chilitags'][0] && tmppiece['chilitags'][0].toString()===tag){
                     console.log("DELETEME found piece during update"+JSON.stringify(tmppiece));
                     piece = tmppiece;
                     break;
@@ -856,7 +856,7 @@ var drawCards = function(tags100, allpieces){
               piece = {};
               for(var i = 0; i < allpieces.length; i++){
                   var tmppiece = allpieces[i];
-                  if(tmppiece['chilitags'][0]==tag){
+                  if(tmppiece['chilitags'] && tmppiece['chilitags'][0] && tmppiece['chilitags'][0]===tag){
                       piece = tmppiece;
                       break;
                   }
