@@ -278,16 +278,30 @@ exports.show = function (req, res) {
             //TODO: Fix this redirection and showing of error message!
         }
         req.setup = setup;
-        console.log('rendering design with versions '+sortedTables.length)
-        //Getting the box too IS NOT NEEDED, it comes with the table, we need it to know the board piece
-        res.render('designs/show', {
-          title: req.i18n.__('Design'),
-          setup: setup,
-          box: req.box,
-          versions: sortedTables,
-          isOwner: setup.user.id === req.user.id
-        });//end render
-    });//end piece list
+
+        Piece.list({ criteria: {'_id': {$in: req.setup.pieces }}}, function (err, unsortedPieces) {
+            if (err) {
+                console.log(err);
+                req.flash('alert', err);
+                return res.redirect('/designs');
+                //TODO: Fix this redirection and showing of error message!
+            }
+
+            console.log('rendering design with pieces '+unsortedPieces.length+' and versions '+sortedTables.length)
+            //Getting the box too IS NOT NEEDED, it comes with the table, we need it to know the board piece
+            res.render('designs/show', {
+              title: req.i18n.__('Design'),
+              setup: setup,
+              box: req.box,
+              versions: sortedTables,
+              setupPieces: unsortedPieces,
+              isOwner: setup.user.id === req.user.id
+            });//end render
+
+        });//end piece list
+
+
+    });//end table list
 
 };
 

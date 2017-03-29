@@ -25,7 +25,29 @@
             <h4>{{ __('Description')}}</h4>
             <pre>{{setup.description}}</pre>
           {% endif %}
+
+          <div class="design-preview text-center" id="designPreview">
+            <!--canvas id="previewcanvas" width="1412" height="875" style="border:1px solid #d3d3d3;"-->
+            <canvas id="previewcanvas" width="500" height="310" style="border:1px solid #d3d3d3;">
+              Your browser does not support the HTML5 canvas tag.
+            </canvas>
+          </div>
+          <div id="invisibleimgs" style="display:none;"></div>
+
+          <script type="text/javascript">
+              var pieces = {% if (setupPieces) %}{{JSON.stringify(setupPieces)}}{% else %}[]{% endif %};
+              console.log("Pieces (UNSORTED!): "+JSON.stringify(pieces));
+
+              var latestversion = {% if (versions && versions.length>0) %}{{JSON.stringify(versions[0])}}{% else %}{}{% endif %};
+              var allversions = {% if (versions && versions.length>0) %}{{JSON.stringify(versions)}}{% else %}[]{% endif %};
+              console.log("Latest design version (out of {% if (versions && versions.length) %}{{versions.length}}{% endif %}): "+JSON.stringify(latestversion));
+              var MSG_FBSECTION1 = "{{ __('Position errors')}}";
+          </script>
+          <script src='/js/previewdesign.js'></script>
+
         </div>
+
+
         <div class="panel-footer">
           <div class="btn-group btn-group-justified">
             {% if isOwner %}
