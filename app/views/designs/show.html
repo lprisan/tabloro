@@ -34,6 +34,13 @@
           </div>
           <div id="invisibleimgs" style="display:none;"></div>
 
+          <!--Hover previews of different versions-->
+          <!--div class="hover-preview text-center" id="hoverPreview" style="display:none;">
+            <canvas id="hoverPreviewcanvas" width="500" height="310" style="border:1px solid #d3d3d3;">
+              Your browser does not support the HTML5 canvas tag.
+            </canvas>
+          </div-->
+
           <script type="text/javascript">
               var pieces = {% if (setupPieces) %}{{JSON.stringify(setupPieces)}}{% else %}[]{% endif %};
               console.log("Pieces (UNSORTED!): "+JSON.stringify(pieces));
@@ -131,7 +138,7 @@
               {% for version in versions %}
               <li class="list-group-item meta">
                 <i class="muted fa fa-code-fork"></i>&nbsp;
-                <a href="{{ '/tables/' + version.title + '/play4Ts' }}" target="_new">{{ version._id.toString() }}</a>
+                <a class="versionlink" {% if isOwner %}href="{{ '/tables/' + version.title + '/play4Ts' }}" target="_new"{% endif %} rel="{{ version._id.toString() }}">{{ version._id.toString() }}</a>
                 &nbsp;&nbsp;
                 {{ version.createdAt.toISOString() }}
                 &nbsp;&nbsp;

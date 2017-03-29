@@ -123,7 +123,57 @@ var drawLatest = function(){
 
 }
 
+var drawVersion = function(id){
+  drawBoard();
+  var version = allversions.filter(function(obj){
+    return obj._id == id;
+  })[0];//Should return only one version, but just in case
+  drawCards(version.rawchilitags, pieces, dim_factor);
+}
+
+
+var screenshotPreview = function(){
+	/* CONFIG */
+
+		xOffset = 10;
+		yOffset = 30;
+
+		// these 2 variable determine popup's distance from the cursor
+		// you might want to adjust to get the right result
+    //console.log("DELETEME attaching events..."+$("a.versionlink").length);
+	/* END CONFIG */
+	$("a.versionlink").hover(function(e){
+    //console.log("DELETEME hovered");
+    //not need to append - the canvas is already there, only invisible
+		//$("body").append("<img id='screenshot'><img src='"+ this.rel +"' alt='url preview' />"+ c +"</p>");
+		//$("#hoverPreview").css("display","inline")
+		//	.css("top",(e.pageY - xOffset) + "px")
+		//	.css("left",(e.pageX + yOffset) + "px")
+		//	.fadeIn("fast");
+    drawVersion(this.rel);
+    },
+	function(){
+    //console.log("DELETEME UNhovered");
+		//$("#hoverPreview").css("display","none");
+    drawLatest();
+    });
+	// $("a.versionlink").mousemove(function(e){
+  //   console.log("DELETEME moved");
+	// 	$("#hoverPreview")
+	// 		.css("top",(e.pageY - xOffset) + "px")
+	// 		.css("left",(e.pageX + yOffset) + "px");
+	// });
+  // console.log("DELETEME ...attached!");
+
+};
+
+
 
 //We invoke the preloading of images and the preview of the latest board
 
 preloadImages();
+
+// starting the script on page load
+$(document).ready(function(){
+	screenshotPreview();
+});
