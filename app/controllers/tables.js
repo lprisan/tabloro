@@ -339,9 +339,43 @@ exports.play4Ts = function (req, res) {
         return res.render('500');
       }
       console.log('created copy of the design version '+oldid+' --> '+table._id);
-      return res.redirect('/tables/'+table.title+'/play');
+      return res.redirect('/tables/'+table.title+'/playNomod');
 
     });
+};
+
+
+/**
+ * Play a 4Ts mode Tabloro table - database edits have to be explicit!
+ */
+
+exports.playNomod = function (req, res) {
+
+    var table = req.table;
+    var setup = table.setup;
+    setup.order = table.box.order;
+
+    Piece.list({ criteria: {'_id': {$in: setup.pieces }}}, function (err, unsortedPieces) {
+        if (err) {
+            req.flash('alert', req.i18n.__('Cannot test game stup!'));
+            return res.redirect('/boxes/' + box._id + '/setups/' + setup.id);
+        }
+
+        var assets = utils.generateAssets(setup, unsortedPieces);
+        console.log('assets', assets);
+
+        res.render('game/test', {
+            title: req.i18n.__('PlayNomod - ') + table.title,
+            game: table.setup,
+            room: table,
+            user: req.user,
+            assets: assets,
+            backUrl: '/designs/' + setup.id,
+            mode: 'playNomod'
+        });
+
+    });
+
 };
 
 

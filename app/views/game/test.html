@@ -12,7 +12,9 @@
         </div>
     {% else %}
         <div id="edit-container">
-            <a href="{{backUrl}}" class="btn btn-warning">{{ __('End Test')}}</a>
+            <!--a href="{{backUrl}}" class="btn btn-warning">{{ __('End Test')}}</a-->
+            <a href="javascript:window.close();" class="btn btn-warning">{{ __('End Test')}}</a>
+
         </div>
     {% endif %}
 
