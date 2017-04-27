@@ -31,14 +31,14 @@ from selenium.common.exceptions import TimeoutException
 
 # Some constants for the program to work
 SPREADSHEET_URL_EN = "https://docs.google.com/spreadsheets/d/17aQHUptQw1W779G23sNhume_IS5h2TMmsOJVh2vo4B0/edit#gid=0"
-SPREADSHEET_URL_IT = ""
+SPREADSHEET_URL_IT = "https://docs.google.com/spreadsheets/d/1gEhqJan9IsuaIDfnb4OQ-2DiDaKPpM0HAP6gIOIL6Sk/edit#gid=0"
 
 BOXNAME_EN = "COMPLETE 4TS BOX EN"
 #BOXNAME_EN = "4Ts DEMO BOX GENOA OCTOBER"
-BOXNAME_IT = ""
+BOXNAME_IT = "COMPLETE 4TS BOX IT"
 SETUPNAME_EN = "COMPLETE 4TS SETUP EN"
 #SETUPNAME_EN = "4Ts DEMO SETUP GENOA OCTOBER"
-SETUPNAME_IT = ""
+SETUPNAME_IT = "COMPLETE 4TS SETUP IT"
 
 
 def extractFromSpreadsheet(url):
@@ -120,7 +120,12 @@ if __name__ == '__main__':
     print('Read %d cards from spreadsheet' % len(cardinstances))
     dir_path = os.path.dirname(os.path.realpath(__file__)) # This script's path
     os.chdir(dir_path)
-    print('Working in '+dir_path)
+    print('Working in '+dir_path)    
+    # We read the credentials for login as admin in Tabloro
+    content = []    
+    with open("tabloroadmin.txt") as f:
+        content = f.readlines()
+    content = [x.strip() for x in content]
     #print(cardinstances)
     # Initialize Selenium driver and authenticate into tabloro    
     print('Starting Selenium...')
@@ -128,14 +133,14 @@ if __name__ == '__main__':
     driver.get("http://localhost:3000/login")
     elem = driver.find_element_by_id("email")
     elem.clear()
-    elem.send_keys("lprisan.itd@gmail.com")
+    elem.send_keys(content[0])
     elem = driver.find_element_by_id("password")
     elem.clear()
-    elem.send_keys("lppslpps")
+    elem.send_keys(content[1])
     elem.submit()
     #elem.send_keys(Keys.RETURN)
     #assert "Python" in driver.title
-    assert "capture=true" in driver.page_source
+    assert "captureDesignLinkMenu" in driver.page_source
     print('Successful login!')
 
     # For each card, we upload the piece

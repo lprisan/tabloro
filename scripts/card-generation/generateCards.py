@@ -21,7 +21,7 @@ import json
 
 # Some constants for the program to work
 SPREADSHEET_URL_EN = "https://docs.google.com/spreadsheets/d/17aQHUptQw1W779G23sNhume_IS5h2TMmsOJVh2vo4B0/edit#gid=0"
-SPREADSHEET_URL_IT = ""
+SPREADSHEET_URL_IT = "https://docs.google.com/spreadsheets/d/1gEhqJan9IsuaIDfnb4OQ-2DiDaKPpM0HAP6gIOIL6Sk/edit#gid=0"
 TEMPLATE_DIGITAL = "./templates/digital_card_template.svg"
 TEMPLATE_PRINT_FRONT = "./templates/printable_card_template_front.svg"
 TEMPLATE_PRINT_BACK_PLAIN = "./templates/printable_card_template_back_plain.svg"
