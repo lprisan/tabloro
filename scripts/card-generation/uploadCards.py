@@ -25,6 +25,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from pyvirtualdisplay import Display
 
 #print 'Number of arguments:', len(sys.argv), 'arguments.'
 #print 'Argument List:', str(sys.argv)
@@ -106,6 +107,50 @@ def extractFromSpreadsheet(url):
     return cardinstances
 
 
+# This method tries to remove all non-base cards/board from a box and setup, 
+# to be filled in later in the upload process. Returns True if everything goes 
+# successfully
+def cleanUpBoxSetup(boxname, setupname, basepieces=6):
+    client = MongoClient()
+    db = client['noobjs_dev']
+    # Cleaning up box    
+    mybox = db.boxes.find_one({"title": boxname})    
+    print("Trying to update box "+str(mybox['_id']))
+    mypieces = mybox['pieces']
+    mynewpieces = mypieces[0:basepieces]
+    myorder = mybox['order']
+    myneworder = {}
+    for p in mynewpieces:
+        myneworder[u''+str(p)] = myorder[str(p)]
+    result = db.boxes.update_one({"_id": mybox['_id']},
+                                   {
+                                         "$set": { "pieces": mynewpieces, "order": myneworder }                                  
+                                   })
+    print("Updated "+str(result.modified_count)+" records")
+    # This only would work if the base setups were already complete from previous time    
+    #if result.modified_count != 1:
+    #    client.close()
+    #    return False
+    # Cleaning up setup
+    mysetup = db.setups.find_one({"title": setupname})    
+    print("Trying to update setup "+str(mysetup['_id']))
+    mypieces = mysetup['pieces']
+    mynewpieces = mypieces[0:basepieces]
+    mytiles = mysetup['tiles']
+    mynewtiles = {}
+    for idx, p in enumerate(mynewpieces):
+        mynewtiles[u''+str(idx)] = mytiles[u''+str(idx)]
+    result = db.setups.update_one({"_id": mysetup['_id']},
+                                   {
+                                         "$set": { "pieces": mynewpieces, "tiles": mynewtiles }                                  
+                                   })
+    print("Updated "+str(result.modified_count)+" records")
+    # This only would work if the base setups were already complete from previous time    
+    #if result.modified_count != 1:
+    #    client.close()
+    #    return False
+    client.close()
+    return True
 
 # MAIN PROGRAM
 if __name__ == '__main__':
@@ -127,7 +172,11 @@ if __name__ == '__main__':
         content = f.readlines()
     content = [x.strip() for x in content]
     #print(cardinstances)
-    # Initialize Selenium driver and authenticate into tabloro    
+    # Initialize Selenium driver and authenticate into tabloro
+    # tweaking for headless browser, see http://kiennt.com/blog/2012/06/29/using-selenium-with-headless-browser.html
+    print('Starting headless display...')    
+    display = Display(visible=0, size=(800, 600))
+    display.start()
     print('Starting Selenium...')
     driver = webdriver.Chrome()
     driver.get("http://localhost:3000/login")
@@ -142,6 +191,15 @@ if __name__ == '__main__':
     #assert "Python" in driver.title
     assert "captureDesignLinkMenu" in driver.page_source
     print('Successful login!')
+
+    # Initialize base box and setup: delete all card pieces, tiles, order 
+    # beyond the 6th
+    boxname = BOXNAME_EN
+    setupname = SETUPNAME_EN
+    if lang == "IT":
+        boxname = BOXNAME_IT
+        setupname = SETUPNAME_IT
+    cleanUpBoxSetup(boxname,setupname)
 
     # For each card, we upload the piece
     for i in range(0,len(cardinstances)-1):
@@ -180,16 +238,17 @@ if __name__ == '__main__':
                                        {
                                              "$set": {"chilitags": card['chilitags'] , "type4ts": card['type4ts'] }                                  
                                        })
-        print("Updated "+str(result.modified_count)+" records")                             
-        mybox = db.boxes.find_one({"title": BOXNAME_EN}) # Find the box with the corresponding title BOXNAME_EN
+        print("Updated "+str(result.modified_count)+" records")   
+                          
+        mybox = db.boxes.find_one({"title": boxname}) # Find the box with the corresponding title BOXNAME_EN
         print("Trying to update box "+str(mybox['_id']))
-        result = db.boxes.update_one({"title": BOXNAME_EN},
+        result = db.boxes.update_one({"title": boxname},
                                      { 
                                          "$addToSet": {"pieces": ObjectId(pieceid) },
                                         "$set": { "order."+str(pieceid) : 3}
                                      }) # Update the box, adding the piece and the layer (order)
         print("Updated "+str(result.modified_count)+" record")                             
-        mysetup = db.setups.find_one({"title": SETUPNAME_EN}) # Find the setup with the corresponding title SETUPNAME_EN
+        mysetup = db.setups.find_one({"title": setupname}) # Find the setup with the corresponding title SETUPNAME_EN
         print("Trying to update setup "+str(mysetup['_id']))
         mytile = {
             "frame" : 0,
@@ -198,7 +257,7 @@ if __name__ == '__main__':
             "x" : (200+(3*i))
             }
         l = len(mysetup['pieces'])
-        result = db.setups.update_one({"title": SETUPNAME_EN},
+        result = db.setups.update_one({"title": setupname},
                                      { 
                                          "$addToSet": {"pieces": ObjectId(pieceid) },
                                         "$set": { "tiles."+str(l) : mytile }
@@ -206,13 +265,14 @@ if __name__ == '__main__':
         print("Updated "+str(result.modified_count)+" record")       # Update the setup, adding the piece and the tiles 
         print("--------------------\nCard "+pieceid+" modified, added to box "+str(mybox['_id'])+" and to setup "+str(mysetup['_id']))
     # Add the is4Ts parameter to the setup
-    mysetup = db.setups.find_one({"title": SETUPNAME_EN}) # Find the setup with the corresponding title SETUPNAME_EN
+    mysetup = db.setups.find_one({"title": setupname}) # Find the setup with the corresponding title SETUPNAME_EN
     print("Trying to finalize update setup "+str(mysetup['_id']))
-    result = db.setups.update_one({"title": SETUPNAME_EN},
+    result = db.setups.update_one({"title": setupname},
                                      { 
-                                        "$set": { "is4Ts" : true }
+                                        "$set": { "is4Ts" : True }
                                      }) # Update the setup, is4Ts
     print("Updated "+str(result.modified_count)+" record")
     print("=================================\nCard modifications in DB complete!!")
     client.close()    
     driver.close()
+    display.stop()

@@ -50,7 +50,7 @@ exports.index = function (req, res) {
         criteria: {
           is4Ts: true,     //Designs are setups with is4Ts=true
           deleted: null,
-          _id : { "$ne": mongoose.Types.ObjectId("583f1c5f6d504c9100d6ff8b") } //TODO: This is the 'original' setup for designs. Maybe add other exceptions later (in other languages)
+          _id : { "$nin": [mongoose.Types.ObjectId("583f1c5f6d504c9100d6ff8b") , mongoose.Types.ObjectId("5902321d2a610e304755dba7")] } //This is the 'original' setup for designs. Maybe add other exceptions later (in other languages)
         }
     };
 
@@ -88,7 +88,7 @@ exports.new = function (req, res) {
 
           setup._id = mongoose.Types.ObjectId();
           setup.user = req.user;
-
+          console.log('do we have a box? '+setup.box);
           setup.isNew = true; //<--------------------IMPORTANT
           setup.is4Ts = true;
           setup.title = req.param('designName');

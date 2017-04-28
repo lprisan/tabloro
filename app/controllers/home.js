@@ -23,7 +23,7 @@ exports.index = function (req, res){
   var designOptions = {
     perPage: 7,
     criteria: {
-      _id : { "$ne": mongoose.Types.ObjectId("583f1c5f6d504c9100d6ff8b") }, //TODO: This is the 'original' setup for designs. Maybe add other exceptions later (in other languages)
+      _id : { "$nin": [mongoose.Types.ObjectId("583f1c5f6d504c9100d6ff8b") , mongoose.Types.ObjectId("5902321d2a610e304755dba7")] }, //This is the 'original' setup for designs. Maybe add other exceptions later (in other languages)
       isPrivate: false,
       is4Ts: true
     }
