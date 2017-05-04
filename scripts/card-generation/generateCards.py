@@ -50,7 +50,7 @@ def extractFromSpreadsheet(url):
     scope = ['https://spreadsheets.google.com/feeds']
     credentials = ServiceAccountCredentials.from_json_keyfile_name('Remote-GSpreadsheet-Access-25f314b90a7f.json', scope)
     gsc = gspread.authorize(credentials)
-    wks = gsc.open_by_url(SPREADSHEET_URL_EN).sheet1
+    wks = gsc.open_by_url(url).sheet1
     #cells = wks.range('A1:F3')
     cardinstances = [] # Here we'll store the cards from the spreadsheet
     i = 2
