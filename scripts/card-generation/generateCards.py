@@ -26,16 +26,20 @@ TEMPLATE_DIGITAL = "./templates/digital_card_template.svg"
 TEMPLATE_PRINT_FRONT = "./templates/printable_card_template_front.svg"
 TEMPLATE_PRINT_BACK_PLAIN = "./templates/printable_card_template_back_plain.svg"
 TEMPLATE_PRINT_BACK_TABLE = "./templates/printable_card_template_back_table.svg"
+
+#Add more keys as needed for different languages... and remember to change all if the icon or color changes!
 iconfiles = {'Technique': '../../icons/technique.png',
              'Task': '../../icons/task.png',
              'Team': '../../icons/team.png',
              'Technology': '../../icons/technology.png',
-             'Wildcard': '../../icons/joker.png'}
+             'Wildcard': '../../icons/joker.png',
+             'Jolly': '../../icons/joker.png'}
 bgcolors = {'Technique': '#adcdea',
             'Wildcard': '#ffffff',
             'Task': '#f57d86', # Originally '#f14c58', but looked too dark
             'Team': '#fee964',
-            'Technology': '#9edb96'}
+            'Technology': '#9edb96',
+            'Jolly': '#ffffff'}
 TEMPLATE_BGCOLOR = '#adcdea' #Needed to substitute the background colors in the svg
 
 
