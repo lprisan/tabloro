@@ -99,7 +99,7 @@ def extractFromSpreadsheet(url):
                 card['ind_tech3'] = cardind_tech3
                 card['ind_time3'] = cardind_time3
                 card['tag'] = int(cardtags[j])
-                card['type4ts'] = cardtype
+                card['type4ts'] = cardtype #TODO: Check what happens if the type is translated to other languages!
                 card['chilitags'] = [ card['tag'] ]
                 cardinstances.append(card)
                 #print('Adding new card, now %d' % len(cardinstances))                

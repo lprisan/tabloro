@@ -159,32 +159,28 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:FreeSans;-inkscape-font-specification:FreeSans" /></flowRegion><flowPara
          id="flowPara4202-3"
          style="font-size:13.48332691px;text-align:start;text-anchor:start">Some overflow text here...</flowPara></flowRoot>    <image
-       sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/technology.png"
-       xlink:href="../icons/technology.png"
+       xlink:href="../../icons/technology.png"
        y="890.26239"
        x="326.66666"
        id="image3100"
        height="35.433071"
        width="35.433071" />
     <image
-       sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/time.png"
-       xlink:href="../icons/time.png"
+       xlink:href="../../icons/time.png"
        y="984.26251"
        x="325.33334"
        id="image3446"
        height="35.433071"
        width="35.433071" />
     <image
-       sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/team.png"
-       xlink:href="../icons/team.png"
+       xlink:href="../../icons/team.png"
        y="809.84259"
        x="322.00003"
        id="image3162"
        height="42.519684"
        width="42.519684" />
     <image
-       sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/task.png"
-       xlink:href="../icons/task.png"
+       xlink:href="../../icons/task.png"
        y="734.26245"
        x="326.66669"
        id="image3224"
