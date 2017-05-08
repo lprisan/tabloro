@@ -577,11 +577,31 @@ var doSemanticChecks = function(xmlstring){
     $.get(url, function(data, status){
         console.log("KB Query successful.\nStatus: " + status + "\nData: " + data);
         $('#fbZZ').remove();
-        $('#fblist').append('<li class="list-group-item" id="fbZZ"></li>');
-        //TODO: Parse and show KB output
-        $('#fbZZ').append(document.createTextNode(data));
+        //Parse and show KB output
+        //$('#fblist').append('<li class="list-group-item" id="fbZZ"></li>');
+        //$('#fbZZ').append(document.createTextNode(data));
+        var semantic = parseKBResponse(data);
+        displaySemanticErrors(semantic.inconsistent, semantic.missing, semantic.suggested);
     });
 }
+
+var parseKBResponse = function(data){
+  var semantic = {};
+  semantic.inconsistent = [];
+  semantic.missing = [];
+  semantic.suggested = [];
+
+  //parse the data
+  var xml = $.parseXML(data),
+      $xml = $( xml ),
+      $inconsistent = $xml.find('inconsistent-slots'),
+      $missing = $xml.find('missing-cards'),
+      $suggested = $xml.find('suggested-cards');
+
+  console.log("Parsed xml:\nInconsistent: "+$inconsistent.text()+"\nMissing: "+$missing.text()+"\nSuggested: "+$suggested.text());
+  return semantic;
+}
+
 
 var displaySyntaxErrors = function(errors){
     $('#fblist').empty();
@@ -614,6 +634,91 @@ var displaySyntaxErrors = function(errors){
     }
 }
 
+var displaySemanticErrors = function(inconsistent, missing, suggested){
+    //inconsistent
+    $('#fblist').append('<li class="list-group-item fb-head lead" id="fb0s2"> II. '+MSG_FBSECTION2+'</li>');
+    if(inconsistent.length==0){
+        //We display a no errors found message
+        $('#fblist').append('<li class="list-group-item fb-item lead" id="fbinc1"> <i class="fa fa-check"></i> '+MSG_NO_INCONSISTENT+' </li>');
+    }else{
+        if(inconsistent.length>0){
+          console.log("Displaying feedback for "+inconsistent.length+" inconsistencies... actually, "+Math.min(inconsistent.length, 4));
+          // Generate and place the error messages
+          for(var i=0;i<Math.min(inconsistent.length, 4);i++){
+              var fbid = "fbinc"+(i+1);
+              $('#fblist').append('<li class="list-group-item fb-item lead" id="'+fbid+'"> <span class="bignumber">'+(i+1)+'</span><p> '+inconsistent[i].message+' </p></li>');
+
+              //var elem = $('#'+fbid)[0];
+              //console.log('added element '+elem.innerHTML);
+              var elem = {};
+              elem.refs = inconsistent[i].refs;
+              addCardContourStatic(elem, (i+1)); //TODO: revise this to play nice with syntax errors? They should not appear at the same time, though
+              //elem.addEventListener("mouseover",addCardContour,false);
+              //elem.addEventListener("mouseout",backToOriginalMap,false);
+          }
+          if(inconsistent.length>4){
+              $('#fblist').append('<li class="list-group-item lead" id="fbincdots"> <p> ... </p></li>');
+          }
+        }
+
+    }
+
+    //missing
+    $('#fblist').append('<li class="list-group-item fb-head lead" id="fb0s3"> III. '+MSG_FBSECTION3+'</li>');
+    if(missing.length==0){
+        //We display a no errors found message
+        $('#fblist').append('<li class="list-group-item fb-item lead" id="fbmis1"> <i class="fa fa-check"></i> '+MSG_NO_MISSING+' </li>');
+    }else{
+        if(missing.length>0){
+          console.log("Displaying feedback for "+missing.length+" missing... actually, "+Math.min(missing.length, 4));
+          // Generate and place the error messages
+          for(var i=0;i<Math.min(missing.length, 4);i++){
+              var fbid = "fbmis"+(i+1);
+              $('#fblist').append('<li class="list-group-item fb-item lead" id="'+fbid+'"> <span class="bignumber">'+(i+1)+'</span><p> '+missing[i].message+' </p></li>');
+
+              //var elem = $('#'+fbid)[0];
+              //console.log('added element '+elem.innerHTML);
+              var elem = {};
+              elem.refs = missing[i].refs;
+              addCardContourStatic(elem, (i+1)); //TODO: revise this to play nice with syntax errors and other semantic ones?
+              //elem.addEventListener("mouseover",addCardContour,false);
+              //elem.addEventListener("mouseout",backToOriginalMap,false);
+          }
+          if(missing.length>4){
+              $('#fblist').append('<li class="list-group-item lead" id="fbmisdots"> <p> ... </p></li>');
+          }
+        }
+
+    }
+
+    //suggested
+    $('#fblist').append('<li class="list-group-item fb-head lead" id="fb0s4"> IV. '+MSG_FBSECTION4+'</li>');
+    if(suggested.length==0){
+        //We display a no errors found message
+        $('#fblist').append('<li class="list-group-item fb-item lead" id="fbsug1"> <i class="fa fa-check"></i> '+MSG_NO_SUGGESTION+' </li>');
+    }else{
+        if(suggested.length>0){
+          console.log("Displaying feedback for "+suggested.length+" suggested... actually, "+Math.min(suggested.length, 4));
+          // Generate and place the error messages
+          for(var i=0;i<Math.min(suggested.length, 4);i++){
+              var fbid = "fbsug"+(i+1);
+              $('#fblist').append('<li class="list-group-item fb-item lead" id="'+fbid+'"> <span class="bignumber">'+(i+1)+'</span><p> '+suggested[i].message+' </p></li>');
+
+              //var elem = $('#'+fbid)[0];
+              //console.log('added element '+elem.innerHTML);
+              var elem = {};
+              elem.refs = suggested[i].refs;
+              addCardContourStatic(elem, (i+1)); //TODO: revise this to play nice with syntax errors and other semantic ones?
+              //elem.addEventListener("mouseover",addCardContour,false);
+              //elem.addEventListener("mouseout",backToOriginalMap,false);
+          }
+          if(suggested.length>4){
+              $('#fblist').append('<li class="list-group-item lead" id="fbsugdots"> <p> ... </p></li>');
+          }
+        }
+
+    }
+}
 
 
 
