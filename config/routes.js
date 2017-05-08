@@ -17,6 +17,11 @@ var comments = require('comments');
 var tags = require('tags');
 var designs = require('designs');
 var auth = require('./middlewares/authorization');
+var redis = require('redis');
+var requestProxy = require('express-request-proxy');
+
+require('redis-streams')(redis);
+
 
 /**
  * Route middlewares
@@ -131,6 +136,13 @@ module.exports = function (app, passport) {
   app.get('/users/:userId/designs', userAuth, designs.index);
   app.get('/designs/:designId', auth.requiresLogin, designs.show);
   app.delete('/designs/:designId', designAuth, designs.destroy); //Wait until we decide what to do with it
+
+  //Proxy for the prolog KB
+  app.get('/kbproxy/*', requestProxy({
+      cache: false,
+      url: "http://localhost:8000/*"
+  }));
+
 
   // Piece
   app.param('pieceId', pieces.load);

@@ -562,15 +562,25 @@ var lookupCardRegions = function(cardRegions,pieces){
     return board;
 }
 
+var KB_BASE_URL = "/kbproxy/check_from_XML?board=";
 
 //Gets a xmlBoard in a string, and POSTs it (directly or through our server)
 //to the KB, redirecting the response to a callback and putting a loading icon
+//Actually, the KB takes a GET, of the form: http://localhost:8000/check_from_XML?board=<board><context>... </board>
 var doSemanticChecks = function(xmlstring){
-    //TODO!
-    var message = 'Will be sending this file to the KB: '+xmlstring;
+    //var message = 'Sending this file to the KB: '+xmlstring+'\n.........';
+    var message = 'Querying the KB...';
     console.log(message);
-    $('#fblist').append('<li class="list-group-item" id="fbZZ"></li>');
+    $('#fblist').append('<li class="list-group-item" id="fbZZ"><img src="/img/ajax-loader.gif" alt="Loading..." /></li>');
     $('#fbZZ').append(document.createTextNode(message));
+    var url = KB_BASE_URL+encodeURIComponent(xmlstring);
+    $.get(url, function(data, status){
+        console.log("KB Query successful.\nStatus: " + status + "\nData: " + data);
+        $('#fbZZ').remove();
+        $('#fblist').append('<li class="list-group-item" id="fbZZ"></li>');
+        //TODO: Parse and show KB output
+        $('#fbZZ').append(document.createTextNode(data));
+    });
 }
 
 var displaySyntaxErrors = function(errors){
@@ -603,6 +613,9 @@ var displaySyntaxErrors = function(errors){
 
     }
 }
+
+
+
 
 var drawnMap = {}; //here we will put the image data for the drawn map
 var drawnCards = {}; //here we will put the positions/sizes of the drawn cards
