@@ -81,8 +81,19 @@ exports.index = function (req, res) {
 
 exports.new = function (req, res) {
     //Duplicate the original setup with all the cards and everything, and the provided name
-    if (req.param('setupName') && req.param('designName')) {
-      Setup.load(req.param('setupName'), function (err, setup) {
+    //The original setup to copy is taken from environment variables, according to locale
+    var setupName = "COMPLETE 4TS BOX EN";
+    console.log("New design. current locale "+req.i18n.getLocale()+"\nEnv: "+JSON.stringify(process.env));
+    if(req.i18n.getLocale()=='en'){
+        setupName = process.env.SETUPNAME_EN;
+    }else if(req.i18n.getLocale()=='it'){
+        setupName = process.env.SETUPNAME_IT;
+    }else if(req.i18n.getLocale()=='es'){
+        setupName = process.env.SETUPNAME_ES;
+    }
+    console.log("Duplicating base setup "+setupName);
+    if ( req.param('designName') ) {
+      Setup.load( setupName, function (err, setup) {
           if (err) return next(err);
           if (!setup) return next(new Error('not found'));
 

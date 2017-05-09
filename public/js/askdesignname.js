@@ -1,19 +1,19 @@
 var askdesignlink = $('#captureDesignLink');
 
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
-}
-var locale = "en";
-if(getCookie("lang")){
-  locale = getCookie("lang");
-}
-console.log('locale '+locale);
-BASESETUP = "COMPLETE%204TS%20SETUP%20EN"
-if(locale=='it'){
-  BASESETUP = "COMPLETE%204TS%20SETUP%20IT"
-}
+// function getCookie(name) {
+//   var value = "; " + document.cookie;
+//   var parts = value.split("; " + name + "=");
+//   if (parts.length == 2) return parts.pop().split(";").shift();
+// }
+// var locale = "en";
+// if(getCookie("lang")){
+//   locale = getCookie("lang");
+// }
+// console.log('locale '+locale);
+// BASESETUP = "COMPLETE%204TS%20SETUP%20EN"
+// if(locale=='it'){
+//   BASESETUP = "COMPLETE%204TS%20SETUP%20IT"
+// }
 
 
 if(askdesignlink){
@@ -21,7 +21,7 @@ if(askdesignlink){
       var designName = prompt('Please insert your design\'s name','');
       if(designName && designName.length>0){
         if(validateTitle(designName)){
-          var linkUrl = "/designs/new/?setupName="+BASESETUP+"&capture=true&designName="+encodeURIComponent(designName);
+          var linkUrl = "/designs/new/?capture=true&designName="+encodeURIComponent(designName);
           window.location.href = linkUrl;
         }else{
           alert('Design names should contain only letters, numbers, spaces and underscores');
@@ -37,7 +37,7 @@ if(askdesignlinkmenu){
       var designName = prompt('Please insert your design\'s name','');
       if(designName && designName.length>0){
         if(validateTitle(designName)){
-          var linkUrl = "/designs/new/?setupName="+BASESETUP+"&capture=true&designName="+encodeURIComponent(designName);
+          var linkUrl = "/designs/new/?capture=true&designName="+encodeURIComponent(designName);
           window.location.href = linkUrl;
         }else{
           alert('Design names should contain only letters, numbers, spaces and underscores');
