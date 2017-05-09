@@ -567,7 +567,7 @@ var KB_BASE_URL = "/kbproxy/check_from_XML?board=";
 //Gets a xmlBoard in a string, and POSTs it (directly or through our server)
 //to the KB, redirecting the response to a callback and putting a loading icon
 //Actually, the KB takes a GET, of the form: http://localhost:8000/check_from_XML?board=<board><context>... </board>
-var doSemanticChecks = function(xmlstring){
+var doSemanticChecks = function(xmlstring, cardRegions, pieces){
     //var message = 'Sending this file to the KB: '+xmlstring+'\n.........';
     var message = 'Querying the KB...';
     console.log(message);
@@ -580,12 +580,17 @@ var doSemanticChecks = function(xmlstring){
         //Parse and show KB output
         //$('#fblist').append('<li class="list-group-item" id="fbZZ"></li>');
         //$('#fbZZ').append(document.createTextNode(data));
-        var semantic = parseKBResponse(data);
-        displaySemanticErrors(semantic.inconsistent, semantic.missing, semantic.suggested);
+        var semantic = parseKBResponse(data, cardRegions, pieces);
+        displaySemanticErrors(semantic);
     });
 }
 
-var parseKBResponse = function(data){
+var trimLines = function(text){
+  return text.replace(/^\s+|\s+$/g, '');
+}
+
+
+var parseKBResponse = function(data, cardRegions, pieces){
   var semantic = {};
   semantic.inconsistent = [];
   semantic.missing = [];
@@ -597,8 +602,43 @@ var parseKBResponse = function(data){
       $inconsistent = $xml.find('inconsistent-slots'),
       $missing = $xml.find('missing-cards'),
       $suggested = $xml.find('suggested-cards');
+  console.log("Parsed xml:\nInconsistent: "+$inconsistent.children().length+"\n"+$inconsistent.text()+"\nMissing: "+$missing.children().length+"\n"+$missing.text()+"\nSuggested: "+$suggested.children().length+"\n"+$suggested.text());
 
-  console.log("Parsed xml:\nInconsistent: "+$inconsistent.text()+"\nMissing: "+$missing.text()+"\nSuggested: "+$suggested.text());
+  //TODO: For now it only gets the positions mentioned in each of the fields... probably the responses will change in the future!
+  if($inconsistent.children().length>0){
+      $inconsistent.find('position').each(function(){
+        var obj = {};
+        obj.position = trimLines($(this).text()).toLowerCase();
+        var tag = cardRegions[obj.position];
+        console.log("found inconsistent card "+tag);
+        obj.message = MSG_INCONSISTENT + lookupCardTitleInPieces(tag,pieces);
+        obj.refs = [ tag ];
+        semantic.inconsistent.push(obj);
+      });
+  }
+  if($missing.children().length>0){
+      $missing.find('position').each(function(){
+        var obj = {};
+        obj.position = trimLines($(this).text()).toLowerCase();
+        var tag = cardRegions[obj.position];
+        console.log("found missing card "+tag);
+        obj.message = MSG_MISSING + lookupCardTitleInPieces(tag,pieces);
+        obj.refs = [ tag ];
+        semantic.missing.push(obj);
+      });
+  }
+  if($suggested.children().length>0){
+      $suggested.find('position').each(function(){
+        var obj = {};
+        obj.position = trimLines($(this).text()).toLowerCase();
+        var tag = cardRegions[obj.position];
+        console.log("found suggested card "+tag);
+        obj.message = MSG_SUGGESTED + lookupCardTitleInPieces(tag,pieces);
+        obj.refs = [ tag ];
+        semantic.suggested.push(obj);
+      });
+  }
+  console.log("Semantic response parsing finished: "+JSON.stringify(semantic));
   return semantic;
 }
 
@@ -634,7 +674,12 @@ var displaySyntaxErrors = function(errors){
     }
 }
 
-var displaySemanticErrors = function(inconsistent, missing, suggested){
+var displaySemanticErrors = function(semantic){
+
+    var inconsistent = semantic.inconsistent;
+    var missing = semantic.missing;
+    var suggested = semantic.suggested;
+
     //inconsistent
     $('#fblist').append('<li class="list-group-item fb-head lead" id="fb0s2"> II. '+MSG_FBSECTION2+'</li>');
     if(inconsistent.length==0){
@@ -936,8 +981,7 @@ var capture = function() {
         displaySyntaxErrors(errors);
         if(errors.length==0){
             var xmlBoard = getXMLFromBoard(capturedBoard);
-            doSemanticChecks(xmlBoard);
-            //TODO: should probably have some kind of callback to the next part of the code (via semaphores?)
+            doSemanticChecks(xmlBoard, cardRegions, pieces);
         }
 
 
@@ -994,7 +1038,9 @@ var drawCards = function(tags100, allpieces){
                   img.xpos = offsetx+(tags100[tag][0]*board_efw/100);
                   img.ypos = offsety+(tags100[tag][1]*board_efh/100);
                   //console.log("Trying to draw "+img.src+" at "+img.xpos+","+img.ypos+" size "+img.width+"x"+img.height);
+                  ctx.globalAlpha = 0.7;
                   ctx.drawImage(img, img.xpos-(img.width/2), img.ypos-(img.height*11/20)); //we draw the image with the center where the detected tag is
+                  ctx.globalAlpha = 1;
                   drawnMap = ctx.getImageData(0,0,c.width,c.height);
                   drawnCards[tag] = {
                       xpos: img.xpos,
