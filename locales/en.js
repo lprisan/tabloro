@@ -226,5 +226,6 @@
 	"Capture": "Capture",
 	"Play (virtually)": "Play (virtually)",
 	"Create copy": "Create copy",
-	"Position errors": "Position errors"
+	"Position errors": "Position errors",
+	"PlayNomod - ": "PlayNomod - "
 }
