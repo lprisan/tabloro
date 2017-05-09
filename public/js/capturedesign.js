@@ -239,8 +239,9 @@ var getBoardRegions = function(transTagPositions, AreaMap100){
               }
           }
       }
-      // Once we go through all areas, if the tag was in none, we add it to the noarea field
-      if(!found){
+      // Once we go through all areas, if the tag was in none (and it is within the board), we add it to the noarea field
+      if(!found && transTagPositions[tag][0]>0 && transTagPositions[tag][0]<100 &&
+        transTagPositions[tag][1]>0 && transTagPositions[tag][1]<100){
           tagsBoard.noarea.push(tag);
       }
   }
