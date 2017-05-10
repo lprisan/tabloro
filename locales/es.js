@@ -187,5 +187,7 @@
 	"The capture card should be placed in the capture slot": "La carta de captura debe ser colocada en la celda de captura",
 	"The question card cannot be placed in a column to the right of an empty column": "La carta de preguntas no debe ser colocada a la derecha de una columna vacía",
 	"Back to capture mode": "Volver al modo captura",
-	"The board appears to be syntactically correct!": "¡El tablero parece ser correcto sintácticamente!"
+	"The board appears to be syntactically correct!": "¡El tablero parece ser correcto sintácticamente!",
+	"Latest Public Designs": "Latest Public Designs",
+	"Designs": "Designs"
 }
