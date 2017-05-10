@@ -10,14 +10,9 @@ Requires packages gspread, oauth2client, pyopenssl, lxml
 
 import os
 import gspread
-import re
 from oauth2client.service_account import ServiceAccountCredentials
 import sys
-from lxml import etree
-from subprocess import call
-import json
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 import time
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -34,12 +29,22 @@ from pyvirtualdisplay import Display
 SPREADSHEET_URL_EN = "https://docs.google.com/spreadsheets/d/17aQHUptQw1W779G23sNhume_IS5h2TMmsOJVh2vo4B0/edit#gid=0"
 SPREADSHEET_URL_IT = "https://docs.google.com/spreadsheets/d/1gEhqJan9IsuaIDfnb4OQ-2DiDaKPpM0HAP6gIOIL6Sk/edit#gid=0"
 
+# These are used only to get the base pieces when a new base setup/box is created. Please modify if a new capture card or board or context/content/etc is done for a different language
 BOXNAME_EN = "COMPLETE 4TS BOX EN"
-#BOXNAME_EN = "4Ts DEMO BOX GENOA OCTOBER"
-BOXNAME_IT = "COMPLETE 4TS BOX IT"
+BOXNAME_IT = "COMPLETE 4TS BOX EN"
+BOXNAME_ES = "COMPLETE 4TS BOX EN"
 SETUPNAME_EN = "COMPLETE 4TS SETUP EN"
-#SETUPNAME_EN = "4Ts DEMO SETUP GENOA OCTOBER"
-SETUPNAME_IT = "COMPLETE 4TS SETUP IT"
+SETUPNAME_IT = "COMPLETE 4TS SETUP EN"
+SETUPNAME_ES = "COMPLETE 4TS SETUP EN"
+
+
+# Translates 4Ts card type in the spreadsheet (potentially translated to Italian, etc) back to the original English types: Team, Technique, Task, Technology, Wildcard
+def toCanonical(cardtype):
+    # For now, only the italian wildcard is translated
+    if(cardtype=='Jolly'):
+        return 'Wildcard'
+    else:
+        return cardtype
 
 
 def extractFromSpreadsheet(url):
@@ -52,7 +57,7 @@ def extractFromSpreadsheet(url):
     scope = ['https://spreadsheets.google.com/feeds']
     credentials = ServiceAccountCredentials.from_json_keyfile_name('Remote-GSpreadsheet-Access-25f314b90a7f.json', scope)
     gsc = gspread.authorize(credentials)
-    wks = gsc.open_by_url(SPREADSHEET_URL_EN).sheet1
+    wks = gsc.open_by_url(url).sheet1
     #cells = wks.range('A1:F3')
     cardinstances = [] # Here we'll store the cards from the spreadsheet
     i = 2
@@ -99,7 +104,7 @@ def extractFromSpreadsheet(url):
                 card['ind_tech3'] = cardind_tech3
                 card['ind_time3'] = cardind_time3
                 card['tag'] = int(cardtags[j])
-                card['type4ts'] = cardtype #TODO: Check what happens if the type is translated to other languages!
+                card['type4ts'] = toCanonical(cardtype)
                 card['chilitags'] = [ card['tag'] ]
                 cardinstances.append(card)
                 #print('Adding new card, now %d' % len(cardinstances))                
@@ -152,16 +157,119 @@ def cleanUpBoxSetup(boxname, setupname, basepieces=6):
     client.close()
     return True
 
+
+def checkDBExistence(origBaseBoxName, origBaseSetupName, newBaseBoxName, newBaseSetupName):
+    message = ""
+    client = MongoClient()
+    db = client['noobjs_dev']
+    # Checking that the base box that will be copied and used as a base for the new one exists and is unique
+    n_origbox = db.boxes.find({"title": origBaseBoxName}).count()
+    if n_origbox == 0:
+        message = "Original box "+origBaseBoxName+" does not exist!"
+        return message
+    elif n_origbox>1:
+        message = "Multiple boxes with name "+origBaseBoxName+"!"
+        return message
+    # Checking that the base setup that will be copied and used as a base for the new one exists and is unique
+    n_origsetup = db.setups.find({"title": origBaseSetupName}).count()
+    if n_origsetup == 0:
+        message = "Original setup "+origBaseSetupName+" does not exist!"
+        return message
+    elif n_origsetup>1:
+        message = "Multiple setups with name "+origBaseSetupName+"!"
+        return message
+    
+    # Checking that the new box name to be created does not exist
+    n_newbox = db.boxes.find({"title": newBaseBoxName}).count()
+    if n_newbox != 0:
+        message = "The box named "+newBaseBoxName+" already exists in the DB! Please provide a different name"
+        return message
+    # Checking that the new setup name to be created does not exist
+    n_newsetup = db.setups.find({"title": newBaseSetupName}).count()
+    if n_newsetup != 0:
+        message = "The setup named "+newBaseSetupName+" already exists in the DB! Please provide a different name"
+        return message
+    client.close()
+    return message
+
+
+def duplicateBaseEntities(origBaseBoxName, origBaseSetupName, newBaseBoxName, newBaseSetupName):
+    message = ""
+    client = MongoClient()
+    db = client['noobjs_dev']
+    # Duplicating the box
+    mybox = db.boxes.find_one({"title": origBaseBoxName}) # Find the box with the corresponding title BOXNAME_EN
+    print("Cloning box "+origBaseBoxName+"/"+str(mybox['_id']))
+    del mybox['_id']
+    mybox['title'] = newBaseBoxName
+    mybox['isPrivate'] = True
+    boxid = db.boxes.insert_one(mybox).inserted_id
+    print("Inserted/Cloned box "+str(boxid)+" in the database")           
+    # Duplicating the setup, and associating it with the just-cloned box
+    mysetup = db.setups.find_one({"title": origBaseSetupName}) # Find the box with the corresponding title BOXNAME_EN
+    print("Cloning setup "+origBaseSetupName+"/"+str(mysetup['_id']))
+    del mysetup['_id']
+    mysetup['title'] = newBaseSetupName
+    mysetup['box'] = boxid
+    mysetup['isPrivate'] = True
+    setupid = db.setups.insert_one(mysetup).inserted_id
+    print("Inserted/Cloned setup "+str(setupid)+" in the database") 
+    client.close()
+    return message
+
+
+
+def printUsage():
+    print('Usage: python uploadCards.py --en|--it --newBaseSetupName \'SOME NAME\' --newBaseBoxName \'SOME OTHER NAME\'')
+
+
+
 # MAIN PROGRAM
 if __name__ == '__main__':
     # If no args, or the first arg is --en, we do the cards from the english spreadsheet 
     cardinstances = [] # Here we'll store the cards from the spreadsheet
     lang = "EN"
-    if(len(sys.argv)==1 or sys.argv[1]=='--en'):
-        cardinstances = extractFromSpreadsheet(SPREADSHEET_URL_EN)
-    elif(sys.argv[1]=="--it"):
-        cardinstances = extractFromSpreadsheet(SPREADSHEET_URL_IT)
-        lang="IT"
+    newBaseSetupName = ""
+    newBaseBoxName = ""
+    origBaseSetupName = SETUPNAME_EN
+    origBaseBoxName = BOXNAME_EN
+    spreadsheetUrl = ""
+    # Process script parameters
+    if(len(sys.argv)!=6):
+        printUsage()
+        sys.exit()
+    else:
+        if(sys.argv[2]=='--newBaseSetupName'):
+            newBaseSetupName = sys.argv[3]
+        else:
+            printUsage()
+            sys.exit()
+        if(sys.argv[4]=='--newBaseBoxName'):
+            newBaseBoxName = sys.argv[5]
+        else:
+            printUsage()
+            sys.exit()
+        if(sys.argv[1]=='--it'):
+            lang="IT"
+            origBaseBoxName = BOXNAME_IT
+            origBaseSetupName = SETUPNAME_IT
+            spreadsheetUrl = SPREADSHEET_URL_IT
+        elif(sys.argv[1]=='--en'):
+            spreadsheetUrl = SPREADSHEET_URL_EN
+        else:
+            printUsage()
+            sys.exit()
+    # Check that the base box/setup exists, and that there is no box/setup with the name of the new ones to be created
+    message = checkDBExistence(origBaseBoxName, origBaseSetupName, newBaseBoxName, newBaseSetupName)
+    if len(message)>0:
+        print(message)
+        printUsage()
+        sys.exit()
+    else:
+        print("DB check successful, starting the process of upload")
+    
+    # Start the process...
+    cardinstances = extractFromSpreadsheet(spreadsheetUrl)
     print('Read %d cards from spreadsheet' % len(cardinstances))
     dir_path = os.path.dirname(os.path.realpath(__file__)) # This script's path
     os.chdir(dir_path)
@@ -192,14 +300,12 @@ if __name__ == '__main__':
     assert "captureDesignLinkMenu" in driver.page_source
     print('Successful login!')
 
+    # Copy the base box and setup, then
     # Initialize base box and setup: delete all card pieces, tiles, order 
     # beyond the 6th
-    boxname = BOXNAME_EN
-    setupname = SETUPNAME_EN
-    if lang == "IT":
-        boxname = BOXNAME_IT
-        setupname = SETUPNAME_IT
-    cleanUpBoxSetup(boxname,setupname)
+    duplicateBaseEntities(origBaseBoxName, origBaseSetupName, newBaseBoxName, newBaseSetupName)
+    cleanUpBoxSetup(newBaseBoxName,newBaseSetupName)
+    print("Successfully cloned and cleaned up the new box/setup")
 
     # For each card, we upload the piece
     for i in range(0,len(cardinstances)-1):
@@ -240,15 +346,15 @@ if __name__ == '__main__':
                                        })
         print("Updated "+str(result.modified_count)+" records")   
                           
-        mybox = db.boxes.find_one({"title": boxname}) # Find the box with the corresponding title BOXNAME_EN
+        mybox = db.boxes.find_one({"title": newBaseBoxName}) # Find the box with the corresponding title BOXNAME_EN
         print("Trying to update box "+str(mybox['_id']))
-        result = db.boxes.update_one({"title": boxname},
+        result = db.boxes.update_one({"title": newBaseBoxName},
                                      { 
                                          "$addToSet": {"pieces": ObjectId(pieceid) },
                                         "$set": { "order."+str(pieceid) : 3}
                                      }) # Update the box, adding the piece and the layer (order)
         print("Updated "+str(result.modified_count)+" record")                             
-        mysetup = db.setups.find_one({"title": setupname}) # Find the setup with the corresponding title SETUPNAME_EN
+        mysetup = db.setups.find_one({"title": newBaseSetupName}) # Find the setup with the corresponding title SETUPNAME_EN
         print("Trying to update setup "+str(mysetup['_id']))
         mytile = {
             "frame" : 0,
@@ -257,7 +363,7 @@ if __name__ == '__main__':
             "x" : (200+(3*i))
             }
         l = len(mysetup['pieces'])
-        result = db.setups.update_one({"title": setupname},
+        result = db.setups.update_one({"title": newBaseSetupName},
                                      { 
                                          "$addToSet": {"pieces": ObjectId(pieceid) },
                                         "$set": { "tiles."+str(l) : mytile }
@@ -265,14 +371,15 @@ if __name__ == '__main__':
         print("Updated "+str(result.modified_count)+" record")       # Update the setup, adding the piece and the tiles 
         print("--------------------\nCard "+pieceid+" modified, added to box "+str(mybox['_id'])+" and to setup "+str(mysetup['_id']))
     # Add the is4Ts parameter to the setup
-    mysetup = db.setups.find_one({"title": setupname}) # Find the setup with the corresponding title SETUPNAME_EN
+    mysetup = db.setups.find_one({"title": newBaseSetupName}) # Find the setup with the corresponding title SETUPNAME_EN
     print("Trying to finalize update setup "+str(mysetup['_id']))
-    result = db.setups.update_one({"title": setupname},
+    result = db.setups.update_one({"title": newBaseSetupName},
                                      { 
                                         "$set": { "is4Ts" : True }
                                      }) # Update the setup, is4Ts
     print("Updated "+str(result.modified_count)+" record")
     print("=================================\nCard modifications in DB complete!!")
+    print("Please check that you modify the start.sh script, so that BOXNAME_"+lang+"=\'"+newBaseBoxName+"\' and SETUPNAME_"+lang+"=\'"+newBaseSetupName+"\'")
     client.close()    
     driver.close()
     display.stop()
