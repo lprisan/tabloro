@@ -17,7 +17,35 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="printable_card_template_front.svg">
   <defs
-     id="defs4" />
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4198">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="0"
+         id="stop4200" />
+      <stop
+         id="stop4212"
+         offset="0.85471088"
+         style="stop-color:#ffffff;stop-opacity:0.93016762" />
+      <stop
+         id="stop4206"
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:0.02234637" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4198"
+       id="radialGradient4210"
+       cx="154.66667"
+       cy="858.78119"
+       fx="154.66667"
+       fy="858.78119"
+       r="142.64096"
+       gradientTransform="matrix(1.0303793,0,0,1.0177208,-6.3653328,-16.864513)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -126,16 +154,15 @@
        height="35.433071"
        id="image3933-6"
        x="362.28345"
-       y="630.64563" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
-       id="rect4045"
-       width="212.59842"
-       height="212.59842"
-       x="47.980316"
-       y="753.36218"
-       rx="17.716536"
-       ry="17.716536" />
+       y="630.64563"
+       sodipodi:absref="/home/lprisan/workspace/4ts-project/scripts/card-generation/templates/../icons/technology.png" />
+    <ellipse
+       style="fill:url(#radialGradient4210);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.05140758px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="path3388"
+       cx="153"
+       cy="857.13501"
+       rx="146.97429"
+       ry="145.16872" />
     <image
        xlink:href="../../tags/big-noborder/23.png"
        width="141.73228"
