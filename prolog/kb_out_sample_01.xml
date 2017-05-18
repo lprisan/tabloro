@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  "fake typical response structure"
+  This is an example of the data structure the KB returns
+  from a call to semantic_check.
+  Suppose the users have placed in 1st column, upper rows:
+  - a "Pyramid I" technique card (slot C1-CSW)
+  - a "Study" task card (slot C1-ABA-CSS-TASK)
+  - an "Individual learner" team card (slot C1-ABA-CSS-TEAM)
+  - a "Forum" card (slot C1-ABA-CSS-TEC1)
+  - a "Text editor" card (slot C1-ABA-CSS-TEC2)
+  The board complies with the semantic rules of the KB, so the
+  <inconsistent-cards> section of the response is empty.
+  The board is incomplete because the second task of Pyramid I
+  is missing, as well as the whole 2nd phase of the technique.
+  The detected missing cards are:
+  - a "Solve a problem" OR a "Prepare a list of questions"
+    task card in 1st column, lower row (slot C1-ABB-CSS-TASK);
+    the associated team and technology cards are not reported
+    to the users.
+  - a "Pyramid II" technique card in 2nd column (slot C2-CSW)
+  As no "?" cards were present in the board status, the
+  <suggested-cards> section is empty.
+-->
+<kb-response>
+  <inconsistent-slots>
+   </inconsistent-slots>
+  <missing-cards>
+    <cards>
+      <alternative>
+        <task-card>solve a problem</task-card>
+        <task-card>prepare a list of questions</task-card>
+        <position>C1-ABB-CSS-TASK</position>
+      </alternative>
+      <ground-card>
+        <technique-card>
+          <technique-name>Pyramid</technique-name>
+          <technique-phase>2</technique-phase>
+        </technique-card>
+        <position>C2-CSW-TECHNIQUE</position>
+      </ground-card>
+    </cards>
+  </missing-cards>
+  <suggested-cards>
+    <cards>
+    </cards>
+  </suggested-cards>
+</kb-response>

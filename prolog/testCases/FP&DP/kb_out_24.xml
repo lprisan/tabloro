@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  Writing a repeor, studying, finding materials, preparing a list of questions,
+  commenting on someone else’s work, preparing a presentation, carrying out an assignement,
+  producing an artifact
+ -->
+<kb-response>
+  <inconsistent-slots>
+  </inconsistent-slots>
+  <missing-cards>
+    <cards>
+    </cards>
+  </missing-cards>
+  <suggested-cards>
+    <cards>
+      <alternative>
+        <task-card>WRITING A REPORT</task-card>
+        <task-card>STUDYING</task-card>
+        <task-card>FINDING MATERIALS</task-card>
+        <task-card>PREPARING A LIST OF QUESTIONS</task-card>
+        <task-card>COMMENTING ON SOMEONE ELSE’S WORK</task-card>
+        <task-card>PREPARING A PRESENTATION</task-card>
+        <task-card>CARRYING OUT AN ASSIGNMENT</task-card>
+        <task-card>PRODUCING AN ARTEFACT</task-card>
+        <position>C1-ABA-CSS-TASK</position>
+      </alternative>
+    </cards>
+  </suggested-cards>
+</kb-response>

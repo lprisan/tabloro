@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  --- soprassedere --- Warning on the empty Task c2-ABA-CSS-Task
+  Team: Individual learners or Pairs or Small groups
+ -->
+<kb-response>
+  <inconsistent-slots>
+  </inconsistent-slots>
+  <missing-cards>
+    <cards>
+<!-- SOPRASSEDERE
+<alternative>
+        <position>C2-ABA-CSS-TASK</position>
+      </alternative>
+SOPRASSEDERE -->
+    </cards>
+  </missing-cards>
+  <suggested-cards>
+    <cards>
+      <alternative>
+        <team-card>INDIVIDUAL LEARNERS</team-card>
+        <team-card>PAIRS</team-card>
+        <team-card>SMALL GROUPS</team-card>
+        <position>C2-ABA-CSS-TEAM</position>
+      </alternative>
+    </cards>
+  </suggested-cards>
+</kb-response>

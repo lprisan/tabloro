@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  ERROR! Task 1 lasts 1 week so Task 2 must be placed on Column 2 
+ -->
+<kb-response>
+  <inconsistent-slots>
+     <position>C1-ABB-CSS-TASK</position>
+   </inconsistent-slots>
+  <missing-cards>
+    <cards>
+    </cards>
+  </missing-cards>
+  <suggested-cards>
+    <cards>
+    </cards>
+  </suggested-cards>
+</kb-response>

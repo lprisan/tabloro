@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  Studying
+-->
+<kb-response>
+  <inconsistent-slots>
+  </inconsistent-slots>
+  <missing-cards>
+    <cards>
+    </cards>
+  </missing-cards>
+  <suggested-cards>
+    <cards>
+      <ground-card>
+        <task-card>STUDYING</task-card>
+      </ground-card>
+      <position>C1-ABA-CSS-TASK</position>
+    </cards>
+  </suggested-cards>
+</kb-response>

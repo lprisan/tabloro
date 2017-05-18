@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  ERROR:  Plenary cannot be associated with Preparing a presentation
+ -->
+<kb-response>
+   <inconsistent-slots>
+      <position>C2-ABA-CSS-TASK</position>
+      <position>C2-ABA-CSS-TEAM</position>
+  </inconsistent-slots>
+  <missing-cards>
+    <cards>
+    </cards>
+  </missing-cards>
+  <suggested-cards>
+    <cards>
+    </cards>
+  </suggested-cards>
+</kb-response>

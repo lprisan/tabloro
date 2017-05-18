@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  ERROR: combinations are right, but  the cluster Preparing a presentation+Small groupd+Forum
+  must be placed in Column 2 (because Task 1 lasts 1 week)
+ -->
+<kb-response>
+  <inconsistent-slots>
+     <position>C1-ABB-CSS-TASK</position>
+     <position>C1-ABB-CSS-TEAM</position>
+     <position>C1-ABB-CSS-TEC1</position>
+  </inconsistent-slots>
+  <missing-cards>
+    <cards>
+    </cards>
+  </missing-cards>
+  <suggested-cards>
+    <cards>
+    </cards>
+  </suggested-cards>
+</kb-response>

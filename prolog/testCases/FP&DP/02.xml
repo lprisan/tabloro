@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE board SYSTEM "kb_in.dtd">
+<board>
+    <context>This is a text describing the context</context>
+    <goals>
+        <goal>This is a text describing a goal</goal>
+        <goal>This is a text describing another goal</goal>
+    </goals>
+    <content>This is a text describing some content</content>
+    <columns>
+        <column id="1">
+            <csw-technique><call-for-suggestion/></csw-technique><aba-css-task/><aba-css-team/><aba-css-tec1/><aba-css-tec2/><abb-css-task/><abb-css-team/><abb-css-tec1/><abb-css-tec2/></column>
+        <column id="2">
+            <csw-technique><technique-name/><technique-phase/></csw-technique><aba-css-task/><aba-css-team/><aba-css-tec1/><aba-css-tec2/><abb-css-task/><abb-css-team/><abb-css-tec1/><abb-css-tec2/></column>
+        <column id="3">
+            <csw-technique><technique-name/><technique-phase/></csw-technique><aba-css-task/><aba-css-team/><aba-css-tec1/><aba-css-tec2/><abb-css-task/><abb-css-team/><abb-css-tec1/><abb-css-tec2/></column>
+        <column id="4">
+            <csw-technique><technique-name/><technique-phase/></csw-technique><aba-css-task/><aba-css-team/><aba-css-tec1/><aba-css-tec2/><abb-css-task/><abb-css-team/><abb-css-tec1/><abb-css-tec2/></column>
+    </columns>
+</board>

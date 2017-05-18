@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  All Techniques – Phases I
+-->
+<kb-response>
+  <inconsistent-slots>
+  </inconsistent-slots>
+  <missing-cards>
+    <cards>
+    </cards>
+ </missing-cards>
+  <suggested-cards>
+    <cards>
+      <alternative>
+        <technique-card>
+          <technique-name>JIGSAW - PHASE I (EXPERT GROUPS)</technique-name>
+          <technique-phase>1</technique-phase>
+        </technique-card>
+        <technique-card>
+          <technique-name>PEER REVIEW - PHASE I</technique-name>
+          <technique-phase>1</technique-phase>
+	</technique-card>
+        <technique-card>
+          <technique-name>CASE STUDY - PHASE I</technique-name>
+          <technique-phase>1</technique-phase>
+        </technique-card>
+        <technique-card>
+          <technique-name>PYRAMID (FOR LIST PREPARATION) - PHASE I</technique-name>
+          <technique-phase>1</technique-phase>
+        </technique-card>
+        <technique-card>
+          <technique-name>PYRAMID (FOR PROBLEM SOLVING) - PHASE I</technique-name>
+          <technique-phase>1</technique-phase>
+        </technique-card>
+        <technique-card>
+          <technique-name>DISCUSSION - PHASE I (ALL CASES)</technique-name>
+          <technique-phase>1</technique-phase>
+        </technique-card>
+        <technique-card>
+          <technique-name>ROLE PLAY - PHASE I</technique-name>
+          <technique-phase>1</technique-phase>
+        </technique-card>
+        <position>C1-CSW-TECHNIQUE</position>
+      </alternative>
+    </cards>
+  </suggested-cards>
+</kb-response>

@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE board SYSTEM "kb_in.dtd">
+<board>
+  <context>...</context>
+  <goals>
+    <goal>...</goal>
+  </goals>
+  <content>...</content>
+  <columns>
+    <column id="1">
+      <csw-technique>
+        <technique-name></technique-name>
+        <technique-phase>0</technique-phase>
+      </csw-technique>
+      <aba-css-task></aba-css-task>
+      <aba-css-team></aba-css-team>
+      <aba-css-tec1>FORUM</aba-css-tec1>
+      <aba-css-tec2></aba-css-tec2>
+      <abb-css-task></abb-css-task>
+      <abb-css-team></abb-css-team>
+      <abb-css-tec1></abb-css-tec1>
+      <abb-css-tec2></abb-css-tec2>
+    </column>
+    <column id="2">
+      <csw-technique>
+        <technique-name></technique-name>
+        <technique-phase>0</technique-phase>
+      </csw-technique>
+      <aba-css-task></aba-css-task>
+      <aba-css-team></aba-css-team>
+      <aba-css-tec1></aba-css-tec1>
+      <aba-css-tec2></aba-css-tec2>
+      <abb-css-task></abb-css-task>
+      <abb-css-team></abb-css-team>
+      <abb-css-tec1></abb-css-tec1>
+      <abb-css-tec2></abb-css-tec2>
+    </column>
+    <column id="3">
+      <csw-technique>
+        <technique-name></technique-name>
+        <technique-phase>0</technique-phase>
+      </csw-technique>
+      <aba-css-task></aba-css-task>
+      <aba-css-team></aba-css-team>
+      <aba-css-tec1></aba-css-tec1>
+      <aba-css-tec2></aba-css-tec2>
+      <abb-css-task></abb-css-task>
+      <abb-css-team></abb-css-team>
+      <abb-css-tec1></abb-css-tec1>
+      <abb-css-tec2></abb-css-tec2>
+   </column>
+   <column id="4">
+      <csw-technique>
+        <technique-name></technique-name>
+        <technique-phase>0</technique-phase>
+      </csw-technique>
+      <aba-css-task></aba-css-task>
+      <aba-css-team></aba-css-team>
+      <aba-css-tec1></aba-css-tec1>
+      <aba-css-tec2></aba-css-tec2>
+      <abb-css-task></abb-css-task>
+      <abb-css-team></abb-css-team>
+      <abb-css-tec1></abb-css-tec1>
+      <abb-css-tec2></abb-css-tec2>
+   </column>
+  </columns>
+</board>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  empty cell 
+-->
+<kb-response>
+  <inconsistent-slots>
+  </inconsistent-slots>
+  <missing-cards>
+    <cards>
+    </cards>
+  </missing-cards>
+  <suggested-cards>
+    <cards>
+      <ground-card>
+        <technology-card />
+      </ground-card>
+      <position>C1-ABA-CSS-TEC2</position>
+    </cards>
+  </suggested-cards>
+</kb-response>

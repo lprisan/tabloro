@@ -1,0 +1,20 @@
+oracle('CaseStudy', result([],[],[])).
+oracle('DiscussionArtifact',                    % missing Plenary in week 2
+       result([],[card_in_slot('206', 'C2-ABA-CSS-TEAM')],[])).
+oracle('DiscussionAssignment',         % missing No Technology or Forum in week 3
+       result([],[card_in_slot('301', 'C3-ABA-CSS-TEC2'),
+                  card_in_slot('310', 'C3-ABA-CSS-TEC2')],[])).
+oracle('DiscussionReport', result([],[],[])).
+oracle('EtCetera', result([],[],[])).
+oracle('Jigsaw', result([],[],[])).
+oracle('PeerReview', result([],[],[])).
+oracle('PeerReview_correct', result([],[],[])).
+oracle('PeerReview_really_correct', result([],[],[])).
+oracle('PeerReview_wrong', result([],[],[])).
+oracle('Pyramid[PS]_correct', result([],[],[])).
+oracle('Pyramid[PS]_wrong', result([],[],[])).
+oracle('PyramidList', result([],[],[])).
+oracle('PyramidPS', result([],[],[])).
+oracle('RolePlay', result([],[],[])).
+oracle('RolePlay_correct', result([],[],[])).
+oracle('RolePlay_wrong', result([],[],[])).

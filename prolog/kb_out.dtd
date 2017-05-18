@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!ELEMENT kb-response (inconsistent-slots, missing-cards, suggested-cards)>
+<!ELEMENT inconsistent-slots position*, rationale?>
+<!ELEMENT missing-cards cards>
+<!ELEMENT suggested-cards cards>
+<!ELEMENT cards ((ground-card | alternative)*, rationale?)>
+<!ELEMENT ground-card ((technique-card | task-card | team-card | technology-card), position?)>
+<!ELEMENT technique-card (technique-name, technique-phase)>
+<!ELEMENT technique-name (#PCDATA)>
+<!ELEMENT technique-phase (#PCDATA)>
+<!ELEMENT task-card (#PCDATA)>
+<!ELEMENT team-card (#PCDATA)>
+<!ELEMENT technology-card (#PCDATA)>
+<!ELEMENT alternative ((technique-card | task-card | team-card | technology-card)*, position?)>
+<!ELEMENT position (#PCDATA)>
+<!ELEMENT rationale (#PCDATA)>

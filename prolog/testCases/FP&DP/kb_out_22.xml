@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE kb-response SYSTEM "kb_out.dtd">
+<!--
+  Warning: missing Teams and Technologies in Column 1
+  All tasks are possible
+ -->
+<kb-response>
+  <inconsistent-slots>
+   </inconsistent-slots>
+  <missing-cards>
+    <cards>
+      <alternative>
+        <position>C1-ABA-CSS-TEAM</position>
+      </alternative>
+      <alternative>
+        <position>C1-ABA-CSS-TEC1</position>
+      </alternative>
+    </cards>
+  </missing-cards>
+  <suggested-cards>
+    <cards>
+      <alternative>
+        <task-card>WRITING A REPORT</task-card>
+        <task-card>STUDYING</task-card>
+        <task-card>FINDING MATERIALS</task-card>
+        <task-card>PREPARING A LIST OF QUESTIONS</task-card>
+        <task-card>COMMENTING ON SOMEONE ELSE’S WORK</task-card>
+        <task-card>PREPARING A PRESENTATION</task-card>
+        <task-card>CARRYING OUT AN ASSIGNMENT</task-card>
+        <task-card>GIVING A PRESENTATION</task-card>
+        <task-card>SOLVING A PROBLEM</task-card>
+        <task-card>INTERVIEWING AN EXPERT</task-card>
+        <task-card>ASSUMING ROLES</task-card>
+        <task-card>PRODUCING AN ARTEFACT</task-card>
+        <task-card>DEBATING</task-card>
+        <position>C2-ABA-CSS-TASK</position>
+      </alternative>
+    </cards>
+  </suggested-cards>
+</kb-response>
