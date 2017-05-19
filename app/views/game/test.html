@@ -10,6 +10,10 @@
         <div id="edit-container">
             <button onclick="G.saveSetup()" class="btn btn-success">{{ __('Save Setup')}}</button>
         </div>
+    {% elseif (mode === 'playNomod') %}
+        <div id="edit-container">
+            <button onclick="G.saveDesign()" class="btn btn-success">{{ __('Save Design')}}</button>
+        </div>
     {% else %}
         <div id="edit-container">
             <!--a href="{{backUrl}}" class="btn btn-warning">{{ __('End Test')}}</a-->

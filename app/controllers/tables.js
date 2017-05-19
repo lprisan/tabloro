@@ -318,31 +318,6 @@ exports.play = function (req, res) {
 
 };
 
-/**
- * Play a 4Ts table: create a new copy of the table and open it
- */
-
-exports.play4Ts = function (req, res) {
-
-    var table = req.table;
-    var oldid = table._id;
-    table._id = mongoose.Types.ObjectId();
-    table.description = undefined;
-    table.isNew = true; //<--------------------IMPORTANT
-    table.title = table.setup.title+" "+Date.now();
-    table.createdAt = Date.now();
-
-    table.save(function (err) {
-      if (err) {
-        console.error(err);
-        req.flash('alert', req.i18n.__('Could not create new version of the design to play virtually!'));
-        return res.render('500');
-      }
-      console.log('created copy of the design version '+oldid+' --> '+table._id);
-      return res.redirect('/tables/'+table.title+'/playNomod');
-
-    });
-};
 
 
 /**
@@ -371,11 +346,41 @@ exports.playNomod = function (req, res) {
             user: req.user,
             assets: assets,
             backUrl: '/designs/' + setup.id,
-            mode: 'playNomod'
+            mode: 'playNomod',
+            pieces: unsortedPieces
         });
 
     });
 
+};
+
+
+
+
+/**
+ * Play a 4Ts table: create a new copy of the table and open it
+ */
+
+exports.play4Ts = function (req, res) {
+
+    var table = req.table;
+    var oldid = table._id;
+    table._id = mongoose.Types.ObjectId();
+    table.description = undefined;
+    table.isNew = true; //<--------------------IMPORTANT
+    table.title = table.setup.title+" "+Date.now();
+    table.createdAt = Date.now();
+
+    table.save(function (err) {
+      if (err) {
+        console.error(err);
+        req.flash('alert', req.i18n.__('Could not create new version of the design to play virtually!'));
+        return res.render('500');
+      }
+      console.log('created copy of the design version '+oldid+' --> '+table._id);
+      return res.redirect('/tables/'+table.title+'/playNomod');
+
+    });
 };
 
 
