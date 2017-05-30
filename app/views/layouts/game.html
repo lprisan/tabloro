@@ -62,6 +62,33 @@
             var gameName = '{{game.title}}';
             var assets = JSON.parse('{{ JSON.stringify(assets) }}');
             {% if mode === 'playNomod' %}
+            var OBJECTIVE_TAG = "6";
+            var CONTEXT_TAG = "7";
+            var CONTENT_TAG = "8";
+            var CAPTURE_TAG = "0";
+            var QUESTION_TAG = "1";
+            var MSG_NOTCLEARPLACE = "{{ __('There are cards not clearly placed in board cells: ')}}";
+            var MSG_TOOMANY = "{{ __('There too many cards in a single slot: ')}}";
+            var MSG_BLUECARDSLOTS = "{{ __('Blue cards can only be on the blue slots: ')}}";
+            var MSG_REDCARDSLOTS = "{{ __('Red cards can only be on the red slots: ')}}";
+            var MSG_YELLOWCARDSLOTS = "{{ __('Yellow cards can only be on the yellow slots: ')}}";
+            var MSG_GREENCARDSLOTS = "{{ __('Green cards can only be on the green slots: ')}}";
+            var MSG_CONTENTBOX = "{{ __('The content box must be occupied')}}";
+            var MSG_CONTEXTBOX = "{{ __('The context box must be occupied')}}";
+            var MSG_OBJECTIVEBOX = "{{ __('The objectives box must be occupied')}}";
+            var MSG_CAPTURECARDSLOT = "{{ __('The capture card should be placed in the capture slot')}}";
+            var MSG_QUESTIONEMPTY = "{{ __('The question card cannot be placed in a column to the right of an empty column')}}";
+            var MSG_SYNTAXCORRECT = "{{ __('The board appears to be syntactically correct!')}}";
+            var MSG_NO_INCONSISTENT = "{{ __('No inconsistent card combinations found!')}}";
+            var MSG_NO_MISSING = "{{ __('No missing cards!')}}";
+            var MSG_NO_SUGGESTION = "{{ __('We have no further suggestions for you!')}}";
+            var MSG_INCONSISTENT = "{{ __('Some card is not consistent with others: ')}}";
+            var MSG_MISSING = "{{ __('Some cards are missing: ')}}";
+            var MSG_SUGGESTED = "{{ __('You can also try these cards: ')}}";
+            var MSG_FBSECTION1 = "{{ __('Position errors')}}";
+            var MSG_FBSECTION2 = "{{ __('Inconsistent cards')}}";
+            var MSG_FBSECTION3 = "{{ __('Missing cards')}}";
+            var MSG_FBSECTION4 = "{{ __('Suggested cards')}}";
             var pieces = JSON.parse('{{ JSON.stringify(pieces) }}')
             {% endif %}
         </script>

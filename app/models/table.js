@@ -161,8 +161,18 @@ TableSchema.statics = {
 
       console.log('updated table', table.id);
     });
-  }
+  },
 
+  eurecaUpdateDesign: function (name, tiles, stacks, rawtags, regions){
+    this.findOneAndUpdate({title: name}, {tiles: tiles, stacks: stacks, cardsboard: regions, rawchilitags: rawtags}, function (err, table) {
+      if (err || !table) {
+        console.error('error', err, 'Could not update table!', table);
+        return;
+      }
+
+      console.log('updated table', table.id);
+    });
+  }
 
 };
 
