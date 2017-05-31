@@ -540,8 +540,8 @@ G.doSemanticChecks = function doSemanticChecks(xmlstring, cardRegions){
     //var message = 'Sending this file to the KB: '+xmlstring+'\n.........';
     var message = 'Querying the KB...';
     console.log(message);
-    $('#fblist').append('<li class="list-group-item" id="fbZZ"><img src="/img/ajax-loader.gif" alt="Loading..." /></li>');
-    $('#fbZZ').append(document.createTextNode(message));
+    //$('#fblist').append('<li class="list-group-item" id="fbZZ"><img src="/img/ajax-loader.gif" alt="Loading..." /></li>');
+    //)$('#fbZZ').append(document.createTextNode(message));
     var url = G.KB_BASE_URL+encodeURIComponent(xmlstring);
     $.get(url, function(data, status){
         console.log("KB Query successful.\nStatus: " + status + "\nData: " + data);
@@ -550,7 +550,7 @@ G.doSemanticChecks = function doSemanticChecks(xmlstring, cardRegions){
         //$('#fblist').append('<li class="list-group-item" id="fbZZ"></li>');
         //$('#fbZZ').append(document.createTextNode(data));
         var semantic = G.parseKBResponse(data, cardRegions, pieces);
-    //    G.displaySemanticErrors(semantic);
+        G.displaySemanticErrors(semantic);
     });
 };
 
@@ -675,6 +675,91 @@ G.modifyXMLField = function modifyXMLField(xmlDoc,field,value,displaySuggest=tru
 };
 
 
+G.displaySyntaxErrors = function displaySyntaxErrors(errors){
+    if(errors.length==0){
+        //We display a no errors found message
+        UI.chat("4Ts",MSG_SYNTAXCORRECT);
+    }else{
+        if(errors.length>0){
+          console.log("Displaying feedback for "+errors.length+" errors... actually, "+Math.min(errors.length, 4));
+          // Generate and place the error messages
+          for(var i=0;i<Math.min(errors.length, 4);i++){
+              UI.chat("4Ts",errors[i].message);
+          }
+          if(errors.length>4){
+              UI.chat("4Ts","...")
+          }
+        }
+
+    }
+}
+
+
+G.displaySemanticErrors = function displaySemanticErrors(semantic){
+
+    var inconsistent = semantic.inconsistent;
+    var missing = semantic.missing;
+    var suggested = semantic.suggested;
+
+    //inconsistent
+    //UI.chat("4Ts",MSG_FBSECTION2);
+    if(inconsistent.length==0){
+        //We display a no errors found message
+        UI.chat("4Ts",MSG_NO_INCONSISTENT);
+    }else{
+        if(inconsistent.length>0){
+          console.log("Displaying feedback for "+inconsistent.length+" inconsistencies... actually, "+Math.min(inconsistent.length, 4));
+          // Generate and place the error messages
+          for(var i=0;i<Math.min(inconsistent.length, 4);i++){
+              UI.chat("4Ts",inconsistent[i].message);
+          }
+          if(inconsistent.length>4){
+            UI.chat("4Ts","...");
+          }
+        }
+
+    }
+
+    //missing
+    //UI.chat("4Ts",MSG_FBSECTION3);
+    if(missing.length==0){
+        //We display a no errors found message
+        UI.chat("4Ts",MSG_NO_MISSING);
+    }else{
+        if(missing.length>0){
+          console.log("Displaying feedback for "+missing.length+" missing... actually, "+Math.min(missing.length, 4));
+
+          // Generate and place the error messages
+          for(var i=0;i<Math.min(missing.length, 4);i++){
+              UI.chat("4Ts",missing[i].message);
+          }
+          if(missing.length>4){
+            UI.chat("4Ts","...");
+          }
+        }
+
+    }
+
+    //suggested
+    //UI.chat("4Ts",MSG_FBSECTION4);
+    if(suggested.length==0){
+        //We display a no errors found message
+        UI.chat("4Ts",MSG_NO_SUGGESTION);
+    }else{
+        if(suggested.length>0){
+          console.log("Displaying feedback for "+suggested.length+" suggested... actually, "+Math.min(suggested.length, 4));
+          // Generate and place the error messages
+          for(var i=0;i<Math.min(suggested.length, 4);i++){
+              UI.chat("4Ts",suggested[i].message);
+          }
+          if(suggested.length>4){
+            UI.chat("4Ts","...");
+          }
+        }
+
+    }
+}
+
 
 
 G.saveDesign = function saveDesign() {
@@ -686,12 +771,12 @@ G.saveDesign = function saveDesign() {
     var capturedBoard = G.lookupCardRegions(boardRegions);
     //ensure saveDesign also takes the cardboard and raw chilitags!
     Network.server.saveDesign(rawchilitags, capturedBoard);
-    UI.chat('Saved design. Checking for feedback...', gameName);
+    UI.chat("4Ts",'Saved design. Checking for feedback...');
     // //Do syntax checks and show feedback
     var errors=[];
     errors = G.doSyntaxChecks(boardRegions);
     console.log(JSON.stringify(errors));
-    // G.displaySyntaxErrors(errors);
+    G.displaySyntaxErrors(errors);
     // //Query the KB and show feedback
     if(errors.length==0){
          var xmlBoard = G.getXMLFromBoard(capturedBoard);

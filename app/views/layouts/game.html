@@ -96,9 +96,9 @@
 
     <body style="cursor : url(/img/cursors/{{user.selected_cursor}}.png), auto;">
         {% if process.env.NODE_ENV === 'development' %}
-            <object id="tuio" type="application/x-tuio" style="width: 0px; height: 0px; position: absolute;">
+            <!--object id="tuio" type="application/x-tuio" style="width: 0px; height: 0px; position: absolute;">
                 Touch input plugin failed to load!
-            </object>
+            </object-->
         {% endif %}
 
         {% block main %}{% endblock %}
