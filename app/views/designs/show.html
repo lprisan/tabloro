@@ -63,7 +63,7 @@
               <i class="fa fa-camera"></i>
             </a>
               {% if (versions && versions.length>0) %}
-                <a class="btn btn-success btn-lg" href="/tables/{{encodeURIComponent(versions[0].title)}}/playNomod" target="_new">
+                <a class="btn btn-success btn-lg" href="/tables/{{encodeURIComponent(versions[0].title)}}/play4Ts" target="_new">
                   {{ __('Play (virtually)')}} &nbsp;
                   <i class="fa fa-play"></i>
                 </a>
@@ -138,7 +138,7 @@
               {% for version in versions %}
               <li class="list-group-item meta">
                 <i class="muted fa fa-code-fork"></i>&nbsp;
-                <a class="versionlink" href="{{ '/tables/' + version.title + '/playNomod' }}" target="_new" rel="{{ version._id.toString() }}">{{ version._id.toString() }}</a>
+                <a class="versionlink" href="{{ '/tables/' + version.title + '/play4Ts' }}" target="_new" rel="{{ version._id.toString() }}">{{ version._id.toString() }}</a>
                 &nbsp;&nbsp;
                 {{ version.createdAt.toISOString() }}
                 &nbsp;&nbsp;

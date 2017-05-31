@@ -172,7 +172,40 @@ TableSchema.statics = {
 
       console.log('updated table', table.id);
     });
+  },
+
+
+  eurecaCopyUpdateDesign: function (name, tiles, stacks, rawtags, regions){
+
+    //Find the table/version and create a copy of it (with the original createdAt)
+    this.findOne({title: name}).exec(
+      function(err, table) {
+          var t1 = table;
+          t1._id = mongoose.Types.ObjectId();
+          var namepieces = name.split(" ");
+          t1.title = namepieces.splice(0,namepieces.length-1).join(" ")+" "+Date.now();
+          t1.isNew = true; //<--------------------IMPORTANT
+          t1.save(function (err, table) {
+            if (err || !table) {
+              console.error('error', err, 'Could not copy table!', table);
+              return;
+            }
+            console.log('created copy table', t1.id);
+          });
+      }
+    );
+
+    //Then, we update the current version, but change the createdAt date so that this is the newest
+    this.findOneAndUpdate({title: name}, {tiles: tiles, stacks: stacks, cardsboard: regions, rawchilitags: rawtags, createdAt: Date.now()}, function (err, table) {
+      if (err || !table) {
+        console.error('error', err, 'Could not update table!', table);
+        return;
+      }
+
+      console.log('updated table', table.id);
+    });
   }
+
 
 };
 
