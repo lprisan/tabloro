@@ -14,6 +14,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import sys
 from selenium import webdriver
 import time
+import json
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from selenium.webdriver.common.by import By
@@ -37,6 +38,20 @@ SETUPNAME_EN = "COMPLETE 4TS SETUP EN"
 SETUPNAME_IT = "COMPLETE 4TS SETUP EN"
 SETUPNAME_ES = "COMPLETE 4TS SETUP EN"
 
+# Tile coordinates and counters to create card distribution in setup
+INITIAL_Y = 1000
+INITIAL_X_TECHNIQUE = 100
+INITIAL_X_TASK = 350
+INITIAL_X_TECHNOLOGY = 600
+INITIAL_X_TEAM = 850
+INITIAL_X_WILD = 1100
+
+COUNTER_TECHNIQUE = 0
+COUNTER_TASK = 0
+COUNTER_TECHNOLOGY = 0
+COUNTER_TEAM = 0
+COUNTER_WILD = 0
+
 
 # Translates 4Ts card type in the spreadsheet (potentially translated to Italian, etc) back to the original English types: Team, Technique, Task, Technology, Wildcard
 def toCanonical(cardtype):
@@ -48,7 +63,7 @@ def toCanonical(cardtype):
 
 
 def extractFromSpreadsheet(url):
-    """Connects to a (authorized) google spreadsheet, and extracts the data 
+    """Connects to a (authorized) google spreadsheet, and extracts the data
     from it about the card titles, descriptions, types etc.
 
     Returns list of dictionaries, each one with the card's data."""
@@ -62,7 +77,7 @@ def extractFromSpreadsheet(url):
     cardinstances = [] # Here we'll store the cards from the spreadsheet
     i = 2
     while True:
-        print('Extracting row %d' % i)        
+        print('Extracting row %d' % i)
         rowvals = wks.row_values(i)
         #print(rowvals)
         cardtype = rowvals[0]
@@ -107,19 +122,19 @@ def extractFromSpreadsheet(url):
                 card['type4ts'] = toCanonical(cardtype)
                 card['chilitags'] = [ card['tag'] ]
                 cardinstances.append(card)
-                #print('Adding new card, now %d' % len(cardinstances))                
+                #print('Adding new card, now %d' % len(cardinstances))
             i = i+1
     return cardinstances
 
 
-# This method tries to remove all non-base cards/board from a box and setup, 
-# to be filled in later in the upload process. Returns True if everything goes 
+# This method tries to remove all non-base cards/board from a box and setup,
+# to be filled in later in the upload process. Returns True if everything goes
 # successfully
 def cleanUpBoxSetup(boxname, setupname, basepieces=6):
     client = MongoClient()
     db = client['noobjs_dev']
-    # Cleaning up box    
-    mybox = db.boxes.find_one({"title": boxname})    
+    # Cleaning up box
+    mybox = db.boxes.find_one({"title": boxname})
     print("Trying to update box "+str(mybox['_id']))
     mypieces = mybox['pieces']
     mynewpieces = mypieces[0:basepieces]
@@ -129,15 +144,15 @@ def cleanUpBoxSetup(boxname, setupname, basepieces=6):
         myneworder[u''+str(p)] = myorder[str(p)]
     result = db.boxes.update_one({"_id": mybox['_id']},
                                    {
-                                         "$set": { "pieces": mynewpieces, "order": myneworder }                                  
+                                         "$set": { "pieces": mynewpieces, "order": myneworder }
                                    })
     print("Updated "+str(result.modified_count)+" records")
-    # This only would work if the base setups were already complete from previous time    
+    # This only would work if the base setups were already complete from previous time
     #if result.modified_count != 1:
     #    client.close()
     #    return False
     # Cleaning up setup
-    mysetup = db.setups.find_one({"title": setupname})    
+    mysetup = db.setups.find_one({"title": setupname})
     print("Trying to update setup "+str(mysetup['_id']))
     mypieces = mysetup['pieces']
     mynewpieces = mypieces[0:basepieces]
@@ -147,10 +162,10 @@ def cleanUpBoxSetup(boxname, setupname, basepieces=6):
         mynewtiles[u''+str(idx)] = mytiles[u''+str(idx)]
     result = db.setups.update_one({"_id": mysetup['_id']},
                                    {
-                                         "$set": { "pieces": mynewpieces, "tiles": mynewtiles }                                  
+                                         "$set": { "pieces": mynewpieces, "tiles": mynewtiles }
                                    })
     print("Updated "+str(result.modified_count)+" records")
-    # This only would work if the base setups were already complete from previous time    
+    # This only would work if the base setups were already complete from previous time
     #if result.modified_count != 1:
     #    client.close()
     #    return False
@@ -178,7 +193,7 @@ def checkDBExistence(origBaseBoxName, origBaseSetupName, newBaseBoxName, newBase
     elif n_origsetup>1:
         message = "Multiple setups with name "+origBaseSetupName+"!"
         return message
-    
+
     # Checking that the new box name to be created does not exist
     n_newbox = db.boxes.find({"title": newBaseBoxName}).count()
     if n_newbox != 0:
@@ -204,7 +219,7 @@ def duplicateBaseEntities(origBaseBoxName, origBaseSetupName, newBaseBoxName, ne
     mybox['title'] = newBaseBoxName
     mybox['isPrivate'] = True
     boxid = db.boxes.insert_one(mybox).inserted_id
-    print("Inserted/Cloned box "+str(boxid)+" in the database")           
+    print("Inserted/Cloned box "+str(boxid)+" in the database")
     # Duplicating the setup, and associating it with the just-cloned box
     mysetup = db.setups.find_one({"title": origBaseSetupName}) # Find the box with the corresponding title BOXNAME_EN
     print("Cloning setup "+origBaseSetupName+"/"+str(mysetup['_id']))
@@ -213,7 +228,7 @@ def duplicateBaseEntities(origBaseBoxName, origBaseSetupName, newBaseBoxName, ne
     mysetup['box'] = boxid
     mysetup['isPrivate'] = True
     setupid = db.setups.insert_one(mysetup).inserted_id
-    print("Inserted/Cloned setup "+str(setupid)+" in the database") 
+    print("Inserted/Cloned setup "+str(setupid)+" in the database")
     client.close()
     return message
 
@@ -222,11 +237,65 @@ def duplicateBaseEntities(origBaseBoxName, origBaseSetupName, newBaseBoxName, ne
 def printUsage():
     print('Usage: python uploadCards.py --en|--it --newBaseSetupName \'SOME NAME\' --newBaseBoxName \'SOME OTHER NAME\'')
 
-
+def getTile(i, card):
+    global COUNTER_TECHNIQUE
+    global COUNTER_TASK
+    global COUNTER_TECHNOLOGY
+    global COUNTER_TEAM
+    global COUNTER_WILD
+    tile = {}
+    if(card['type4ts']=='Technique'):
+            tile = {
+                "frame" : 0,
+                "rotation" : 0,
+                "y" : (INITIAL_Y+(3*COUNTER_TECHNIQUE)),
+                "x" : (INITIAL_X_TECHNIQUE+(3*COUNTER_TECHNIQUE))
+            }
+            COUNTER_TECHNIQUE = COUNTER_TECHNIQUE+1
+    elif(card['type4ts']=='Task'):
+            tile = {
+                "frame" : 0,
+                "rotation" : 0,
+                "y" : (INITIAL_Y+(3*COUNTER_TASK)),
+                "x" : (INITIAL_X_TASK+(3*COUNTER_TASK))
+            }
+            COUNTER_TASK = COUNTER_TASK+1
+    elif(card['type4ts']=='Technology'):
+            tile = {
+                "frame" : 0,
+                "rotation" : 0,
+                "y" : (INITIAL_Y+(3*COUNTER_TECHNOLOGY)),
+                "x" : (INITIAL_X_TECHNOLOGY+(3*COUNTER_TECHNOLOGY))
+            }
+            COUNTER_TECHNOLOGY = COUNTER_TECHNOLOGY+1
+    elif(card['type4ts']=='Team'):
+            tile = {
+                "frame" : 0,
+                "rotation" : 0,
+                "y" : (INITIAL_Y+(3*COUNTER_TEAM)),
+                "x" : (INITIAL_X_TEAM+(3*COUNTER_TEAM))
+            }
+            COUNTER_TEAM = COUNTER_TEAM+1
+    elif(card['type4ts']=='Wildcard'):
+            tile = {
+                "frame" : 0,
+                "rotation" : 0,
+                "y" : (INITIAL_Y+(3*COUNTER_WILD)),
+                "x" : (INITIAL_X_WILD+(3*COUNTER_WILD))
+            }
+            COUNTER_WILD = COUNTER_WILD+1
+    else:
+            tile = {
+                "frame" : 0,
+                "rotation" : 0,
+                "y" : (INITIAL_Y+(3*i)),
+                "x" : (1350+(3*i))
+            }
+    return tile
 
 # MAIN PROGRAM
 if __name__ == '__main__':
-    # If no args, or the first arg is --en, we do the cards from the english spreadsheet 
+    # If no args, or the first arg is --en, we do the cards from the english spreadsheet
     cardinstances = [] # Here we'll store the cards from the spreadsheet
     lang = "EN"
     newBaseSetupName = ""
@@ -267,22 +336,22 @@ if __name__ == '__main__':
         sys.exit()
     else:
         print("DB check successful, starting the process of upload")
-    
+
     # Start the process...
     cardinstances = extractFromSpreadsheet(spreadsheetUrl)
     print('Read %d cards from spreadsheet' % len(cardinstances))
     dir_path = os.path.dirname(os.path.realpath(__file__)) # This script's path
     os.chdir(dir_path)
-    print('Working in '+dir_path)    
+    print('Working in '+dir_path)
     # We read the credentials for login as admin in Tabloro
-    content = []    
+    content = []
     with open("tabloroadmin.txt") as f:
         content = f.readlines()
     content = [x.strip() for x in content]
     #print(cardinstances)
     # Initialize Selenium driver and authenticate into tabloro
     # tweaking for headless browser, see http://kiennt.com/blog/2012/06/29/using-selenium-with-headless-browser.html
-    print('Starting headless display...')    
+    print('Starting headless display...')
     display = Display(visible=0, size=(800, 600))
     display.start()
     print('Starting Selenium...')
@@ -301,7 +370,7 @@ if __name__ == '__main__':
     print('Successful login!')
 
     # Copy the base box and setup, then
-    # Initialize base box and setup: delete all card pieces, tiles, order 
+    # Initialize base box and setup: delete all card pieces, tiles, order
     # beyond the 6th
     duplicateBaseEntities(origBaseBoxName, origBaseSetupName, newBaseBoxName, newBaseSetupName)
     cleanUpBoxSetup(newBaseBoxName,newBaseSetupName)
@@ -313,7 +382,7 @@ if __name__ == '__main__':
         card = cardinstances[i]
         uploadtitle = (card['title']+' '+lang+' '+str(time.time())).replace("-","_").replace(".","_").replace("(","_").replace(")","_")
         filepath = dir_path+"/output/digital/"+card['title'].replace(" ","_")+'_'+str(card['tag'])+'_DIGITAL.svg.png'
-        assert os.path.isfile(filepath) 
+        assert os.path.isfile(filepath)
         print('Starting upload of '+uploadtitle+' from file '+filepath)
         driver.get("http://localhost:3000/pieces/new")
         elem = driver.find_element_by_id("title")
@@ -322,7 +391,7 @@ if __name__ == '__main__':
         elem = driver.find_element_by_id("image")
         elem.clear()
         elem.send_keys(filepath)
-        elem.submit() 
+        elem.submit()
         # Check success and wait for response to get the piece id?
         try:
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//h1[starts-with(.,"Piece: ")]')))
@@ -332,54 +401,56 @@ if __name__ == '__main__':
         cardid = elem.get_attribute('action')
         print('cardid '+cardid)
         pieceid = cardid[(cardid.rindex('/')+1):]
-        card['mongoid'] = pieceid 
+        card['mongoid'] = pieceid
         cardinstances[0] = card
         print("=================================\nCard upload complete! _id: "+pieceid)
         client = MongoClient()
         db = client['noobjs_dev']
-        mypiece = db.pieces.find_one({"_id": ObjectId(pieceid)})    
+        mypiece = db.pieces.find_one({"_id": ObjectId(pieceid)})
         print("Trying to update piece "+str(mypiece['_id']))
         print(str(card['chilitags']))
         result = db.pieces.update_one({"_id": ObjectId(pieceid)},
                                        {
-                                             "$set": {"chilitags": card['chilitags'] , "type4ts": card['type4ts'] }                                  
+                                             "$set": {"chilitags": card['chilitags'] , "type4ts": card['type4ts'] ,
+                                                      "desc4ts": json.dumps(card['description']) , "ind_plain": json.dumps(card['ind_plain']) ,
+                                                    "ind_task1": json.dumps(card['ind_task1']) , "ind_team1": json.dumps(card['ind_team1']) ,
+                                                    "ind_tech1": json.dumps(card['ind_tech1']) , "ind_time1": json.dumps(card['ind_time1']) ,
+                                                    "ind_task2": json.dumps(card['ind_task2']) , "ind_team2": json.dumps(card['ind_team2']) ,
+                                                    "ind_tech2": json.dumps(card['ind_tech2']) , "ind_time2": json.dumps(card['ind_time2']) ,
+                                                    "ind_task3": json.dumps(card['ind_task3']) , "ind_team3": json.dumps(card['ind_team3']) ,
+                                                    "ind_tech3": json.dumps(card['ind_tech3']) , "ind_time3": json.dumps(card['ind_time3'])}
                                        })
-        print("Updated "+str(result.modified_count)+" records")   
-                          
+        print("Updated "+str(result.modified_count)+" records")
+
         mybox = db.boxes.find_one({"title": newBaseBoxName}) # Find the box with the corresponding title BOXNAME_EN
         print("Trying to update box "+str(mybox['_id']))
         result = db.boxes.update_one({"title": newBaseBoxName},
-                                     { 
+                                     {
                                          "$addToSet": {"pieces": ObjectId(pieceid) },
                                         "$set": { "order."+str(pieceid) : 3}
                                      }) # Update the box, adding the piece and the layer (order)
-        print("Updated "+str(result.modified_count)+" record")                             
+        print("Updated "+str(result.modified_count)+" record")
         mysetup = db.setups.find_one({"title": newBaseSetupName}) # Find the setup with the corresponding title SETUPNAME_EN
         print("Trying to update setup "+str(mysetup['_id']))
-        mytile = {
-            "frame" : 0,
-            "rotation" : 0,
-            "y" : (1000+(3*i)),
-            "x" : (200+(3*i))
-            }
+        mytile = getTile(i, card)
         l = len(mysetup['pieces'])
         result = db.setups.update_one({"title": newBaseSetupName},
-                                     { 
+                                     {
                                          "$addToSet": {"pieces": ObjectId(pieceid) },
                                         "$set": { "tiles."+str(l) : mytile }
                                      }) # Update the box, adding the piece and the layer (order)
-        print("Updated "+str(result.modified_count)+" record")       # Update the setup, adding the piece and the tiles 
+        print("Updated "+str(result.modified_count)+" record")       # Update the setup, adding the piece and the tiles
         print("--------------------\nCard "+pieceid+" modified, added to box "+str(mybox['_id'])+" and to setup "+str(mysetup['_id']))
     # Add the is4Ts parameter to the setup
     mysetup = db.setups.find_one({"title": newBaseSetupName}) # Find the setup with the corresponding title SETUPNAME_EN
     print("Trying to finalize update setup "+str(mysetup['_id']))
     result = db.setups.update_one({"title": newBaseSetupName},
-                                     { 
+                                     {
                                         "$set": { "is4Ts" : True }
                                      }) # Update the setup, is4Ts
     print("Updated "+str(result.modified_count)+" record")
     print("=================================\nCard modifications in DB complete!!")
     print("Please check that you modify the start.sh script, so that BOXNAME_"+lang+"=\'"+newBaseBoxName+"\' and SETUPNAME_"+lang+"=\'"+newBaseSetupName+"\'")
-    client.close()    
+    client.close()
     driver.close()
     display.stop()
