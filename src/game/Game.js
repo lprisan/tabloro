@@ -678,16 +678,16 @@ G.modifyXMLField = function modifyXMLField(xmlDoc,field,value,displaySuggest=tru
 G.displaySyntaxErrors = function displaySyntaxErrors(errors){
     if(errors.length==0){
         //We display a no errors found message
-        UI.chat("4Ts",MSG_SYNTAXCORRECT);
+        UI.fbchat("4Ts",MSG_SYNTAXCORRECT);
     }else{
         if(errors.length>0){
           console.log("Displaying feedback for "+errors.length+" errors... actually, "+Math.min(errors.length, 4));
           // Generate and place the error messages
           for(var i=0;i<Math.min(errors.length, 4);i++){
-              UI.chat("4Ts",errors[i].message);
+              UI.fbchat("4Ts",errors[i].message);
           }
           if(errors.length>4){
-              UI.chat("4Ts","...")
+              UI.fbchat("4Ts","...")
           }
         }
 
@@ -702,58 +702,58 @@ G.displaySemanticErrors = function displaySemanticErrors(semantic){
     var suggested = semantic.suggested;
 
     //inconsistent
-    //UI.chat("4Ts",MSG_FBSECTION2);
+    //UI.fbchat("4Ts",MSG_FBSECTION2);
     if(inconsistent.length==0){
         //We display a no errors found message
-        UI.chat("4Ts",MSG_NO_INCONSISTENT);
+        UI.fbchat("4Ts",MSG_NO_INCONSISTENT);
     }else{
         if(inconsistent.length>0){
           console.log("Displaying feedback for "+inconsistent.length+" inconsistencies... actually, "+Math.min(inconsistent.length, 4));
           // Generate and place the error messages
           for(var i=0;i<Math.min(inconsistent.length, 4);i++){
-              UI.chat("4Ts",inconsistent[i].message);
+              UI.fbchat("4Ts",inconsistent[i].message);
           }
           if(inconsistent.length>4){
-            UI.chat("4Ts","...");
+            UI.fbchat("4Ts","...");
           }
         }
 
     }
 
     //missing
-    //UI.chat("4Ts",MSG_FBSECTION3);
+    //UI.fbchat("4Ts",MSG_FBSECTION3);
     if(missing.length==0){
         //We display a no errors found message
-        UI.chat("4Ts",MSG_NO_MISSING);
+        UI.fbchat("4Ts",MSG_NO_MISSING);
     }else{
         if(missing.length>0){
           console.log("Displaying feedback for "+missing.length+" missing... actually, "+Math.min(missing.length, 4));
 
           // Generate and place the error messages
           for(var i=0;i<Math.min(missing.length, 4);i++){
-              UI.chat("4Ts",missing[i].message);
+              UI.fbchat("4Ts",missing[i].message);
           }
           if(missing.length>4){
-            UI.chat("4Ts","...");
+            UI.fbchat("4Ts","...");
           }
         }
 
     }
 
     //suggested
-    //UI.chat("4Ts",MSG_FBSECTION4);
+    //UI.fbchat("4Ts",MSG_FBSECTION4);
     if(suggested.length==0){
         //We display a no errors found message
-        UI.chat("4Ts",MSG_NO_SUGGESTION);
+        UI.fbchat("4Ts",MSG_NO_SUGGESTION);
     }else{
         if(suggested.length>0){
           console.log("Displaying feedback for "+suggested.length+" suggested... actually, "+Math.min(suggested.length, 4));
           // Generate and place the error messages
           for(var i=0;i<Math.min(suggested.length, 4);i++){
-              UI.chat("4Ts",suggested[i].message);
+              UI.fbchat("4Ts",suggested[i].message);
           }
           if(suggested.length>4){
-            UI.chat("4Ts","...");
+            UI.fbchat("4Ts","...");
           }
         }
 
@@ -771,7 +771,8 @@ G.saveDesign = function saveDesign() {
     var capturedBoard = G.lookupCardRegions(boardRegions);
     //ensure saveDesign also takes the cardboard and raw chilitags!
     Network.server.saveDesign(rawchilitags, capturedBoard);
-    UI.chat("4Ts",'Saved design. Checking for feedback...');
+    UI.lines = [];
+    UI.fbchat("4Ts",'Saved design. Checking for feedback...');
     // //Do syntax checks and show feedback
     var errors=[];
     errors = G.doSyntaxChecks(boardRegions);
