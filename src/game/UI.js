@@ -25,7 +25,7 @@ UI.init = function () {
     }, UI.group);
     UI.nameText.align = 'right';
     UI.nameText.alpha = 0.7;
-    UI.nameText.setShadow(1,2,'#000000');
+    //UI.nameText.setShadow(1,2,'#000000');
 
 
 
@@ -36,7 +36,7 @@ UI.init = function () {
     }, UI.group);
     UI.messageText.align = 'right';
     UI.messageText.alpha = 1.0;
-    UI.messageText.setShadow(3,3,'#000000', 1);
+    //UI.messageText.setShadow(3,3,'#000000', 1);
 
 
 
@@ -173,7 +173,7 @@ UI.hudMessage = function () {
 
     UI.graphics.clear();
     UI.graphics.lineStyle(1, 0x888888, 1);
-    UI.graphics.beginFill(0x333222111, 0.5);
+    UI.graphics.beginFill(0x333222111, 0.8);
     UI.graphics.drawRect(
         - 10,
          - 10,
@@ -218,7 +218,7 @@ UI.fbhudMessage = function () {
 
     UI.graphics.clear();
     UI.graphics.lineStyle(1, 0x888888, 1);
-    UI.graphics.beginFill(0x333222111, 0.5);
+    UI.graphics.beginFill(0x333222111, 0.8);
     UI.graphics.drawRect(
         - 10,
          - 10,
