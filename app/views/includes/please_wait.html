@@ -5,17 +5,18 @@
     <h1>
       <i class="fa fa-spinner fa-spin">
       </i>
-      Please wait while loading '{{room.title}}'.
+      <!--Please wait while loading '{{room.title}}'.-->
+      {{ __('Please wait while loading your design.')}}
     </h1>
-    <p>Loading may take 0-3 <b>minutes</b> depending on your connection.</p>
-    
-    <a href="http://www.google.com/chrome" target="_blank"><img src="/img/browsers.png"/>
+    <p>{{ __('Loading may take 0-3 minutes depending on your connection')}}</p>
+
+    <!--a href="http://www.google.com/chrome" target="_blank"><img src="/img/browsers.png"/>
       Please use Chrome or Firefox
     </a>
-    <hr>
+    <hr-->
     <h3 id="load_error"></h3>
-    
-    {% include '../includes/controls.html' %}
-    
+
+    <!--{% include '../includes/controls.html' %}-->
+
     </center>
 </div>
