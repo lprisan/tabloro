@@ -411,14 +411,15 @@ if __name__ == '__main__':
         print(str(card['chilitags']))
         result = db.pieces.update_one({"_id": ObjectId(pieceid)},
                                        {
-                                             "$set": {"chilitags": card['chilitags'] , "type4ts": card['type4ts'] ,
-                                                      "desc4ts": json.dumps(card['description']) , "ind_plain": json.dumps(card['ind_plain']) ,
-                                                    "ind_task1": json.dumps(card['ind_task1']) , "ind_team1": json.dumps(card['ind_team1']) ,
-                                                    "ind_tech1": json.dumps(card['ind_tech1']) , "ind_time1": json.dumps(card['ind_time1']) ,
-                                                    "ind_task2": json.dumps(card['ind_task2']) , "ind_team2": json.dumps(card['ind_team2']) ,
-                                                    "ind_tech2": json.dumps(card['ind_tech2']) , "ind_time2": json.dumps(card['ind_time2']) ,
-                                                    "ind_task3": json.dumps(card['ind_task3']) , "ind_team3": json.dumps(card['ind_team3']) ,
-                                                    "ind_tech3": json.dumps(card['ind_tech3']) , "ind_time3": json.dumps(card['ind_time3'])}
+                                             "$set": {"chilitags": card['chilitags'] , "type4ts": card['type4ts'] #,
+#                                                      "desc4ts": json.dumps(card['description']) , "ind_plain": json.dumps(card['ind_plain']) ,
+#                                                    "ind_task1": json.dumps(card['ind_task1']) , "ind_team1": json.dumps(card['ind_team1']) ,
+#                                                    "ind_tech1": json.dumps(card['ind_tech1']) , "ind_time1": json.dumps(card['ind_time1']) ,
+#                                                    "ind_task2": json.dumps(card['ind_task2']) , "ind_team2": json.dumps(card['ind_team2']) ,
+#                                                    "ind_tech2": json.dumps(card['ind_tech2']) , "ind_time2": json.dumps(card['ind_time2']) ,
+#                                                    "ind_task3": json.dumps(card['ind_task3']) , "ind_team3": json.dumps(card['ind_team3']) ,
+#                                                    "ind_tech3": json.dumps(card['ind_tech3']) , "ind_time3": json.dumps(card['ind_time3'])
+                                                    }
                                        })
         print("Updated "+str(result.modified_count)+" records")
 
