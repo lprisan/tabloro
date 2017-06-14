@@ -278,6 +278,10 @@
               <!--button class="btn btn-primary" type="submit">{{ __('Create')}}</button-->
               &nbsp;
               <a href="/designs/{{table.setup._id.toString()}}" class="btn btn-link"><i class="fa fa-backward"></i>&nbsp;&nbsp;{{ __('Back to This Design Page')}}</a>
+              <a class="btn btn-success btn-lg" href="/designs/{{table.setup._id.toString()}}/play4TsLatest">
+                {{ __('Play (virtually)')}} &nbsp;
+                <i class="fa fa-play"></i>
+              </a>
             </div>
           </div>
         </form>

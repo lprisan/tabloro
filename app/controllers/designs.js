@@ -266,6 +266,65 @@ exports.createVersion = function (req, res) {
 };
 
 
+exports.play4TsLatest = function (req, res) {
+    console.log('play latest version of design '+req.setup._id);
+    var setup = req.setup;
+
+    var criteria = {
+      setup: setup._id,
+      deleted: null
+    }
+
+    Table.list({ criteria , sort: {createdAt:-1} }, function (err, sortedTables) {
+        if (err) {
+            console.log(err);
+            req.flash('alert', err);
+            return res.redirect('/designs');
+        }
+
+        if(sortedTables.length>0){ // If there is a version, we play the latest (will create new version in the process)
+          req.setup = setup;
+          req.table = sortedTables[0];
+
+          return res.redirect('/tables/'+encodeURIComponent(sortedTables[0].title)+'/play4Ts');
+        }else{ // If there is no version, we should create one and play it!
+
+          console.log('no existing versions of this design. create design version for setup '+req.setup._id);
+          var formtable = {};
+          formtable._id = mongoose.Types.ObjectId();
+          formtable.setup = req.setup._id;
+          formtable.box = req.setup.box;
+          formtable.isPrivate = false;
+          formtable.tiles = req.setup.tiles;
+          formtable.user = req.user;
+          formtable.stacks = {};
+          formtable.createdAt = Date.now();
+          formtable.title = req.setup.title + ' ' + Date.now();
+          formtable.tags = ""; //For now, we do not use tags of the tables/designversions
+          console.log('creating new table: '+ formtable._id);
+          var table = new Table(formtable);
+
+          //Setup findOne not needed anymore, it comes from load already?
+          //table.setup = req.body.table.setup;
+          //table.box = req.body.table.setup.box;
+          table.isNew = true; //<--------------------IMPORTANT
+
+          console.log('DELETEME play4TsLatest before table save: '+JSON.stringify(table));
+          table.save(function (err) {
+              if (!err) {
+                  console.log('Successfully created designVersion/table!');
+                  return res.redirect('/tables/'+encodeURIComponent(formtable.title)+'/playNomod');
+              }
+              console.log(err);
+              req.flash('alert', req.i18n.__('Failed to create designVersion/table!'));
+              return res.render('500');
+          });
+
+
+        }
+    });//end table list
+
+};
 
 
 

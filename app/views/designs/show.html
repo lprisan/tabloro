@@ -61,12 +61,10 @@
               {{ __('Capture')}} &nbsp;
               <i class="fa fa-camera"></i>
             </a>
-              {% if (versions && versions.length>0) %}
-                <a class="btn btn-success btn-lg" href="/tables/{{encodeURIComponent(versions[0].title)}}/play4Ts" target="_new">
+                <a class="btn btn-success btn-lg" href="/designs/{{setup._id.toString()}}/play4TsLatest" target="_new">
                   {{ __('Play (virtually)')}} &nbsp;
                   <i class="fa fa-play"></i>
                 </a>
-              {% endif %}
             {% endif %}
             <a class="btn btn-info btn-lg" href="#" onclick="askDesignCopy('/designs/{{setup._id.toString()}}/copy');">
               {{ __('Create copy')}} &nbsp;
