@@ -213,7 +213,7 @@ exports.capture = function (req, res) {
       }
       //Getting the box too IS NOT NEEDED, it comes with the table, we need it to know the board piece
       res.render('designs/new', {
-          title: req.i18n.__('New Design') + ': ' + req.setup.title,
+          title: req.i18n.__('Design') + ': ' + req.setup.title,
           setup: req.setup,
           capture: capture,
           setupPieces: unsortedPieces,
@@ -301,7 +301,7 @@ exports.show = function (req, res) {
             console.log('rendering design with pieces '+unsortedPieces.length+' and versions '+sortedTables.length)
             //Getting the box too IS NOT NEEDED, it comes with the table, we need it to know the board piece
             res.render('designs/show', {
-              title: req.i18n.__('Design'),
+              title: req.i18n.__('Design')+': '+setup.title,
               setup: setup,
               box: req.box,
               versions: sortedTables,

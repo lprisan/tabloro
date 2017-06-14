@@ -2,7 +2,6 @@
 
 {% block main %}
   <h1>
-
     {{ title }}
   </h1>
 {% endblock %}
@@ -82,7 +81,7 @@
     <div class="col-md-4">
       <ul class="list-group">
         {% if (setup.isPrivate) %}
-          <li class="list-group-item list-group-item-warning">{{ __('This Design is Private')}}</li>
+          <li class="list-group-item list-group-item-warning">{{ __('This Design is Private (but you can share it with others by copying/pasting the address you see now in your browser navigation bar)')}}</li>
         {% else %}
           <li class="list-group-item list-group-item-success">{{ __('This Design is Public')}}</li>
         {% endif %}
