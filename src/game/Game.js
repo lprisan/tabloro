@@ -692,7 +692,7 @@ G.displaySyntaxErrors = function displaySyntaxErrors(errors){
         }
 
     }
-}
+};
 
 
 G.displaySemanticErrors = function displaySemanticErrors(semantic){
@@ -758,7 +758,7 @@ G.displaySemanticErrors = function displaySemanticErrors(semantic){
         }
 
     }
-}
+};
 
 
 

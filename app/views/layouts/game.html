@@ -89,7 +89,8 @@
             var MSG_FBSECTION2 = "{{ __('Inconsistent cards')}}";
             var MSG_FBSECTION3 = "{{ __('Missing cards')}}";
             var MSG_FBSECTION4 = "{{ __('Suggested cards')}}";
-            var pieces = JSON.parse('{{ JSON.stringify(pieces) }}')
+            var pieces = JSON.parse('{{ JSON.stringify(pieces) }}');
+            var backUrl = '{{backUrl}}';
             {% endif %}
         </script>
     </head>
