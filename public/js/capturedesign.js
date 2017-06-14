@@ -298,7 +298,8 @@ var snapshot = function() {
         for(var tag in obj){
             str += tag + ", ";
         }
-        fpsText.nodeValue = video.width+"x"+video.height+"--Chilitags processing = " + (end.getTime() - start.getTime()) + "ms  " + str;
+        //Debug infor chilitags
+        //fpsText.nodeValue = video.width+"x"+video.height+"--Chilitags processing = " + (end.getTime() - start.getTime()) + "ms  " + str;
         // We color the video's containters bg color, and disable the capture button,
         // so that we can know when the capture is possible
         var rancapture = false;
@@ -926,9 +927,9 @@ var capture = function() {
   if(preloaded && framesSinceCapture>FRAMESBETWEENCAPTURES){ //We only allow capture once all piece images have been preloaded and can be drawn
     continuous=false;
     var str = JSON.stringify(lastTags);
-    var captured = document.getElementById('capturedElements');
-    var capturedText = document.createTextNode(str);
-    captured.appendChild(capturedText);
+    //var captured = document.getElementById('capturedElements');
+    //var capturedText = document.createTextNode(str);
+    //captured.appendChild(capturedText);
     captureBtn.classList.add("disabled");
 
     var board_present = checkAndStyleBoardCapture(lastTags, videoContBG, captureBtn);
@@ -997,11 +998,11 @@ var capture = function() {
 
 var retry = function() {
     continuous=true;
-    var captured = document.getElementById('capturedElements');
-    var capturedText = document.createTextNode('');
-    //captured.removeChild(captured.firstChild);
-    captured.innerHTML='';
-    captured.appendChild(capturedText);
+    //var captured = document.getElementById('capturedElements');
+    //var capturedText = document.createTextNode('');
+    ////captured.removeChild(captured.firstChild);
+    //captured.innerHTML='';
+    //captured.appendChild(capturedText);
     captureBtn.classList.add("disabled");
     requestAnimationFrame(snapshot);
 }
