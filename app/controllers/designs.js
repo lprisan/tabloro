@@ -324,13 +324,13 @@ exports.show = function (req, res) {
  exports.destroy = function (req, res) {
      var setup = req.setup;
 
-     Table.list({setup: setup}, function (err, tables) {
+     Table.list({ criteria: {'setup': mongoose.Types.ObjectId(setup._id)}}, function (err, tables) {
          if (err) {
              req.flash('error', req.i18n.__('Could not delete setup'));
              res.redirect('/designs');
              return;
          }
-         console.log(tables.length+' versions of the design ['+Object.prototype.toString.call(tables)+']: '+JSON.stringify(tables));
+         console.log(tables.length+' versions of the design ['+setup._id+']');
          if (tables.length > 0) {
            tables.forEach(function(tab) {
              console.log('Deleting table '+tab._id+' from design '+setup._id);
