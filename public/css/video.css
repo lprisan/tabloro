@@ -38,6 +38,7 @@ body {
     position: absolute;
     top: 0px;
     left: 350px;
+    display: none;
 }
 
 .video-group {

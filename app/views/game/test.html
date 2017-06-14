@@ -13,6 +13,7 @@
     {% elseif (mode === 'playNomod') %}
         <div id="edit-container">
             <button onclick="G.saveDesign()" class="btn btn-success">{{ __('Save Design')}}</button>
+            <button onclick="window.close()" class="btn btn-danger">{{ __('Back to Design Page (closes window)')}}</button>
         </div>
     {% else %}
         <div id="edit-container">

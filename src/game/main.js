@@ -91,6 +91,8 @@ function setupStage() {
     game.stage.disableVisibilityChange = true; // loose tab focus, game will continue
     var please_wait = document.getElementById('please_wait');
     if(please_wait) please_wait.remove();
+    //make menu and save design button visible
+    document.getElementById('edit-container').style.display = "block";
     game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
     game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     game.scale.fullScreenTarget = document.body;
