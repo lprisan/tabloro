@@ -1061,7 +1061,7 @@ var drawBoard = function(){
     boardpiece = {};
     for(var i = 0; i < pieces.length; i++){
         var piece = pieces[i];
-        if(piece['_id']=='57f58b985dcddd50009e8b1a'){
+        if(piece['title'].startsWith('New board clearer')){
             boardpiece = piece;
             break;
         }
