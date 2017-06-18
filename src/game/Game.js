@@ -771,8 +771,9 @@ G.saveDesign = function saveDesign() {
     var capturedBoard = G.lookupCardRegions(boardRegions);
     //ensure saveDesign also takes the cardboard and raw chilitags!
     Network.server.saveDesign(rawchilitags, capturedBoard);
-    UI.lines = [];
-    UI.fbchat("4Ts",'Saved design. Checking for feedback...');
+    UI.lines2 = [];
+    UI.chat("4Ts",'Saved design. Checking for feedback...');
+    UI.fbchat("4Ts","4Ts Feedback:");
     // //Do syntax checks and show feedback
     var errors=[];
     errors = G.doSyntaxChecks(boardRegions);

@@ -4,6 +4,7 @@
 var UI = {};
 
 UI.lines = [];
+UI.lines2 = [];
 UI.menuLines = [];
 UI.timeout = null;
 
@@ -18,6 +19,10 @@ UI.init = function () {
     // UI.gameText.alpha = 0.7;
     UI.graphics = game.add.graphics(0, 0);
     UI.group.addChild(UI.graphics);
+
+    UI.graphics2 = game.add.graphics(0, 0);
+    UI.group.addChild(UI.graphics2);
+
 
     UI.nameText = game.add.text(0, 0, '----------------\nNAME:' + playerName, {
         font: '16px Helvetica',
@@ -38,13 +43,22 @@ UI.init = function () {
     UI.messageText.alpha = 1.0;
     //UI.messageText.setShadow(3,3,'#000000', 1);
 
+    UI.feedbackText = game.add.text(0, 0, '4Ts Feedback:', {
+        font: '18px monospace',
+        fill: '#000',
+        backgroundColor: '#fff'
+    }, UI.group);
+    UI.feedbackText.align = 'left';
+    UI.feedbackText.alpha = 1.0;
+    //UI.messageText.setShadow(3,3,'#000000', 1);
+
 
 
     UI.chatInput = document.getElementById('chatInput');
     UI.chatFrame = document.getElementById('chatFrame');
 
     // UI.textElements = [UI.gameText, UI.nameText, UI.messageText];
-    UI.textElements = [UI.nameText, UI.messageText, UI.graphics];
+    UI.textElements = [UI.nameText, UI.messageText, UI.graphics, UI.feedbackText, UI.graphics2];
 
     UI.chatSound = game.add.audio('chatSound');
     UI.disconnectSound = game.add.audio('disconnectSound');
@@ -136,7 +150,12 @@ UI.update = function () {
     UI.nameText.y = 16;
     UI.messageText.y = 280;
 
+    UI.feedbackText.x = 0;
+    UI.feedbackText.y = 280;
+
     Utils.alignPosition(UI.graphics, UI.messageText);
+    Utils.alignPosition(UI.graphics2, UI.feedbackText);
+
     R.forEach(UI.fixedToCamera(true))(UI.textElements);
 
 };
@@ -198,32 +217,31 @@ UI.hudMessage = function () {
 
 //VAriant of HUD for 4Ts feedback (does not fade away, clears every time)
 UI.fbhudMessage = function () {
-    UI.messageText.alpha = 1.0;
-    UI.graphics.alpha = 1.0;
+    UI.feedbackText.alpha = 1.0;
+    UI.graphics2.alpha = 1.0;
     var rawtext = R.join(' ', slice(arguments));
 
     var text = rawtext.match(/.{1,25}/g); // split string every 30 characters
 
-
     // chat text
-    UI.lines = R.concat(text, UI.lines);
-    if (UI.lines.length > 10) {
-        UI.lines.pop();
-    }
-    //UI.messageText.setText(R.join('\n')(UI.lines) + '\n...');
-    UI.messageText.setText(R.join('\n')(UI.lines));
+    UI.lines2 = R.concat(UI.lines2, text);
+    //if (UI.lines2.length > 10) {
+    //    UI.lines2.pop();
+    //}
+    //UI.messageText.setText(R.join('\n')(UI.lines2) + '\n...');
+    UI.feedbackText.setText(R.join('\n')(UI.lines2));
 
 
-    UI.log(rawtext);
+    //UI.log(rawtext);
 
-    UI.graphics.clear();
-    UI.graphics.lineStyle(1, 0x888888, 1);
-    UI.graphics.beginFill(0x333222111, 0.8);
-    UI.graphics.drawRect(
+    UI.graphics2.clear();
+    UI.graphics2.lineStyle(1, 0x888888, 1);
+    UI.graphics2.beginFill(0xffffff, 1);
+    UI.graphics2.drawRect(
         - 10,
          - 10,
-        UI.messageText.width + 20,
-        UI.messageText.height + 20
+        UI.feedbackText.width + 20,
+        UI.feedbackText.height + 20
     );
 
 
@@ -269,15 +287,16 @@ UI.chat = function (userName, text, sound) {
 
 //Variant of chat that does not dissappear, for 4Ts feedback
 UI.fbchat = function (userName, text, sound) {
-    UI.messageText.clearColors();
-    UI.fbhudMessage(userName +  ': ' + text);
-    UI.messageText.addColor('#5cb85c', 0);
-    UI.messageText.addColor('#cccccc', userName.length + 1);
-    if (sound) {
-        sound.play();
-        return;
-    }
-    if (playerName.toLowerCase() !== userName.toLowerCase()) UI.chatSound.play();
+    UI.feedbackText.clearColors();
+    //UI.fbhudMessage(userName +  ': ' + text);
+    UI.fbhudMessage(text);
+    UI.feedbackText.addColor('#000000', 0);
+    //UI.feedbackText.addColor('#cccccc', userName.length + 1);
+    // if (sound) {
+    //     sound.play();
+    //     return;
+    // }
+    // if (playerName.toLowerCase() !== userName.toLowerCase()) UI.chatSound.play();
 };
 
 
