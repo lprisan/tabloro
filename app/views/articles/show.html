@@ -8,7 +8,7 @@
   <div class="about"></div>
 
   <section class="container">
-    
+
     <div class="col-md-8">
       <p class="large">{{ article.body | raw }}</p>
       <div class="meta">
@@ -29,7 +29,7 @@
         <span class="muted">{{ article.createdAt.toISOString()|date('M d, Y  h:i a') }}</span>
       </div>
     </div>
-    
+
     <div class="col-md-4">
       {% if (!article.isNew && article.image && article.image.files && article.image.files.length) %}
         <img src="{{ article.image.cdnUri + '/mini_' + article.image.files[0] }}" alt="">
@@ -54,7 +54,7 @@
 
   <section class="container">
     <h2>Comments</h2>
-      
+
     {% for comment in article.comments %}
       {% include '../comments/comment.html' %}
     {% endfor %}
@@ -66,9 +66,9 @@
   <div class="spacer"></div>
   <section class="bg-primary about">
     <div class="container">
-      
+
       <a href="/news" class="btn btn-default">
-        <i class="fa fa-backward"></i>
+        <i class="fa fa-arrow-left"></i>
         Back to news
       </a>
     </div>

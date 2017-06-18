@@ -101,11 +101,11 @@
                           <canvas id="snapshot" class="fullscreen" width="1280" height="720"></canvas>
                           <div id="fps" class="info"></div>
                           <div>
-                            <a id="captureBtn" class="btn btn-danger btn-lg" href="javascript:capture();">
-                              {{ __('Capture design!')}} &nbsp;
-                              <i class="fa fa-camera"></i>
+                            <a id="captureBtn" class="btn btn-default btn-lg" href="javascript:capture();">
+                              {{ __('Capture design')}} &nbsp;
+                              <i class="fa fa-floppy-o"></i>
                             </a>
-                            <a id="retryBtn" class="btn btn-success btn-lg" href="javascript:retry();">
+                            <a id="retryBtn" class="btn btn-default btn-lg" href="javascript:retry();">
                               {{ __('Retry')}} &nbsp;
                               <i class="fa fa-undo"></i>
                             </a>
@@ -121,10 +121,10 @@
                         <div class="panel-heading" id="mapareahead">
                           <h4>
                           <i class="fa fa-settings"></i>
-                          {{ __('Board Map and Feedback')}} <a id="backCaptBtn" href="javascript:backCapture();">
+                          {{ __('Board Map and Feedback')}} <!--a id="backCaptBtn" href="javascript:backCapture();">
                             {{ __('Back to capture mode')}} &nbsp;
                             <i class="fa fa-arrow-up"></i>
-                          </a></h4>
+                          </a--></h4>
 
                         </div>
 
@@ -277,9 +277,13 @@
             <div class="col-sm-offset-3 col-sm-9">
               <!--button class="btn btn-primary" type="submit">{{ __('Create')}}</button-->
               &nbsp;
-              <a href="/designs/{{table.setup._id.toString()}}" class="btn btn-link"><i class="fa fa-backward"></i>&nbsp;&nbsp;{{ __('Back to This Design Page')}}</a>
-              <a class="btn btn-success btn-lg" href="/designs/{{table.setup._id.toString()}}/play4TsLatest">
-                {{ __('Play (virtually)')}} &nbsp;
+              <a href="/designs/{{table.setup._id.toString()}}" class="btn btn-default btn-lg"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{ __('Back to Design Page')}}</a>
+              <a id="backCaptBtn" class="btn btn-default btn-lg" href="javascript:backCapture();">
+                {{ __('Back to capture mode')}} &nbsp;
+                <i class="fa fa-arrow-up"></i>
+              </a>
+              <a class="btn btn-default btn-lg" href="/designs/{{table.setup._id.toString()}}/play4TsLatest">
+                {{ __('Play virtually')}} &nbsp;
                 <i class="fa fa-play"></i>
               </a>
             </div>

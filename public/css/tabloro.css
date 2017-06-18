@@ -661,11 +661,6 @@ a.skype {
     position: absolute;
 }
 
-#backCaptBtn {
-    position: relative;
-    float: right;
-}
-
 #hoverPreview{
 	position:absolute;
 	border:1px solid #ccc;

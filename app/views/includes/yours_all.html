@@ -1,10 +1,10 @@
 {% if (req.param('userId')) %}
-  <a class="btn btn-warning" href="/{{model}}">
+  <a class="btn btn-default" href="/{{model}}">
     <i class="fa {{icon}} fa-fw"></i>&nbsp;
     {{ __('Show All')}}
   </a>
 {% else %}
-  <a class="btn btn-warning" href="/users/{{req.user.id}}/{{model}}">
+  <a class="btn btn-default" href="/users/{{req.user.id}}/{{model}}">
     <i class="fa {{icon}} fa-fw"></i>&nbsp;
     {{ __('Show Yours')}}
   </a>

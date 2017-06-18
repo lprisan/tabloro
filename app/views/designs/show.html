@@ -57,16 +57,16 @@
         <div class="panel-footer">
           <div class="btn-group btn-group-justified">
             {% if isOwner %}
-            <a class="btn btn-danger btn-lg" href="/designs/{{setup._id.toString()}}/capture">
+            <a class="btn btn-default btn-lg" href="/designs/{{setup._id.toString()}}/capture">
               {{ __('Capture')}} &nbsp;
               <i class="fa fa-camera"></i>
             </a>
-                <a class="btn btn-success btn-lg" href="/designs/{{setup._id.toString()}}/play4TsLatest">
+                <a class="btn btn-default btn-lg" href="/designs/{{setup._id.toString()}}/play4TsLatest">
                   {{ __('Play (virtually)')}} &nbsp;
                   <i class="fa fa-play"></i>
                 </a>
             {% endif %}
-            <a class="btn btn-info btn-lg" href="#" onclick="askDesignCopy('/designs/{{setup._id.toString()}}/copy');">
+            <a class="btn btn-default btn-lg" href="#" onclick="askDesignCopy('/designs/{{setup._id.toString()}}/copy');">
               {{ __('Create copy')}} &nbsp;
               <i class="fa fa-files-o"></i>
             </a>
@@ -115,7 +115,7 @@
             <form action="{{ '/designs/' + setup._id }}" method="post" onsubmit="return confirm('{{ __('Are you sure?')}}')">
               <input type="hidden" name="_csrf" value="{{ csrf_token }}">
               <input type="hidden" name="_method" value="DELETE">
-              <button class="btn btn-danger" type="submit">{{ __('Delete Design')}}</button>
+              <button class="btn btn-default btn-lg" type="submit"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;{{ __('Delete Design')}}</button>
             </form>
           </li>
         {% endif %}
@@ -163,8 +163,8 @@
   <section class="bg-primary about">
     <div class="container">
 
-      <a href="/designs" class="btn btn-info">
-        <i class="fa fa-backward"></i>
+      <a href="/designs" class="btn btn-default btn-lg">
+        <i class="fa fa-arrow-left"></i>
         {{ __('Back to designs')}}
       </a>
     </div>
