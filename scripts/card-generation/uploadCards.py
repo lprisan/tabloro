@@ -39,12 +39,13 @@ SETUPNAME_IT = "COMPLETE 4TS SETUP EN"
 SETUPNAME_ES = "COMPLETE 4TS SETUP EN"
 
 # Tile coordinates and counters to create card distribution in setup
-INITIAL_Y = 1000
-INITIAL_X_TECHNIQUE = 100
-INITIAL_X_TASK = 350
-INITIAL_X_TECHNOLOGY = 600
-INITIAL_X_TEAM = 850
-INITIAL_X_WILD = 1100
+INITIAL_X = 1745
+INITIAL_Y_TECHNIQUE = 340
+INITIAL_Y_TASK = 540
+INITIAL_Y_TECHNOLOGY = 740
+INITIAL_Y_TEAM = 940
+INITIAL_Y_WILD = 1100
+INITIAL_X_WILD = 141
 
 COUNTER_TECHNIQUE = 0
 COUNTER_TASK = 0
@@ -248,39 +249,39 @@ def getTile(i, card):
             tile = {
                 "frame" : 0,
                 "rotation" : 0,
-                "y" : (INITIAL_Y+(3*COUNTER_TECHNIQUE)),
-                "x" : (INITIAL_X_TECHNIQUE+(3*COUNTER_TECHNIQUE))
+                "y" : (INITIAL_Y_TECHNIQUE+(3*COUNTER_TECHNIQUE)),
+                "x" : (INITIAL_X+(3*COUNTER_TECHNIQUE))
             }
             COUNTER_TECHNIQUE = COUNTER_TECHNIQUE+1
     elif(card['type4ts']=='Task'):
             tile = {
                 "frame" : 0,
                 "rotation" : 0,
-                "y" : (INITIAL_Y+(3*COUNTER_TASK)),
-                "x" : (INITIAL_X_TASK+(3*COUNTER_TASK))
+                "y" : (INITIAL_Y_TASK+(3*COUNTER_TASK)),
+                "x" : (INITIAL_X+(3*COUNTER_TASK))
             }
             COUNTER_TASK = COUNTER_TASK+1
     elif(card['type4ts']=='Technology'):
             tile = {
                 "frame" : 0,
                 "rotation" : 0,
-                "y" : (INITIAL_Y+(3*COUNTER_TECHNOLOGY)),
-                "x" : (INITIAL_X_TECHNOLOGY+(3*COUNTER_TECHNOLOGY))
+                "y" : (INITIAL_Y_TECHNOLOGY+(3*COUNTER_TECHNOLOGY)),
+                "x" : (INITIAL_X+(3*COUNTER_TECHNOLOGY))
             }
             COUNTER_TECHNOLOGY = COUNTER_TECHNOLOGY+1
     elif(card['type4ts']=='Team'):
             tile = {
                 "frame" : 0,
                 "rotation" : 0,
-                "y" : (INITIAL_Y+(3*COUNTER_TEAM)),
-                "x" : (INITIAL_X_TEAM+(3*COUNTER_TEAM))
+                "y" : (INITIAL_Y_TEAM+(3*COUNTER_TEAM)),
+                "x" : (INITIAL_X+(3*COUNTER_TEAM))
             }
             COUNTER_TEAM = COUNTER_TEAM+1
     elif(card['type4ts']=='Wildcard'):
             tile = {
                 "frame" : 0,
                 "rotation" : 0,
-                "y" : (INITIAL_Y+(3*COUNTER_WILD)),
+                "y" : (INITIAL_Y_WILD+(3*COUNTER_WILD)),
                 "x" : (INITIAL_X_WILD+(3*COUNTER_WILD))
             }
             COUNTER_WILD = COUNTER_WILD+1
@@ -288,8 +289,8 @@ def getTile(i, card):
             tile = {
                 "frame" : 0,
                 "rotation" : 0,
-                "y" : (INITIAL_Y+(3*i)),
-                "x" : (1350+(3*i))
+                "y" : (1200+(3*i)),
+                "x" : (300+(3*i))
             }
     return tile
 
