@@ -674,3 +674,7 @@ a.skype {
 .larger-versions{
   font-size: 200%;
 }
+
+.captureControls{
+  float: right;
+}
