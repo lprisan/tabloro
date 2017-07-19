@@ -87,8 +87,54 @@ function zoom (mult) {
 }
 
 
+function getCardOptions(array){
+
+  var opts = [];
+  for(var i=0; i<array.length; i++){
+
+    if(!array[i].args[0].startsWith('NO') && !array[i].args[0].startsWith('New board')){
+
+      opts.push({
+        id: i,
+        text: array[i].args[0]
+      });
+
+    }
+
+  }
+  return opts;
+
+}
+
+
 function setupStage() {
     game.stage.disableVisibilityChange = true; // loose tab focus, game will continue
+
+    //Initialize the select for the card selection
+    var data = getCardOptions(assets);//[{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+    $("#card-select").select2({
+      data: data,
+      width: 'resolve'
+    });
+
+    var $eventSelect = $("#card-select");
+    //TODO: bind moving the card to the change in select value
+    $eventSelect.on("select2:select", function (e) {
+                                          console.log("select2:select SELECTED A CARD! ", e);
+                                          var boardpos = G.findTile(0).position;
+                                          var tile = G.findTile(e.target.value);
+                                          T.onStartDrag(tile);
+                                          var demoTween = game.add.tween(tile).to(boardpos,1000);
+                                          demoTween.onComplete.add(function(){
+                                            console.log('completed tween '+this.position);
+                                            T.onStopDragControllable(this);
+                                            T.onStopDrag(this);
+                                          }, tile);
+                                          demoTween.start();
+                                          //tile.position = boardpos;
+
+                                                    });
+
     var please_wait = document.getElementById('please_wait');
     if(please_wait) please_wait.remove();
     //make menu and save design button visible
@@ -300,38 +346,58 @@ function update() {
 
     var mouseWorldPosition = Utils.getMousePosition();
 
-
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP)
-        || game.input.keyboard.isDown(Phaser.Keyboard.W) && !UI.chatVisible())
+    // We do not use normal letters as shortcuts
+    // if (game.input.keyboard.isDown(Phaser.Keyboard.UP)
+    //     || game.input.keyboard.isDown(Phaser.Keyboard.W) && !UI.chatVisible())
+    // {
+    //     game.camera.y -= 50;
+    // }
+    // else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)
+    //          || game.input.keyboard.isDown(Phaser.Keyboard.S) && !UI.chatVisible())
+    // {
+    //     game.camera.y += 50;
+    // }
+    // else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)
+    //          || game.input.keyboard.isDown(Phaser.Keyboard.A) && !UI.chatVisible())
+    // {
+    //     game.camera.x -= 50;
+    // }
+    // else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)
+    //          || game.input.keyboard.isDown(Phaser.Keyboard.D) && !UI.chatVisible())
+    // {
+    //     game.camera.x += 50;
+    // }
+    // else if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+    //     UI.enterPressed();
+    // }
+    if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && !UI.chatVisible())
     {
         game.camera.y -= 50;
     }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)
-             || game.input.keyboard.isDown(Phaser.Keyboard.S) && !UI.chatVisible())
+    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) && !UI.chatVisible())
     {
         game.camera.y += 50;
     }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)
-             || game.input.keyboard.isDown(Phaser.Keyboard.A) && !UI.chatVisible())
+    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && !UI.chatVisible())
     {
         game.camera.x -= 50;
     }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)
-             || game.input.keyboard.isDown(Phaser.Keyboard.D) && !UI.chatVisible())
+    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) && !UI.chatVisible())
     {
         game.camera.x += 50;
     }
     else if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
         UI.enterPressed();
     }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.I) && !UI.chatVisible())
-    {
-        zoom(1);
-    }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.O) && !UI.chatVisible())
-    {
-        zoom(-1);
-    }
+    // Removed the zoom in-out from keyboard for now, it inteferes with select2 for the card selector
+    // else if (game.input.keyboard.isDown(Phaser.Keyboard.I) && !UI.chatVisible())
+    // {
+    //     zoom(1);
+    // }
+    // else if (game.input.keyboard.isDown(Phaser.Keyboard.O) && !UI.chatVisible())
+    // {
+    //     zoom(-1);
+    // }
 
     if (game.input.mouse.event) {
         // console.log(game.input.mouse.event)

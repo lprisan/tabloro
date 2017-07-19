@@ -678,3 +678,11 @@ a.skype {
 .captureControls{
   float: right;
 }
+
+#edit-container {
+    width: 70%;
+}
+
+.select2-container {
+  width: 100%;
+}

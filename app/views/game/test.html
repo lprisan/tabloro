@@ -12,6 +12,8 @@
         </div>
     {% elseif (mode === 'playNomod') %}
         <div id="edit-container">
+          <select id="card-select" style="width: 50%">
+          </select>
           <a href="{{backUrl}}" class="btn btn-default"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;{{ __('Back to Design Page')}}</a>
             <button onclick="G.saveDesign()" class="btn btn-default"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;{{ __('Save and Check Design')}}</button>
         </div>
